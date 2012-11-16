@@ -11,6 +11,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    InputWidget.cpp
 
-HEADERS  += mainwindow.hpp
+HEADERS  += mainwindow.hpp \
+    InputWidget.hpp \
+    HandleSelectedFile.hpp

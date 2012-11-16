@@ -1,12 +1,8 @@
 #include <QWidget>
 #include <QDebug>
 #include "mainwindow.hpp"
+#include "InputWidget.hpp"
 
-namespace {
-
-const char SELECT_FILE_TEXT[] = "Select .rgf file";
-
-}
 
 MainWindow::MainWindow(const QRect& screen_size, QWidget *parent)
     : QMainWindow(parent), screen_size(screen_size)
@@ -26,51 +22,33 @@ void MainWindow::set_appearance() {
     setGeometry(0, 0, screen_size.width()/2, screen_size.height()/2);
 
 
-    selectFileButton.setText(SELECT_FILE_TEXT);
 
-    QFontMetrics fontMetrics(selectFileButton.font());
 
-    selectFileButton.setMinimumWidth(1);
+}
 
-    selectFileButton.resize(fontMetrics.width(SELECT_FILE_TEXT), selectFileButton.height());
+void MainWindow::handleSelectedFile(const QString &file) {
 
 }
 
 void MainWindow::connect_signal_slots() {
 
-     connect(&selectFileButton, SIGNAL(clicked()), SLOT(showSelectFileDialog()));
 }
 
 void MainWindow::add_elements() {
 
-    layoutSelectFile.addWidget(&selectFileButton);
+    QWidget* centralWidget = new QWidget(this);
 
-    layoutSelectFile.addStretch();
+    mainLayout = new QVBoxLayout;
 
+    inputWidget = new InputWidget(this);
 
+    mainLayout->addWidget(inputWidget);
 
-    QWidget* fileSelectPanel = new QWidget();
+    mainLayout->addStretch();
 
-    fileSelectPanel->setLayout(&layoutSelectFile);
+    centralWidget->setLayout(mainLayout);
 
-
-
-    mainLayout.addWidget(fileSelectPanel); // FIXME Write wrapper for this
-
-    mainLayout.addStretch();
-
-
-
-    QWidget* mainPanel = new QWidget();
-
-    mainPanel->setLayout(&mainLayout);
-
-    setCentralWidget(mainPanel);
-}
-
-void MainWindow::showSelectFileDialog() {
-
-    qDebug() << "Button clicked!";
+    setCentralWidget(centralWidget);
 }
 
 MainWindow::~MainWindow()

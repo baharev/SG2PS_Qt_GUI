@@ -1,12 +1,12 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-#include <QtGui/QMainWindow>
-#include <QFileDialog>
-#include <QVBoxLayout>
-#include <QPushButton>
+#include <QtGui>
+#include "HandleSelectedFile.hpp"
 
-class MainWindow : public QMainWindow
+class InputWidget;
+
+class MainWindow : public QMainWindow, HandleSelectedFile
 {
     Q_OBJECT
     
@@ -16,11 +16,9 @@ public:
 
     ~MainWindow();
 
-public slots:
-
-    void showSelectFileDialog();
-
 private:
+
+    void handleSelectedFile(const QString &file);
 
     void set_appearance();
 
@@ -28,13 +26,9 @@ private:
 
     void add_elements();
 
-    QVBoxLayout mainLayout;
+    InputWidget* inputWidget;
 
-    QHBoxLayout layoutSelectFile;
-
-    QPushButton selectFileButton;
-
-    QFileDialog dialog;
+    QVBoxLayout* mainLayout;
 
     const QRect screen_size;
 };
