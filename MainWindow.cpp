@@ -1,7 +1,9 @@
 #include <QVBoxLayout>
+#include <QDebug>
 #include "MainWindow.hpp"
 #include "InputWidget.hpp"
 #include "SettingsWidget.hpp"
+#include "Runner.hpp"
 
 
 MainWindow::MainWindow(const QRect& screen_size, QWidget *parent)
@@ -53,12 +55,22 @@ void MainWindow::add_elements() {
     mainLayout->addWidget(settingsWidget);
 
 
+    runner = new Runner(this);
+
+    mainLayout->addWidget(runner);
+
+
 
     mainLayout->addStretch(1);
 
     centralWidget->setLayout(mainLayout);
 
     setCentralWidget(centralWidget);
+}
+
+void MainWindow::printSize() {
+
+    qDebug() << "Size: " << width() << " x " << height();
 }
 
 MainWindow::~MainWindow()

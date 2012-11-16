@@ -14,11 +14,49 @@ struct Option {
 
 Option opts[] = {
 
-    Option("color") << "red" << "green" << "blue",
+    Option("Data convention") << "German dip directon" << "right hand rule",
 
-    Option("type") << "fast" << "medium" << "slow",
+    Option("Plot type") << "Angelier plot" << "Hoeppner pole point",
 
-    Option("line width") << "0.3",
+    Option("Projection type") << "Schmidt" << "Wulff",
+
+    Option("Hemisphere") << "upper" << "lower",
+
+    Option("Bedding & palaeonorth correction") << "re-tilt with the bedding"
+                                               << "only palaeonorth direction"
+                                               << "both",
+
+    // FIXME Shouldn't it be sort???
+    Option("Separate by locality, datatype and groups") << "yes" << "no" ,
+
+    // FIXME Arbitrary number?
+    Option("Cluster numbers") << "ideal" << "don't use" <<"2"<<"3"<<"4"<<"5"<<"6"<<"7"<<"8"<<"9",
+
+    Option("Labelling") << "yes" << "no" ,
+
+    Option("Inversion methodology") << "NDA after Sprang (1972)"
+                                    << "PTN after Turner (1953)"
+                                    << "Fry (1999)"
+                                    << "Shan et al (2003)"
+                                    << "Michael (1984)"
+                                    << "Angelier (1990)"
+                                    << "Mostafa (2005)",
+
+    Option("Virtual symmetrical data set") << "yes" << "no" ,
+
+    Option("Ideal movement direction display") << "yes" << "no" ,
+
+    // FIXME Arbitrary number?
+    Option("Maximum stress & slickenside direction angle") << "10" << "30" << "80",
+
+    Option("Fracture weight point statistics") << "Bingham statistics" << "not needed" ,
+
+    // FIXME Arbitrary number?
+    Option("Line width used on stereonets in points") << "0.1" << "0.6" << "1.0",
+
+    Option("Type of the rose plot") << "symmetric" << "asymmetric",
+
+    Option("Bin size for rose plot in degrees") << "2.5" << "4.0" << "10.0" << "22.5"
 
 };
 

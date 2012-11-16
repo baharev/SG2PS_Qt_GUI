@@ -8,6 +8,7 @@ class QVBoxLayout;
 
 class InputWidget;
 class SettingsWidget;
+class Runner;
 
 
 class MainWindow : public QMainWindow, HandleSelectedFile
@@ -17,6 +18,8 @@ class MainWindow : public QMainWindow, HandleSelectedFile
 public:
 
     explicit MainWindow(const QRect& screen_size, QWidget *parent = 0);
+
+    void printSize();
 
     ~MainWindow();
 
@@ -33,6 +36,8 @@ private:
     InputWidget* inputWidget;
 
     SettingsWidget* settingsWidget;
+
+    Runner* runner;
 
     QVBoxLayout* mainLayout;
 

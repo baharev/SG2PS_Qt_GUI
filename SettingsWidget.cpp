@@ -28,6 +28,7 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
     int left_size = (n_opts+1) / 2;
 
     fillColumn(leftColumn,          0, left_size);
+    //fillColumn(leftColumn,          0, n_opts);
 
     fillColumn(rightColumn, left_size, n_opts);
 
@@ -44,8 +45,6 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
     panel->addWidget(left);
 
     panel->addWidget(right);
-
-    //panel->addWidget(new QWidget(this));
 
     panel->addStretch(1);
 

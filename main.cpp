@@ -11,6 +11,8 @@ int main(int argc, char *argv[])
     MainWindow w(screen_size);
 
     w.show();
+
+    w.printSize();
     
     return app.exec();
 }

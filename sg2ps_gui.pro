@@ -14,7 +14,9 @@ SOURCES += main.cpp\
     InputWidget.cpp \
     SettingsWidget.cpp \
     MainWindow.cpp \
-    OptionWidget.cpp
+    OptionWidget.cpp \
+    Runner.cpp \
+    ProcessManager.cpp
 
 HEADERS  += \
     InputWidget.hpp \
@@ -23,4 +25,6 @@ HEADERS  += \
     SettingsWidget.hpp \
     MainWindow.hpp \
     OptionWidget.hpp \
-    Option.hpp
+    Option.hpp \
+    Runner.hpp \
+    ProcessManager.hpp

@@ -13,7 +13,13 @@ OptionWidget::OptionWidget(QWidget* parent, const QString& key, const QStringLis
 
     comboBox = new QComboBox(this);
 
-    comboBox->addItems(values);
+    comboBox->addItems(values); // TODO Add QLineEdit to custom values?
+
+//    QFont labelFont = label->font();
+//    labelFont.setStretch(QFont::SemiCondensed);
+//    label->setFont(labelFont);
+
+//    comboBox->setFont(labelFont);
 
 
     QHBoxLayout* layout = new QHBoxLayout(this);
