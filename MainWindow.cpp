@@ -19,7 +19,7 @@ void MainWindow::set_appearance() {
 
     setWindowTitle("SG2PS");
 
-    setGeometry(0, 0, screen_size.width()/2, screen_size.height()/2);
+    //setGeometry(0, 0, screen_size.width()/2, screen_size.height()/2);
 
 
 
@@ -54,7 +54,7 @@ void MainWindow::add_elements() {
 
 
 
-    mainLayout->addStretch();
+    mainLayout->addStretch(1);
 
     centralWidget->setLayout(mainLayout);
 

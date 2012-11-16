@@ -5,6 +5,7 @@
 #include "SettingsWidget.hpp"
 #include "OptionWidget.hpp"
 #include "Option.hpp"
+#include "LayoutConstants.hpp"
 
 SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
 
@@ -17,12 +18,7 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
     rightColumn = new QVBoxLayout(right);
 
 
-    QLabel* leftLabel = new QLabel("Settings");
-
-    leftLabel->setMinimumWidth(1);
-
-
-    leftColumn->addWidget(leftLabel);
+    leftColumn->addWidget(new QLabel("Settings"));
 
     rightColumn->addWidget(new QLabel(""));
 
@@ -36,9 +32,6 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
     fillColumn(rightColumn, left_size, n_opts);
 
 
-    left->setMinimumWidth(1);
-
-    right->setMinimumWidth(1);
 
     left->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
@@ -71,5 +64,9 @@ void SettingsWidget::fillColumn(QVBoxLayout* col, int opt_first, int opt_last) {
         col->addWidget(new OptionWidget(this, key, values));
     }
 
-    col->addStretch();
+    col->addStretch(1);
+
+    col->setMargin(MARGIN);
+
+    col->setSpacing(SPACING);
 }

@@ -16,14 +16,9 @@ OptionWidget::OptionWidget(QWidget* parent, const QString& key, const QStringLis
     comboBox->addItems(values);
 
 
-    label->setMinimumWidth(1);
-
-    comboBox->setMinimumWidth(1);
-
-
     QHBoxLayout* layout = new QHBoxLayout(this);
 
-    layout->setMargin(MARGIN);
+    layout->setMargin(0);
 
     layout->setSpacing(SPACING);
 
@@ -31,7 +26,7 @@ OptionWidget::OptionWidget(QWidget* parent, const QString& key, const QStringLis
 
     layout->addWidget(comboBox);
 
-    layout->addStretch();
+    layout->addStretch(1);
 
     setLayout(layout);
 }

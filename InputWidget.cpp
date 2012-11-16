@@ -49,7 +49,7 @@ InputWidget::InputWidget(HandleSelectedFile* input_handler, QWidget* parent)
 
     fileSelectLayout->addWidget(fileNameLabel);
 
-    fileSelectLayout->addStretch();
+    fileSelectLayout->addStretch(1);
 
     setLayout(fileSelectLayout);
 
