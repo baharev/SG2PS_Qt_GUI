@@ -1,7 +1,13 @@
 #ifndef INPUTWIDGET_HPP
 #define INPUTWIDGET_HPP
 
-#include <QtGui>
+#include <QWidget>
+
+class HandleSelectedFile;
+class QHBoxLayout;
+class QPushButton;
+class QLabel;
+class QFileDialog;
 
 class HandleSelectedFile;
 
@@ -11,7 +17,7 @@ class InputWidget : public QWidget {
 
 public:
 
-    InputWidget(HandleSelectedFile* input_handler, QWidget* parent = 0);
+    explicit InputWidget(HandleSelectedFile* input_handler, QWidget* parent = 0);
 
 private slots:
 

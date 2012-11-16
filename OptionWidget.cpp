@@ -1,0 +1,37 @@
+#include <QComboBox>
+#include <QHBoxLayout>
+#include <QLabel>
+#include "OptionWidget.hpp"
+#include "LayoutConstants.hpp"
+
+
+OptionWidget::OptionWidget(QWidget* parent, const QString& key, const QStringList& values)
+    : QWidget(parent)
+{
+
+    label = new QLabel(key, this);
+
+    comboBox = new QComboBox(this);
+
+    comboBox->addItems(values);
+
+
+    label->setMinimumWidth(1);
+
+    comboBox->setMinimumWidth(1);
+
+
+    QHBoxLayout* layout = new QHBoxLayout(this);
+
+    layout->setMargin(MARGIN);
+
+    layout->setSpacing(SPACING);
+
+    layout->addWidget(label);
+
+    layout->addWidget(comboBox);
+
+    layout->addStretch();
+
+    setLayout(layout);
+}

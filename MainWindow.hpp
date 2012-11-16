@@ -1,10 +1,14 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-#include <QtGui>
+#include <QMainWindow>
 #include "HandleSelectedFile.hpp"
 
+class QVBoxLayout;
+
 class InputWidget;
+class SettingsWidget;
+
 
 class MainWindow : public QMainWindow, HandleSelectedFile
 {
@@ -12,7 +16,7 @@ class MainWindow : public QMainWindow, HandleSelectedFile
     
 public:
 
-    MainWindow(const QRect& screen_size, QWidget *parent = 0);
+    explicit MainWindow(const QRect& screen_size, QWidget *parent = 0);
 
     ~MainWindow();
 
@@ -27,6 +31,8 @@ private:
     void add_elements();
 
     InputWidget* inputWidget;
+
+    SettingsWidget* settingsWidget;
 
     QVBoxLayout* mainLayout;
 

@@ -1,0 +1,8 @@
+#ifndef LAYOUTCONSTANTS_HPP
+#define LAYOUTCONSTANTS_HPP
+
+const int MARGIN = 10;
+
+const int SPACING = 10;
+
+#endif // LAYOUTCONSTANTS_HPP

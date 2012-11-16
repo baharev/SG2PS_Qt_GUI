@@ -11,9 +11,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    InputWidget.cpp
+    InputWidget.cpp \
+    SettingsWidget.cpp \
+    MainWindow.cpp \
+    OptionWidget.cpp
 
-HEADERS  += mainwindow.hpp \
+HEADERS  += \
     InputWidget.hpp \
-    HandleSelectedFile.hpp
+    HandleSelectedFile.hpp \
+    LayoutConstants.hpp \
+    SettingsWidget.hpp \
+    MainWindow.hpp \
+    OptionWidget.hpp \
+    Option.hpp

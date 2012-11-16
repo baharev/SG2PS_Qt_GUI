@@ -1,7 +1,7 @@
-#include <QWidget>
-#include <QDebug>
-#include "mainwindow.hpp"
+#include <QVBoxLayout>
+#include "MainWindow.hpp"
 #include "InputWidget.hpp"
+#include "SettingsWidget.hpp"
 
 
 MainWindow::MainWindow(const QRect& screen_size, QWidget *parent)
@@ -40,9 +40,19 @@ void MainWindow::add_elements() {
 
     mainLayout = new QVBoxLayout;
 
+
+
     inputWidget = new InputWidget(this);
 
     mainLayout->addWidget(inputWidget);
+
+
+
+    settingsWidget = new SettingsWidget(this);
+
+    mainLayout->addWidget(settingsWidget);
+
+
 
     mainLayout->addStretch();
 

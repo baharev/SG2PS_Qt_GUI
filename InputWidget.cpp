@@ -1,12 +1,18 @@
+#include <QHBoxLayout>
+#include <QPushButton>
+#include <QLabel>
+#include <QFileDialog>
+
 #include "InputWidget.hpp"
+#include "HandleSelectedFile.hpp"
+#include "LayoutConstants.hpp"
 
 
 namespace {
 
 const char SELECT_FILE_TEXT[] = "Select .rgf file";
 
-const char FILE_NAME[] = "(No file selected)";
-
+const char FILE_NAME[] = "Working with: (empty)";
 
 }
 
@@ -21,9 +27,7 @@ InputWidget::InputWidget(HandleSelectedFile* input_handler, QWidget* parent)
 
     QFontMetrics fontMetrics(selectButton->font());
 
-    selectButton->setMinimumWidth(1);
-
-    selectButton->resize(fontMetrics.width(SELECT_FILE_TEXT), selectButton->height());
+    selectButton->setMinimumWidth(fontMetrics.width(SELECT_FILE_TEXT)*1.5);
 
     connect(selectButton, SIGNAL(clicked()), SLOT(showSelectFileDialog()));
 
@@ -34,11 +38,12 @@ InputWidget::InputWidget(HandleSelectedFile* input_handler, QWidget* parent)
     fileNameLabel->setAlignment(Qt::AlignRight);
 
 
+
     fileSelectLayout = new QHBoxLayout;
 
-    fileSelectLayout->setMargin(10);
+    fileSelectLayout->setMargin(MARGIN);
 
-    fileSelectLayout->setSpacing(10);
+    fileSelectLayout->setSpacing(SPACING);
 
     fileSelectLayout->addWidget(selectButton);
 
@@ -49,6 +54,7 @@ InputWidget::InputWidget(HandleSelectedFile* input_handler, QWidget* parent)
     setLayout(fileSelectLayout);
 
 
+
     dialog = new QFileDialog(this);
 
     startDir = QDir::homePath();
@@ -56,14 +62,14 @@ InputWidget::InputWidget(HandleSelectedFile* input_handler, QWidget* parent)
 
 void InputWidget::showSelectFileDialog() {
 
-    filePath = dialog->getOpenFileName(this, "Open File", startDir, "*.rgf (*.rgf *.set)");
+    filePath = dialog->getOpenFileName(this, "Select File", startDir, "*.rgf (*.rgf)");
 
-    QFileInfo finfo(filePath);
+    QFileInfo fileInfo(filePath);
 
-    if (finfo.exists() && finfo.suffix()=="rgf") {
+    if (fileInfo.exists() && fileInfo.suffix()=="rgf") {
 
-        startDir = finfo.absolutePath();
+        startDir = fileInfo.absolutePath();
 
-        fileNameLabel->setText(filePath);
+        fileNameLabel->setText("Working with: " + filePath);
     }
 }
