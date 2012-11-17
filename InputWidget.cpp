@@ -33,10 +33,15 @@ InputWidget::InputWidget(QWidget* parent)
     connect(selectButton, SIGNAL(clicked()), SLOT(showSelectFileDialog()));
 
 
+    fileNameFrame = new QFrame;
 
     fileNameLabel = new QLabel(FILE_NAME);
 
-    fileNameLabel->setAlignment(Qt::AlignRight);
+    QHBoxLayout* fileNameLayout = new QHBoxLayout(fileNameFrame);
+
+    fileNameLayout->addWidget(fileNameLabel, 1);
+
+    fileNameFrame->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
 
 
@@ -48,9 +53,9 @@ InputWidget::InputWidget(QWidget* parent)
 
     fileSelectLayout->addWidget(selectButton);
 
-    fileSelectLayout->addWidget(fileNameLabel);
+    fileSelectLayout->addWidget(fileNameFrame);
 
-    fileSelectLayout->addStretch(1);
+    //fileSelectLayout->addStretch(1);
 
     setLayout(fileSelectLayout);
 
@@ -61,6 +66,11 @@ InputWidget::InputWidget(QWidget* parent)
     dialog = new QFileDialog(this);
 
     startDir = getStrOption("start_dir");
+}
+
+void InputWidget::freezeLabelSize() {
+
+        fileNameFrame->setFixedWidth(fileNameFrame->width());
 }
 
 void InputWidget::showSelectFileDialog() {

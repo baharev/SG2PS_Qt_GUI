@@ -17,9 +17,10 @@ SOURCES += main.cpp\
     OptionWidget.cpp \
     Runner.cpp \
     ProcessManager.cpp \
-    ExternalExe.cpp \
     GUISettings.cpp \
-    GlobalSettings.cpp
+    GlobalSettings.cpp \
+    ErrorMsg.cpp \
+    ResolveExitCode.cpp
 
 HEADERS  += \
     InputWidget.hpp \
@@ -31,6 +32,7 @@ HEADERS  += \
     Runner.hpp \
     ProcessManager.hpp \
     ExitStatus.hpp \
-    ExternalExe.hpp \
     GUISettings.hpp \
-    GlobalSettings.hpp
+    GlobalSettings.hpp \
+    ErrorMsg.hpp \
+    ResolveExitCode.hpp

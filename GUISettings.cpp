@@ -1,8 +1,20 @@
 #include <QDebug>
-#include <QMessageBox>
 #include <QDir>
 #include "GUISettings.hpp"
+#include "ErrorMsg.hpp"
 
+namespace {
+
+const char EDITOR[] =
+#if defined _WIN32
+        "notepad"
+#elif (defined __linux__)
+        "kate"
+#else
+        #error Define your text editor
+#endif
+;
+}
 
 GUISettings::GUISettings() {
 
@@ -10,10 +22,13 @@ GUISettings::GUISettings() {
 
     strOptions["start_dir"] = QDir::homePath();
 
+    strOptions["text_editor"] = EDITOR;
+
     qDebug() << QDir::currentPath();
 }
 
 void GUISettings::readSettings() {
+
     // TODO Read these from config file
 
     setValue("start_dir", "/home/ali/ws-juno/Test/");
@@ -59,13 +74,7 @@ void GUISettings::errorKeyNotFound(const QString& key) const {
 
 void GUISettings::showError(const QString &what) const {
 
-    QMessageBox mbox;
-
-    mbox.setIcon(QMessageBox::Critical);
-
-    mbox.setText("Error: "+what+"!");
-
-    mbox.exec();
+    showErrorMsg(what);
 
     // TODO Exit here?
 }

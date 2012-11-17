@@ -4,7 +4,7 @@
 struct ExitStatus {
 
     enum Code {
-        OK,
+        OK = 0,
         CONFIG_ERROR,
         FAILURE,
         BUG,

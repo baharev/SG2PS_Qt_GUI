@@ -1,8 +1,8 @@
 #include <QString>
-#include "ExternalExe.hpp"
+#include "ResolveExitCode.hpp"
 #include "ExitStatus.hpp"
 
-QString ExternalExe::checkResult(int exitCode) const {
+QString resolveExitCode(int exitCode) {
 
     QString msg;
 
@@ -29,3 +29,4 @@ QString ExternalExe::checkResult(int exitCode) const {
 
     return msg;
 }
+

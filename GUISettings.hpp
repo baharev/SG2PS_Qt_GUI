@@ -4,6 +4,9 @@
 #include <QMap>
 #include <QString>
 
+class GUISettings;
+
+void initGlobalSettings(const GUISettings* settings);
 
 class GUISettings {
 

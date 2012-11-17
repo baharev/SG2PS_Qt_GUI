@@ -15,15 +15,13 @@ class MainWindow : public QMainWindow
     
 public:
 
-    explicit MainWindow(const QRect& screen_size, QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0);
 
     void fixSize();
 
     ~MainWindow();
 
 private:
-
-    void set_appearance();
 
     void connect_signal_slots();
 
@@ -36,8 +34,6 @@ private:
     Runner* runner;
 
     QVBoxLayout* mainLayout;
-
-    const QRect screen_size;
 };
 
 #endif // MAINWINDOW_HPP

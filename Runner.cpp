@@ -3,6 +3,8 @@
 #include <QPushButton>
 #include "Runner.hpp"
 #include "ProcessManager.hpp"
+#include "GlobalSettings.hpp"
+#include "ErrorMsg.hpp"
 
 namespace {
 
@@ -49,6 +51,7 @@ void Runner::inputFileSelected(const QString& name) {
 
     fileName = file.fileName();
 
+    logFile = "log.txt";
 }
 
 QString Runner::croppedFileName() const {
@@ -65,7 +68,7 @@ void Runner::runButtonClicked() {
 
     if (workingDirectory.isEmpty()) {
 
-        // TODO Show error: select input first
+        showErrorMsg("no input .rgf file selected yet");
         return;
     }
 
@@ -73,23 +76,38 @@ void Runner::runButtonClicked() {
 
     args.append(croppedFileName());
 
-    // TODO Set up logging!
-
-    ExeCall::Status status = processManager->run(workingDirectory, args);
+    ExeCall::Status status = processManager->run(workingDirectory, args, logFile);
 
     if (status == ExeCall::OK) {
 
-        runButton->setText(RUNNING); // TODO Wrap up
-
-        runButton->setDisabled(true);
+        disableButton();
     }
 }
 
 void Runner::finished(bool success, const QString& errorMsg) {
 
-    // TODO Call global MsgBox to display errors, if any
+    if (!success) {
 
-    runButton->setText(RUN); // TODO Wrap up
+        showErrorMsg(errorMsg);
+    }
+
+    enableButton();
+
+    QString editor = getStrOption("text_editor");
+
+    QProcess::startDetached(editor+" "+workingDirectory+"/"+logFile);
+}
+
+void Runner::enableButton() {
+
+    runButton->setText(RUN);
 
     runButton->setEnabled(true);
+}
+
+void Runner::disableButton() {
+
+    runButton->setText(RUNNING);
+
+    runButton->setDisabled(true);
 }

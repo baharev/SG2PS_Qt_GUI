@@ -9,9 +9,6 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    QRect screen_size = QApplication::desktop()->screenGeometry();
-
-
 
     GUISettings settings;
 
@@ -21,7 +18,7 @@ int main(int argc, char *argv[])
 
 
 
-    MainWindow w(screen_size);
+    MainWindow w;
 
     w.show();
 

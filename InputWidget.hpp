@@ -6,6 +6,7 @@
 class HandleSelectedFile;
 class QHBoxLayout;
 class QPushButton;
+class QFrame;
 class QLabel;
 class QFileDialog;
 
@@ -16,6 +17,8 @@ class InputWidget : public QFrame {
 public:
 
     explicit InputWidget(QWidget* parent = 0);
+
+    void freezeLabelSize();
 
 signals:
 
@@ -32,6 +35,8 @@ private:
     QHBoxLayout* fileSelectLayout;
 
     QPushButton* selectButton;
+
+    QFrame* fileNameFrame;
 
     QLabel* fileNameLabel;
 

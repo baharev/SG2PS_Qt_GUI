@@ -6,24 +6,14 @@
 #include "Runner.hpp"
 
 
-MainWindow::MainWindow(const QRect& screen_size, QWidget *parent)
-    : QMainWindow(parent), screen_size(screen_size)
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
 {
-    set_appearance();
+    setWindowTitle("SG2PS Qt Frontend");
 
     add_elements();
 
     connect_signal_slots();
-}
-
-void MainWindow::set_appearance() {
-
-
-    setWindowTitle("SG2PS Qt Frontend");
-
-    //setGeometry(0, 0, screen_size.width()/2, screen_size.height()/2)
-
-
 }
 
 void MainWindow::connect_signal_slots() {
@@ -66,6 +56,8 @@ void MainWindow::add_elements() {
 void MainWindow::fixSize() {
 
     setFixedSize(width(), height());
+
+    inputWidget->freezeLabelSize();
 
     qDebug() << "Size: " << width() << "x" << height();
 }

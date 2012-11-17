@@ -29,6 +29,10 @@ private:
 
     QString croppedFileName() const;
 
+    void enableButton();
+
+    void disableButton();
+
     QPushButton* runButton;
 
     QHBoxLayout* layout;
@@ -39,6 +43,7 @@ private:
 
     QString workingDirectory;
 
+    QString logFile;
 };
 
 #endif // RUNNER_HPP

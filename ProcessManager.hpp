@@ -15,15 +15,19 @@ struct Lock {
     enum Status { OK, FAILED };
 };
 
+const bool SUCCESS = true;
+
+const bool FAILED = false;
+
 class ProcessManager : public QObject {
 
     Q_OBJECT
 
 public:
 
-    explicit ProcessManager(QWidget* parent);
+    explicit ProcessManager(QObject* parent);
 
-    ExeCall::Status run(const QString& workingDirectory, const QStringList& args);
+    ExeCall::Status run(const QString& workingDirectory, const QStringList& args, const QString &logFile);
 
     ~ProcessManager();
 
@@ -45,20 +49,15 @@ private:
 
     void cleanUp();
 
-    void showErrorMsg(const QString& what = "");
-
-    void callExecutable(const QString& workingDirectory, const QStringList& args);
+    void callExecutable(const QString& workingDirectory, const QStringList& args, const QString &logFile);
 
     Lock::Status getLock();
 
-    void releaseLock();
+    void emitFinished(bool success, const QString &message);
 
-    QMutex* mutex;
+    QMutex* mutex; // TODO Do we need mutex at all? As at SO
 
     QProcess* executable;
-
-    QString errorMsg;
-
 };
 
 #endif // PROCESSMANAGER_HPP

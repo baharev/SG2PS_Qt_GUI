@@ -1,17 +1,16 @@
 #include <QDebug>
-#include <QMessageBox>
 #include <QMutex>
 #include <QProcess>
 #include "ProcessManager.hpp"
 #include "GlobalSettings.hpp"
+#include "ErrorMsg.hpp"
+#include "ResolveExitCode.hpp"
 
-ProcessManager::ProcessManager(QWidget *parent)
+ProcessManager::ProcessManager(QObject *parent)
 :   QObject(parent),
     executable(0)
 {
-
     mutex = new QMutex;
-
 }
 
 ProcessManager::~ProcessManager() {
@@ -47,8 +46,6 @@ void ProcessManager::cleanUp() {
 
         executable = 0;
     }
-
-    errorMsg = "Error: ";
 }
 
 Lock::Status ProcessManager::getLock() {
@@ -70,45 +67,44 @@ void ProcessManager::exeStarted() {
 
 void ProcessManager::exeError(QProcess::ProcessError error) {
 
+    QString errorMsg;
+
     if (error == QProcess::FailedToStart) {
 
-        errorMsg += "the executable failed to start";
+        errorMsg = "the executable failed to start";
     }
     else if (error == QProcess::Crashed) {
 
-        errorMsg += "the executable crashed";
+        errorMsg = "the executable crashed";
     }
     else if (error == QProcess::Timedout) {
 
-        errorMsg += "the executable timed out";
+        errorMsg = "the executable timed out";
     }
     else if (error == QProcess::ReadError) {
 
-        errorMsg += "when retrieving data from the executable";
+        errorMsg = "when retrieving data from the executable";
     }
     else if (error == QProcess::WriteError) {
 
-        errorMsg += "when passing data to the executable";
+        errorMsg = "when passing data to the executable";
     }
     else if (error == QProcess::UnknownError) {
 
-        errorMsg += "unknown error";
+        errorMsg = "unknown error";
     }
     else {
 
-        errorMsg += "unexpected error code received from Qt";
+        errorMsg = "unexpected error code received from Qt";
     }
 
-    showErrorMsg();
-
-    releaseLock();
+    emitFinished(FAILED, errorMsg);
 }
 
 void ProcessManager::exeFinished(int exitCode, QProcess::ExitStatus exitStatus) {
 
     if (exitStatus == QProcess::NormalExit) {
 
-        // TODO check_result(exitCode);
     }
     else if (exitStatus == QProcess::CrashExit) {
 
@@ -119,10 +115,10 @@ void ProcessManager::exeFinished(int exitCode, QProcess::ExitStatus exitStatus) 
         showErrorMsg("unexpected error code received from Qt");
     }
 
-    releaseLock();
+    emitFinished(exitCode==0?SUCCESS:FAILED, resolveExitCode(exitCode) );
 }
 
-void ProcessManager::releaseLock() { // TODO Name not quite appropriate
+void ProcessManager::emitFinished(bool success, const QString& message) {
 
     Q_ASSERT(!mutex->tryLock());
 
@@ -130,33 +126,22 @@ void ProcessManager::releaseLock() { // TODO Name not quite appropriate
 
     qDebug() << "External executable has finished!";
 
-    emit finished(true, ""); // TODO Fix it!
+    emit finished(success, message);
 }
 
-void ProcessManager::showErrorMsg(const QString& what) {
-
-    errorMsg.append(what+"!");
-
-    QMessageBox mbox;
-
-    mbox.setText(errorMsg);
-
-    mbox.exec();
-}
-
-ExeCall::Status ProcessManager::run(const QString& workingDirectory, const QStringList& args) {
+ExeCall::Status ProcessManager::run(const QString& workingDirectory, const QStringList& args, const QString& logFile) {
 
     if (getLock()==Lock::FAILED) {
 
         return ExeCall::FAILED;
     }
 
-    callExecutable(workingDirectory, args);
+    callExecutable(workingDirectory, args, logFile);
 
     return ExeCall::OK;
 }
 
-void ProcessManager::callExecutable(const QString& workingDirectory, const QStringList& args) {
+void ProcessManager::callExecutable(const QString& workingDirectory, const QStringList& args, const QString& logFile) {
 
     init();
 
@@ -167,6 +152,8 @@ void ProcessManager::callExecutable(const QString& workingDirectory, const QStri
     qDebug() << exeName << args;
 
     executable->setWorkingDirectory(workingDirectory);
+
+    executable->setStandardOutputFile(workingDirectory+"/"+logFile);
 
     executable->start(exeName, args);
 
