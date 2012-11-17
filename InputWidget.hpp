@@ -1,3 +1,6 @@
+// Copyright (C) 2012, Ali Baharev
+// All rights reserved.
+// This code is published under the GNU Lesser General Public License.
 #ifndef INPUTWIDGET_HPP
 #define INPUTWIDGET_HPP
 
