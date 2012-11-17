@@ -36,7 +36,7 @@ public:
 
 signals:
 
-    void finished(bool success, const QString& errorMsg);
+    void runFinished(bool success, const QString& errorMsg);
 
 private slots:
 

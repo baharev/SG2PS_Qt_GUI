@@ -1,6 +1,7 @@
 // Copyright (C) 2012, Ali Baharev
 // All rights reserved.
 // This code is published under the GNU Lesser General Public License.
+#include <QDebug>
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -43,7 +44,7 @@ Runner::Runner(QWidget *parent)
 
     processManager = new ProcessManager(this);
 
-    connect(processManager, SIGNAL(finished(bool,QString)), SLOT(finished(bool,QString)));
+    connect(processManager, SIGNAL(runFinished(bool,QString)), SLOT(onRunFinished(bool,QString)));
 }
 
 void Runner::inputFileSelected(const QString& name) {
@@ -83,11 +84,13 @@ void Runner::runButtonClicked() {
 
     if (status == ExeCall::OK) {
 
+        qDebug() << "Button disabled!";
+
         disableButton();
     }
 }
 
-void Runner::finished(bool success, const QString& errorMsg) {
+void Runner::onRunFinished(bool success, const QString& errorMsg) {
 
     if (!success) {
 
@@ -95,6 +98,8 @@ void Runner::finished(bool success, const QString& errorMsg) {
     }
 
     enableButton();
+
+    qDebug() << "Button enabled!";
 
     QString editor = getStrOption("text_editor");
 

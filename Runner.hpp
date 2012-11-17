@@ -26,7 +26,7 @@ private slots:
 
     void runButtonClicked();
 
-    void finished(bool success, const QString& errorMsg);
+    void onRunFinished(bool success, const QString& errorMsg);
 
 private:
 

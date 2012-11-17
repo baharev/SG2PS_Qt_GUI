@@ -129,7 +129,7 @@ void ProcessManager::emitFinished(bool success, const QString& message) {
 
     qDebug() << "External executable has finished!";
 
-    emit finished(success, message);
+    emit runFinished(success, message);
 }
 
 ExeCall::Status ProcessManager::run(const QString& workingDirectory, const QStringList& args, const QString& logFile) {
