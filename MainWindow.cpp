@@ -19,7 +19,7 @@ MainWindow::MainWindow(const QRect& screen_size, QWidget *parent)
 void MainWindow::set_appearance() {
 
 
-    setWindowTitle("SG2PS");
+    setWindowTitle("SG2PS Qt Frontend");
 
     //setGeometry(0, 0, screen_size.width()/2, screen_size.height()/2)
 

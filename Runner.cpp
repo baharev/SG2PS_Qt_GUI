@@ -37,6 +37,8 @@ Runner::Runner(QWidget *parent)
 
 
     processManager = new ProcessManager(this);
+
+    connect(processManager, SIGNAL(finished(bool,QString)), SLOT(finished(bool,QString)));
 }
 
 void Runner::inputFileSelected(const QString& name) {
@@ -46,13 +48,48 @@ void Runner::inputFileSelected(const QString& name) {
     workingDirectory = file.absolutePath();
 
     fileName = file.fileName();
+
+}
+
+QString Runner::croppedFileName() const {
+
+    if (fileName.size() > 4) {
+
+        return fileName.left(fileName.size()-4);
+    }
+
+    return fileName;
 }
 
 void Runner::runButtonClicked() {
 
+    if (workingDirectory.isEmpty()) {
+
+        // TODO Show error: select input first
+        return;
+    }
+
     QStringList args;
 
-    args.append(fileName);
+    args.append(croppedFileName());
 
-    processManager->run(workingDirectory, args);
+    // TODO Set up logging!
+
+    ExeCall::Status status = processManager->run(workingDirectory, args);
+
+    if (status == ExeCall::OK) {
+
+        runButton->setText(RUNNING); // TODO Wrap up
+
+        runButton->setDisabled(true);
+    }
+}
+
+void Runner::finished(bool success, const QString& errorMsg) {
+
+    // TODO Call global MsgBox to display errors, if any
+
+    runButton->setText(RUN); // TODO Wrap up
+
+    runButton->setEnabled(true);
 }

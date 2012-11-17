@@ -23,7 +23,11 @@ private slots:
 
     void runButtonClicked();
 
+    void finished(bool success, const QString& errorMsg);
+
 private:
+
+    QString croppedFileName() const;
 
     QPushButton* runButton;
 

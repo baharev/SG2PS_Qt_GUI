@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QMessageBox>
 #include <QDir>
 #include "GUISettings.hpp"
@@ -8,6 +9,8 @@ GUISettings::GUISettings() {
     strOptions["exe_name"]  = "sg2ps";
 
     strOptions["start_dir"] = QDir::homePath();
+
+    qDebug() << QDir::currentPath();
 }
 
 void GUISettings::readSettings() {

@@ -122,11 +122,15 @@ void ProcessManager::exeFinished(int exitCode, QProcess::ExitStatus exitStatus) 
     releaseLock();
 }
 
-void ProcessManager::releaseLock() {
+void ProcessManager::releaseLock() { // TODO Name not quite appropriate
 
     Q_ASSERT(!mutex->tryLock());
 
     mutex->unlock();
+
+    qDebug() << "External executable has finished!";
+
+    emit finished(true, ""); // TODO Fix it!
 }
 
 void ProcessManager::showErrorMsg(const QString& what) {

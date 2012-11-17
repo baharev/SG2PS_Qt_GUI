@@ -27,6 +27,10 @@ public:
 
     ~ProcessManager();
 
+signals:
+
+    void finished(bool success, const QString& errorMsg);
+
 private slots:
 
     void exeStarted();
