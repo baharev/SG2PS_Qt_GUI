@@ -23,7 +23,7 @@ public:
 
     explicit ProcessManager(QWidget* parent);
 
-    ExeCall::Status run();
+    ExeCall::Status run(const QString& workingDirectory, const QStringList& args);
 
     ~ProcessManager();
 
@@ -41,9 +41,13 @@ private:
 
     void cleanUp();
 
-    void showErrorMsg(const QString& what);
+    void showErrorMsg(const QString& what = "");
+
+    void callExecutable(const QString& workingDirectory, const QStringList& args);
 
     Lock::Status getLock();
+
+    void releaseLock();
 
     QMutex* mutex;
 

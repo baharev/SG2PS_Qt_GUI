@@ -2,7 +2,6 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
-#include "HandleSelectedFile.hpp"
 
 class QVBoxLayout;
 
@@ -10,8 +9,7 @@ class InputWidget;
 class SettingsWidget;
 class Runner;
 
-
-class MainWindow : public QMainWindow, HandleSelectedFile
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
     
@@ -19,13 +17,11 @@ public:
 
     explicit MainWindow(const QRect& screen_size, QWidget *parent = 0);
 
-    void printSize();
+    void fixSize();
 
     ~MainWindow();
 
 private:
-
-    void handleSelectedFile(const QString &file);
 
     void set_appearance();
 

@@ -16,15 +16,21 @@ SOURCES += main.cpp\
     MainWindow.cpp \
     OptionWidget.cpp \
     Runner.cpp \
-    ProcessManager.cpp
+    ProcessManager.cpp \
+    ExternalExe.cpp \
+    GUISettings.cpp \
+    GlobalSettings.cpp
 
 HEADERS  += \
     InputWidget.hpp \
-    HandleSelectedFile.hpp \
     LayoutConstants.hpp \
     SettingsWidget.hpp \
     MainWindow.hpp \
     OptionWidget.hpp \
     Option.hpp \
     Runner.hpp \
-    ProcessManager.hpp
+    ProcessManager.hpp \
+    ExitStatus.hpp \
+    ExternalExe.hpp \
+    GUISettings.hpp \
+    GlobalSettings.hpp

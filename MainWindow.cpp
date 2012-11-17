@@ -11,9 +11,9 @@ MainWindow::MainWindow(const QRect& screen_size, QWidget *parent)
 {
     set_appearance();
 
-    connect_signal_slots();
-
     add_elements();
+
+    connect_signal_slots();
 }
 
 void MainWindow::set_appearance() {
@@ -21,19 +21,14 @@ void MainWindow::set_appearance() {
 
     setWindowTitle("SG2PS");
 
-    //setGeometry(0, 0, screen_size.width()/2, screen_size.height()/2);
+    //setGeometry(0, 0, screen_size.width()/2, screen_size.height()/2)
 
-
-
-
-}
-
-void MainWindow::handleSelectedFile(const QString &file) {
 
 }
 
 void MainWindow::connect_signal_slots() {
 
+    connect(inputWidget, SIGNAL(inputFileSelected(QString)), runner, SLOT(inputFileSelected(QString)));
 }
 
 void MainWindow::add_elements() {
@@ -68,9 +63,11 @@ void MainWindow::add_elements() {
     setCentralWidget(centralWidget);
 }
 
-void MainWindow::printSize() {
+void MainWindow::fixSize() {
 
-    qDebug() << "Size: " << width() << " x " << height();
+    setFixedSize(width(), height());
+
+    qDebug() << "Size: " << width() << "x" << height();
 }
 
 MainWindow::~MainWindow()

@@ -1,11 +1,12 @@
+#include <QFrame>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QLabel>
 #include <QFileDialog>
 
 #include "InputWidget.hpp"
-#include "HandleSelectedFile.hpp"
 #include "LayoutConstants.hpp"
+#include "GlobalSettings.hpp"
 
 
 namespace {
@@ -17,9 +18,9 @@ const char FILE_NAME[] = "Working with: (empty)";
 }
 
 
-InputWidget::InputWidget(HandleSelectedFile* input_handler, QWidget* parent)
+InputWidget::InputWidget(QWidget* parent)
 :
-    QWidget(parent),
+    QFrame(parent),
     input_handler(input_handler)
 {
 
@@ -53,11 +54,13 @@ InputWidget::InputWidget(HandleSelectedFile* input_handler, QWidget* parent)
 
     setLayout(fileSelectLayout);
 
+    setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
+
 
 
     dialog = new QFileDialog(this);
 
-    startDir = QDir::homePath();
+    startDir = getStrOption("start_dir");
 }
 
 void InputWidget::showSelectFileDialog() {
@@ -71,5 +74,7 @@ void InputWidget::showSelectFileDialog() {
         startDir = fileInfo.absolutePath();
 
         fileNameLabel->setText("Working with: " + filePath);
+
+        emit inputFileSelected(filePath);
     }
 }

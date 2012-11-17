@@ -1,7 +1,7 @@
 #ifndef INPUTWIDGET_HPP
 #define INPUTWIDGET_HPP
 
-#include <QWidget>
+#include <QFrame>
 
 class HandleSelectedFile;
 class QHBoxLayout;
@@ -9,15 +9,17 @@ class QPushButton;
 class QLabel;
 class QFileDialog;
 
-class HandleSelectedFile;
-
-class InputWidget : public QWidget {
+class InputWidget : public QFrame {
 
     Q_OBJECT
 
 public:
 
-    explicit InputWidget(HandleSelectedFile* input_handler, QWidget* parent = 0);
+    explicit InputWidget(QWidget* parent = 0);
+
+signals:
+
+    void inputFileSelected(const QString& fileNameWithPath);
 
 private slots:
 

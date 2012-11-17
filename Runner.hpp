@@ -15,6 +15,10 @@ public:
 
     explicit Runner(QWidget* parent);
 
+public slots:
+
+    void inputFileSelected(const QString& name);
+
 private slots:
 
     void runButtonClicked();
@@ -26,6 +30,10 @@ private:
     QHBoxLayout* layout;
 
     ProcessManager* processManager;
+
+    QString fileName;
+
+    QString workingDirectory;
 
 };
 

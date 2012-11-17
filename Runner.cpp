@@ -1,3 +1,4 @@
+#include <QFileInfo>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "Runner.hpp"
@@ -27,7 +28,7 @@ Runner::Runner(QWidget *parent)
 
     connect(runButton, SIGNAL(clicked()), SLOT(runButtonClicked()));
 
-
+    layout->addStretch(1);
 
     layout->addWidget(runButton);
 
@@ -38,7 +39,20 @@ Runner::Runner(QWidget *parent)
     processManager = new ProcessManager(this);
 }
 
+void Runner::inputFileSelected(const QString& name) {
+
+    QFileInfo file(name);
+
+    workingDirectory = file.absolutePath();
+
+    fileName = file.fileName();
+}
+
 void Runner::runButtonClicked() {
 
-    processManager->run();
+    QStringList args;
+
+    args.append(fileName);
+
+    processManager->run(workingDirectory, args);
 }
