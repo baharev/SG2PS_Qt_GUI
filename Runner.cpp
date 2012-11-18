@@ -45,6 +45,8 @@ Runner::Runner(QWidget *parent)
     processManager = new ProcessManager(this);
 
     connect(processManager, SIGNAL(runFinished(bool,QString)), SLOT(onRunFinished(bool,QString)));
+
+    connect(processManager, SIGNAL(runStarted()), SLOT(onRunStarted()));
 }
 
 void Runner::inputFileSelected(const QString& name) {
@@ -80,14 +82,16 @@ void Runner::runButtonClicked() {
 
     args.append(croppedFileName());
 
-    ExeCall::Status status = processManager->run(workingDirectory, args, logFile);
+    processManager->run(workingDirectory, args, logFile);
+}
 
-    if (status == ExeCall::OK) {
+void Runner::onRunStarted() {
 
-        qDebug() << "Button disabled!";
+    runButton->setDisabled(true);
 
-        disableButton();
-    }
+    runButton->setText(RUNNING);
+
+    qDebug() << "Button disabled!";
 }
 
 void Runner::onRunFinished(bool success, const QString& errorMsg) {
@@ -97,25 +101,13 @@ void Runner::onRunFinished(bool success, const QString& errorMsg) {
         showErrorMsg(errorMsg);
     }
 
-    enableButton();
+    runButton->setText(RUN);
+
+    runButton->setEnabled(true);
 
     qDebug() << "Button enabled!";
 
     QString editor = getStrOption("text_editor");
 
     QProcess::startDetached(editor+" "+workingDirectory+"/"+logFile);
-}
-
-void Runner::enableButton() {
-
-    runButton->setText(RUN);
-
-    runButton->setEnabled(true);
-}
-
-void Runner::disableButton() {
-
-    runButton->setText(RUNNING);
-
-    runButton->setDisabled(true);
 }

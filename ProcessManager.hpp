@@ -8,16 +8,6 @@
 
 class QMutex;
 
-struct ExeCall {
-
-    enum Status { OK, FAILED };
-};
-
-struct Lock {
-
-    enum Status { OK, FAILED };
-};
-
 const bool SUCCESS = true;
 
 const bool FAILED = false;
@@ -30,11 +20,13 @@ public:
 
     explicit ProcessManager(QObject* parent);
 
-    ExeCall::Status run(const QString& workingDirectory, const QStringList& args, const QString &logFile);
+    void run(const QString& workingDirectory, const QStringList& args, const QString &logFile);
 
     ~ProcessManager();
 
 signals:
+
+    void runStarted();
 
     void runFinished(bool success, const QString& errorMsg);
 
@@ -53,6 +45,8 @@ private:
     void cleanUp();
 
     void callExecutable(const QString& workingDirectory, const QStringList& args, const QString &logFile);
+
+    struct Lock { enum Status { OK, FAILED };  };
 
     Lock::Status getLock();
 

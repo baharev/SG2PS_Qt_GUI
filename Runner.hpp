@@ -26,15 +26,13 @@ private slots:
 
     void runButtonClicked();
 
+    void onRunStarted();
+
     void onRunFinished(bool success, const QString& errorMsg);
 
 private:
 
     QString croppedFileName() const;
-
-    void enableButton();
-
-    void disableButton();
 
     QPushButton* runButton;
 

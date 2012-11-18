@@ -51,7 +51,7 @@ void ProcessManager::cleanUp() {
     }
 }
 
-Lock::Status ProcessManager::getLock() {
+ProcessManager::Lock::Status ProcessManager::getLock() {
 
     if (!mutex->tryLock()) {
 
@@ -65,7 +65,7 @@ Lock::Status ProcessManager::getLock() {
 
 void ProcessManager::exeStarted() {
 
-    // Seems like a useless function
+    emit runStarted();
 }
 
 void ProcessManager::exeError(QProcess::ProcessError error) {
@@ -132,16 +132,12 @@ void ProcessManager::emitFinished(bool success, const QString& message) {
     emit runFinished(success, message);
 }
 
-ExeCall::Status ProcessManager::run(const QString& workingDirectory, const QStringList& args, const QString& logFile) {
+void ProcessManager::run(const QString& workingDirectory, const QStringList& args, const QString& logFile) {
 
-    if (getLock()==Lock::FAILED) {
+    if (getLock()==Lock::OK) {
 
-        return ExeCall::FAILED;
+        callExecutable(workingDirectory, args, logFile);
     }
-
-    callExecutable(workingDirectory, args, logFile);
-
-    return ExeCall::OK;
 }
 
 void ProcessManager::callExecutable(const QString& workingDirectory, const QStringList& args, const QString& logFile) {
