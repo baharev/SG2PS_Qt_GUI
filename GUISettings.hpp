@@ -4,10 +4,11 @@
 #ifndef GUISETTINGS_HPP
 #define GUISETTINGS_HPP
 
-#include <QMap>
-#include <QString>
-
+template <class Key, class T> class QMap;
+template <typename T> class QVector;
+class QString;
 class GUISettings;
+struct Pair;
 
 void initGlobalSettings(const GUISettings* settings);
 
@@ -21,6 +22,8 @@ public:
 
     QString getStrOption(const QString& key) const;
 
+    ~GUISettings();
+
 private:
 
     void errorKeyNotFound(const QString& key) const;
@@ -29,7 +32,11 @@ private:
 
     void setValue(const QString& key, const QString& value);
 
-    QMap<QString,QString> strOptions;
+    void readPairs();
+
+    QMap<QString,QString>& strOptions;
+
+    QVector<Pair>& userOptions;
 
 };
 
