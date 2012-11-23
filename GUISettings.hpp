@@ -34,6 +34,8 @@ private:
 
     void readPairs();
 
+    QString removeComment(const QString& origLine);
+
     QMap<QString,QString>& strOptions;
 
     QVector<Pair>& userOptions;

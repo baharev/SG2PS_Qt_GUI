@@ -45,7 +45,7 @@ GUISettings::GUISettings()
 
     strOptions["text_editor"] = EDITOR;
 
-    qDebug() << QDir::currentPath();
+    qDebug() << "Current path: " << QDir::currentPath();
 }
 
 GUISettings::~GUISettings() {
@@ -127,24 +127,42 @@ void GUISettings::readPairs() {
 
     while(!in.atEnd()) {
 
-        QString line = in.readLine();
+        const QString origLine = in.readLine();
 
-        if (line.isEmpty() || line.startsWith('#')) {
+        QString line = removeComment(origLine);
+
+        line = line.trimmed();
+
+        if (line.isEmpty()) {
 
             continue;
         }
 
-        QStringList fields = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+        QRegExp rx("(\\w+)(\\s+)(.+)");
 
-        if (fields.size()!=2) {
+        int pos = rx.indexIn(line);
 
-            showError("reading line \""+line+"\"");
+        if (pos > -1) {
+
+            Pair opt;
+
+            opt.key   = rx.cap(1);
+            opt.value = rx.cap(3);
+
+            userOptions.push_back(opt);
+        }
+        else {
+
+            showError("reading line \""+origLine+"\"");
 
             break;
         }
-
-        userOptions.push_back(Pair(fields));
     }
 
     file.close();
+}
+
+QString GUISettings::removeComment(const QString &origLine) {
+
+    return origLine.left( origLine.indexOf('#') );
 }
