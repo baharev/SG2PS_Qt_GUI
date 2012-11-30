@@ -16,7 +16,7 @@ namespace {
 
 const char SELECT_FILE_TEXT[] = "Select .rgf file";
 
-const char FILE_NAME[] = "Working with: (empty)";
+const char FILE_NAME[] = "(please select the .rgf file)";
 
 }
 
@@ -86,7 +86,7 @@ void InputWidget::showSelectFileDialog() {
 
         startDir = fileInfo.absolutePath();
 
-        fileNameLabel->setText("Working with: " + filePath);
+        fileNameLabel->setText(filePath);
 
         emit inputFileSelected(filePath);
     }

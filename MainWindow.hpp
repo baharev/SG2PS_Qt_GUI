@@ -24,11 +24,20 @@ public:
 
     ~MainWindow();
 
+private slots:
+
+    void about();
+
+    void editGUISettings();
+
 private:
 
     void connect_signal_slots();
 
     void add_elements();
+
+    void set_menu();
+
 
     InputWidget* inputWidget;
 
