@@ -44,7 +44,7 @@ InputWidget::InputWidget(QWidget* parent)
 
     fileNameLayout->addWidget(fileNameLabel, 1);
 
-    fileNameFrame->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
+    fileNameFrame->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
 
 
 
@@ -62,7 +62,7 @@ InputWidget::InputWidget(QWidget* parent)
 
     setLayout(fileSelectLayout);
 
-    setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
+    //setFrameStyle(QFrame::WinPanel | QFrame::Raised);
 
 
 
@@ -86,7 +86,7 @@ void InputWidget::showSelectFileDialog() {
 
         startDir = fileInfo.absolutePath();
 
-        fileNameLabel->setText(filePath);
+        fileNameLabel->setText(QDir::toNativeSeparators(filePath));
 
         emit inputFileSelected(filePath);
     }

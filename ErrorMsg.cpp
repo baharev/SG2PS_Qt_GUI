@@ -9,6 +9,8 @@ void showErrorMsg(const QString& what) {
 
     QMessageBox mbox;
 
+    mbox.setWindowTitle("Error");
+
     mbox.setText("Error: "+what+"!");
 
     mbox.setIcon(QMessageBox::Critical);

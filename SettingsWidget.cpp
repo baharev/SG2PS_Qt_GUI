@@ -37,9 +37,9 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
 
 
 
-    left->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
+    left->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
 
-    right->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
+    right->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
 
 
 

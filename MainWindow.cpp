@@ -102,6 +102,7 @@ void MainWindow::about() {
 
 void MainWindow::editGUISettings() {
 
+    // TODO Reload it automatically instead!
     QMessageBox::information(this, "Reminder", "After editing the options, don\'t forget "
                              "to restart the application!");
 

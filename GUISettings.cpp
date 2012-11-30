@@ -23,6 +23,17 @@ const char EDITOR[] =
         #error Define your text editor
 #endif
 ;
+
+const char FILE_MANAGER[] =
+#if defined _WIN32
+        "explorer /root," // Otherwise a malformed window pops up
+#elif (defined __linux__)
+        "dolphin " // The space is important, due to Windows quirks...
+#else
+        #error Define your file manager
+#endif
+;
+
 }
 
 struct Pair {
@@ -44,6 +55,8 @@ GUISettings::GUISettings()
     strOptions["start_dir"] = QDir::homePath();
 
     strOptions["text_editor"] = EDITOR;
+
+    strOptions["file_manager"] = FILE_MANAGER;
 
     qDebug() << "Current path: " << QDir::currentPath();
 }

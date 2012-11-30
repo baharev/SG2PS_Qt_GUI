@@ -2,6 +2,7 @@
 // All rights reserved.
 // This code is published under the GNU Lesser General Public License.
 #include <QDebug>
+#include <QDir>
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -107,7 +108,13 @@ void Runner::onRunFinished(bool success, const QString& errorMsg) {
 
     qDebug() << "Button enabled!";
 
+    // TODO Move these below into there own class
+
     QString editor = getStrOption("text_editor");
 
     QProcess::startDetached(editor+" "+workingDirectory+"/"+logFile);
+
+    QString file_manager = getStrOption("file_manager");
+
+    QProcess::startDetached("explorer /root,"+QDir::toNativeSeparators(workingDirectory));
 }
