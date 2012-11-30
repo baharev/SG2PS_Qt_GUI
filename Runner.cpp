@@ -116,5 +116,7 @@ void Runner::onRunFinished(bool success, const QString& errorMsg) {
 
     QString file_manager = getStrOption("file_manager");
 
-    QProcess::startDetached("explorer /root,"+QDir::toNativeSeparators(workingDirectory));
+    QString cmd = file_manager+QDir::toNativeSeparators(workingDirectory);
+
+    QProcess::startDetached(cmd);
 }

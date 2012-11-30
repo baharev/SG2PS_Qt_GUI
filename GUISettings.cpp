@@ -28,7 +28,7 @@ const char FILE_MANAGER[] =
 #if defined _WIN32
         "explorer /root," // Otherwise a malformed window pops up
 #elif (defined __linux__)
-        "dolphin " // The space is important, due to Windows quirks...
+        "konqueror " // The space is important, due to Windows quirks...
 #else
         #error Define your file manager
 #endif
