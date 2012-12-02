@@ -108,15 +108,30 @@ void Runner::onRunFinished(bool success, const QString& errorMsg) {
 
     qDebug() << "Button enabled!";
 
-    // TODO Move these below into there own class
+    showLog();
 
-    QString editor = getStrOption("text_editor");
-
-    QProcess::startDetached(editor+" "+workingDirectory+"/"+logFile);
-
-    QString file_manager = getStrOption("file_manager");
-
-    QString cmd = file_manager+QDir::toNativeSeparators(workingDirectory);
-
-    QProcess::startDetached(cmd);
+    showResultDir();
 }
+
+void Runner::showLog() const {
+
+    if (getStrOption("show_logfile")=="yes") {
+
+        QString editor = getStrOption("text_editor");
+
+        QProcess::startDetached(editor+" "+workingDirectory+"/"+logFile);
+    }
+}
+
+void Runner::showResultDir() const {
+
+    if (getStrOption("show_result_directory")=="yes") {
+
+        QString file_manager = getStrOption("file_manager");
+
+        QString cmd = file_manager+QDir::toNativeSeparators(workingDirectory);
+
+        QProcess::startDetached(cmd);
+    }
+}
+

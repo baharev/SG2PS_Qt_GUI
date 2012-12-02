@@ -34,6 +34,10 @@ private:
 
     QString croppedFileName() const;
 
+    void showLog() const;
+
+    void showResultDir() const;
+
     QPushButton* runButton;
 
     QHBoxLayout* layout;

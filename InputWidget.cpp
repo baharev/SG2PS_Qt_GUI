@@ -68,7 +68,7 @@ InputWidget::InputWidget(QWidget* parent)
 
     dialog = new QFileDialog(this);
 
-    startDir = getStrOption("start_dir");
+    startDir = getStrOption("start_browsing_from_directory");
 }
 
 void InputWidget::freezeLabelSize() {

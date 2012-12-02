@@ -24,6 +24,7 @@ const char EDITOR[] =
 #endif
 ;
 
+// TODO Clean up this mess: decorate filename with /root,?
 const char FILE_MANAGER[] =
 #if defined _WIN32
         "explorer /root," // Otherwise a malformed window pops up
@@ -50,13 +51,17 @@ GUISettings::GUISettings()
     userOptions(*new QVector<Pair>)
 {
 
-    strOptions["exe_name"]  = "sg2ps";
+    strOptions["executable_name"]  = "sg2ps";
 
-    strOptions["start_dir"] = QDir::homePath();
+    strOptions["start_browsing_from_directory"] = QDir::homePath();
 
     strOptions["text_editor"] = EDITOR;
 
     strOptions["file_manager"] = FILE_MANAGER;
+
+    strOptions["show_logfile"] = "yes"; // TODO Stringly typed...
+
+    strOptions["show_result_directory"] = "yes";
 
     qDebug() << "Current path: " << QDir::currentPath();
 }
