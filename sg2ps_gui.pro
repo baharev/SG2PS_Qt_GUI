@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     GUISettings.cpp \
     GlobalSettings.cpp \
     ErrorMsg.cpp \
-    ResolveExitCode.cpp
+    ResolveExitCode.cpp \
+    Option.cpp
 
 HEADERS  += \
     InputWidget.hpp \

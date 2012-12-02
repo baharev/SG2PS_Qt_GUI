@@ -4,19 +4,24 @@
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QLabel>
+#include "Option.hpp"
 #include "OptionWidget.hpp"
 #include "LayoutConstants.hpp"
 
 
-OptionWidget::OptionWidget(QWidget* parent, const QString& key, const QStringList& values)
+OptionWidget::OptionWidget(QWidget* parent, const Option& opt)
     : QWidget(parent)
 {
 
-    label = new QLabel(key, this);
+    label = new QLabel(opt.key, this);
 
     comboBox = new QComboBox(this);
 
-    comboBox->addItems(values); // TODO Add QLineEdit to custom values?
+    comboBox->addItems(opt.values);
+
+    defaultElem = opt.defaultElem;
+
+    comboBox->setCurrentIndex(defaultElem);
 
 //    QFont labelFont = label->font();
 //    labelFont.setStretch(QFont::SemiCondensed);

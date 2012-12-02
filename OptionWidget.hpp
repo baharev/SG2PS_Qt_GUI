@@ -4,11 +4,11 @@
 #ifndef OPTIONWIDGET_HPP
 #define OPTIONWIDGET_HPP
 
-#include <QStringList>
 #include <QWidget>
 
 class QComboBox;
 class QLabel;
+class Option;
 
 class OptionWidget : public QWidget {
 
@@ -16,7 +16,7 @@ class OptionWidget : public QWidget {
 
 public:
 
-    OptionWidget(QWidget* parent, const QString& key, const QStringList& values);
+    OptionWidget(QWidget* parent, const Option& opt);
 
     QString value() const;
 
@@ -25,6 +25,8 @@ private:
     QComboBox* comboBox;
 
     QLabel* label;
+
+    int defaultElem;
 };
 
 #endif // OPTIONWIDGET_HPP

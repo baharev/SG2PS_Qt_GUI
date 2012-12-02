@@ -5,9 +5,11 @@
 #define SETTINGSWIDGET_HPP
 
 #include <QWidget>
+#include <QVector>
 
 class QHBoxLayout;
 class QVBoxLayout;
+class OptionWidget;
 
 
 class SettingsWidget: public QWidget {
@@ -29,6 +31,8 @@ private:
     QVBoxLayout* leftColumn;
 
     QVBoxLayout* rightColumn;
+
+    QVector<OptionWidget*> optionWidgets;
 };
 
 #endif // SETTINGSWIDGET_HPP

@@ -26,7 +26,7 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
     rightColumn->addWidget(new QLabel(""));
 
 
-    int n_opts = sizeof(opts) / sizeof(opts[0]);
+    int n_opts = Option::getOptSize();
 
     int left_size = (n_opts+1) / 2;
 
@@ -57,13 +57,15 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
 
 void SettingsWidget::fillColumn(QVBoxLayout* col, int opt_first, int opt_last) {
 
+    const Option* opts = Option::getOpts();
+
     for (int i=opt_first; i<opt_last; ++i) {
 
-        const QString& key = opts[i].key;
+        OptionWidget* optWidget = new OptionWidget(this, opts[i]);
 
-        const QStringList& values = opts[i].values;
+        optionWidgets.push_back(optWidget);
 
-        col->addWidget(new OptionWidget(this, key, values));
+        col->addWidget(optWidget);
     }
 
     col->addStretch(1);
