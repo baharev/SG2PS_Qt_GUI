@@ -20,6 +20,8 @@ public:
 
     QString value() const;
 
+    void selectDefault();
+
 private:
 
     QComboBox* comboBox;

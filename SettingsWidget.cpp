@@ -1,6 +1,7 @@
 // Copyright (C) 2012, Ali Baharev
 // All rights reserved.
 // This code is published under the GNU Lesser General Public License.
+#include <QDebug>
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -74,3 +75,23 @@ void SettingsWidget::fillColumn(QVBoxLayout* col, int opt_first, int opt_last) {
 
     col->setSpacing(SPACING);
 }
+
+void SettingsWidget::reset_defaults() {
+
+    foreach (OptionWidget* widget , optionWidgets) {
+
+        widget->selectDefault();
+    }
+
+}
+
+void SettingsWidget::tryLoadSettings(const QString& rgfFileName) {
+
+    qDebug() << "Selected: " << rgfFileName;
+
+    //rgfFileName.chop(); // TODO get .set file name and check existence
+    // if none -> reset defaults
+
+    reset_defaults();
+}
+

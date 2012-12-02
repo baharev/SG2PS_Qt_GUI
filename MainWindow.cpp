@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::connect_signal_slots() {
 
     connect(inputWidget, SIGNAL(inputFileSelected(QString)), runner, SLOT(inputFileSelected(QString)));
+
+    connect(inputWidget, SIGNAL(inputFileSelected(QString)), settingsWidget, SLOT(tryLoadSettings(QString)));
 }
 
 void MainWindow::add_elements() {

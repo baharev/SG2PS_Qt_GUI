@@ -44,3 +44,8 @@ OptionWidget::OptionWidget(QWidget* parent, const Option& opt)
 
     setLayout(layout);
 }
+
+void OptionWidget::selectDefault() {
+
+    comboBox->setCurrentIndex(defaultElem);
+}

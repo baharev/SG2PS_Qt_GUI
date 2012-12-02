@@ -20,11 +20,15 @@ public:
 
     explicit SettingsWidget(QWidget* parent);
 
+public slots:
+
     void tryLoadSettings(const QString& rgfFileName);
 
 private:
 
     void fillColumn(QVBoxLayout* col, int row_beg, int row_end);
+
+    void reset_defaults();
 
     QHBoxLayout* panel;
 
