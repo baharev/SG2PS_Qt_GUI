@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     GlobalSettings.cpp \
     ErrorMsg.cpp \
     ResolveExitCode.cpp \
-    Option.cpp
+    Option.cpp \
+    Launcher.cpp
 
 HEADERS  += \
     InputWidget.hpp \
@@ -36,4 +37,5 @@ HEADERS  += \
     GUISettings.hpp \
     GlobalSettings.hpp \
     ErrorMsg.hpp \
-    ResolveExitCode.hpp
+    ResolveExitCode.hpp \
+    Launcher.hpp
