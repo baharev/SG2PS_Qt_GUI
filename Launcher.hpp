@@ -4,6 +4,8 @@
 #ifndef LAUNCHER_HPP
 #define LAUNCHER_HPP
 
+class QString;
+
 void openWithDefaultApp(const QString& file);
 
 void openDirectoryWithFileManager(const QString& directory);

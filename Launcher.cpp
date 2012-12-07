@@ -4,6 +4,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <ShellApi.h>
+#include <QString>
 #else
 #include <QProcess>
 #endif
@@ -14,13 +15,13 @@
 
 void openWithDefaultApp(const QString& file) {
 
-    ShellExecute(GetDesktopWindow(), _T("open"), (wchar_t*)directory.utf16(), NULL, NULL, SW_SHOWNORMAL);
+    ShellExecute(GetDesktopWindow(), L"open", (wchar_t*)file.utf16(), NULL, NULL, SW_SHOWNORMAL);
 
 }
 
 void openDirectoryWithFileManager(const QString& directory) {
 
-    ShellExecute(GetDesktopWindow(), _T("explore"), (wchar_t*)directory.utf16(), NULL, NULL, SW_SHOWMAXIMIZED);
+    ShellExecute(GetDesktopWindow(), L"explore", (wchar_t*)directory.utf16(), NULL, NULL, SW_SHOWMAXIMIZED);
 }
 
 #else

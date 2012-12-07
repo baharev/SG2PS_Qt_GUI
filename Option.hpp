@@ -8,8 +8,6 @@
 
 struct Default { };
 
-const Default setDefault;
-
 struct Option {
 
     Option(const QString& key_str);

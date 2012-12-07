@@ -120,7 +120,7 @@ QString GUISettings::getStrOption(const QString& key) const {
 
 void GUISettings::errorKeyNotFound(const QString& key) const {
 
-    showError("key " + key + " not found");
+    showError("key \"" + key + "\" not found");
 }
 
 void GUISettings::showError(const QString &what) const {

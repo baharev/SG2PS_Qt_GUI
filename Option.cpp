@@ -6,6 +6,8 @@
 
 namespace {
 
+const Default setDefault = Default();
+
 Option opts[] = {
 
     Option("Data convention") << "German dip directon" << setDefault << "Right hand rule",
