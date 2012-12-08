@@ -13,23 +13,22 @@ QString resolveExitCode(int exitCode) {
 
     case ExitStatus::OK:
         break;
-    case ExitStatus::CONFIG_ERROR:
-        msg = "error in the .set file";
+    case ExitStatus::RGF_ERROR:
+        msg = "failed to read the RGF file, please check the log";
         break;
-    case ExitStatus::FAILURE:
-        msg = "the executable failed";
+    case ExitStatus::RUNTIME_ERROR:
+        msg = "runtime error occured in the external executable, please check the log";
         break;
     case ExitStatus::BUG:
         msg = "this is a bug, please report it";
         break;
     case ExitStatus::UNKNOWN_ERROR:
-        msg = "unknown error happened in the external executable";
+        msg = "unknown error happened in the external executable, please report it";
         break;
     default:
-        msg = "implementation not updated properly";
+        msg = "implementation not updated properly, please report it";
 
     }
 
     return msg;
 }
-

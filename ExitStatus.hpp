@@ -8,11 +8,12 @@ struct ExitStatus {
 
     enum Code {
         OK = 0,
-        CONFIG_ERROR,
-        FAILURE,
+        RGF_ERROR,
+        RUNTIME_ERROR,
         BUG,
         UNKNOWN_ERROR
     };
+
 };
 
 #endif // EXITSTATUS_HPP

@@ -30,6 +30,10 @@ private slots:
 
     void editGUISettings();
 
+    void showHomepage();
+
+    void showManual();
+
 private:
 
     void connect_signal_slots();

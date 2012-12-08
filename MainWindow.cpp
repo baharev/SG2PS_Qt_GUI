@@ -95,7 +95,7 @@ void MainWindow::set_menu() {
     connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
 
 
-    QMenu* settingsMenu = menuBar()->addMenu("Settings");
+    QMenu* settingsMenu = menuBar()->addMenu("Options");
 
     settingsMenu->addAction(editSettings);
 
@@ -139,6 +139,18 @@ void MainWindow::editGUISettings() {
     QString path = QDir::currentPath();
 
     openInTextEditor(path+"/settings.txt");
+}
+
+void MainWindow::showHomepage() {
+
+    openWithDefaultApp("http://www.sg2ps.eu/index.php"); // TODO ?gui=201212081605
+}
+
+void MainWindow::showManual() {
+
+    QString path = QDir::currentPath();
+
+    openPDF(path+"/manual.pdf");
 }
 
 MainWindow::~MainWindow()

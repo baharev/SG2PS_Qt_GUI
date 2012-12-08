@@ -39,6 +39,8 @@ GUISettings::GUISettings()
 
     strOptions["show_result_directory"] = "yes";
 
+    strOptions["pdf_viewer"] = QString();
+
     qDebug() << "Current path: " << QDir::currentPath();
 }
 
@@ -114,6 +116,8 @@ void GUISettings::readPairs() {
 
         qDebug() << "Settings file not found!";
 
+        dumpSettings();
+
         return;
     }
 
@@ -159,4 +163,32 @@ void GUISettings::readPairs() {
 QString GUISettings::removeComment(const QString &origLine) {
 
     return origLine.left( origLine.indexOf('#') );
+}
+
+void GUISettings::dumpSettings() {
+
+    QFile settings("settings.txt");
+
+    if (!settings.open(QIODevice::WriteOnly | QIODevice::Text)) {
+
+        return;
+    }
+
+    QTextStream out(&settings);
+
+    QMapIterator<QString,QString> i(strOptions);
+
+     while (i.hasNext()) {
+
+         i.next();
+
+         if (i.value().isEmpty()) {
+
+             out << "# " << i.key() << '\n';
+         }
+         else {
+
+             out << i.key() << "\t\t" << i.value() << '\n';
+         }
+     }
 }

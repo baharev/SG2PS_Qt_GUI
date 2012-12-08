@@ -86,3 +86,26 @@ void showInFileManager(const QString& directory) {
         }
     }
 }
+
+void openPDF(const QString& fileName) {
+
+    QString nativeFileName = QDir::toNativeSeparators(fileName);
+
+    QString pdf_viewer = getStrOption("pdf_viewer");
+
+    if (pdf_viewer.isEmpty()) {
+
+        openWithDefaultApp(nativeFileName);
+    }
+    else {
+
+        bool success = QProcess::startDetached(pdf_viewer+" " +nativeFileName);
+
+        if (!success) {
+
+            qDebug() << "user defined pdf_viewer failed to start, calling default";
+
+            openWithDefaultApp(nativeFileName);
+        }
+    }
+}
