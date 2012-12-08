@@ -30,6 +30,8 @@ void MainWindow::connect_signal_slots() {
     connect(inputWidget, SIGNAL(inputFileSelected(QString)), runner, SLOT(inputFileSelected(QString)));
 
     connect(inputWidget, SIGNAL(inputFileSelected(QString)), settingsWidget, SLOT(tryLoadSettings(QString)));
+
+    connect(runner, SIGNAL(generateSetFile()), settingsWidget, SLOT(writeSettings()));
 }
 
 void MainWindow::add_elements() {
@@ -95,9 +97,23 @@ void MainWindow::set_menu() {
     connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
 
 
+    // TODO Connect and implement
+    QAction* createRGF = new QAction("New RGF file", this);
+    QAction* editRGF = new QAction("Edit existing RGF", this);
+
+
+    QMenu* file = menuBar()->addMenu("File");
+
+    file->addAction(createRGF);
+
+    file->addAction(editRGF);
+
+
+
     QMenu* settingsMenu = menuBar()->addMenu("Options");
 
     settingsMenu->addAction(editSettings);
+
 
 
     QMenu* help = menuBar()->addMenu("Help");
@@ -143,7 +159,7 @@ void MainWindow::editGUISettings() {
 
 void MainWindow::showHomepage() {
 
-    openWithDefaultApp("http://www.sg2ps.eu/index.php"); // TODO ?gui=201212081605
+    openWithDefaultApp("http://www.sg2ps.eu/"); // TODO ?gui=201212081605
 }
 
 void MainWindow::showManual() {

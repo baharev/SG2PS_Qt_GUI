@@ -6,6 +6,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QFile>
+#include <QFileInfo>
 #include "SettingsWidget.hpp"
 #include "OptionWidget.hpp"
 #include "Option.hpp"
@@ -89,9 +91,72 @@ void SettingsWidget::tryLoadSettings(const QString& rgfFileName) {
 
     qDebug() << "Selected: " << rgfFileName;
 
-    //rgfFileName.chop(); // TODO get .set file name and check existence
-    // if none -> reset defaults
+    if (rgfFileName.size() > 4) {
 
-    reset_defaults();
+        setFileName = rgfFileName.left(rgfFileName.size()-4) + ".set";
+    }
+    else {
+        Q_ASSERT(false);
+        setFileName = QString();
+    }
+
+    QFileInfo setFile = QFileInfo(setFileName);
+
+    if (setFile.exists() && setFile.isFile()) {
+
+        qDebug() << "Corresponding .set file found";
+
+        loadSettings();
+    }
+    else {
+
+        qDebug() << setFileName << " not found";
+
+        reset_defaults();
+    }
 }
 
+void SettingsWidget::writeSettings() {
+
+    QFile setFile(setFileName);
+
+    if (!setFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+
+        return;
+    }
+
+    QTextStream out(&setFile);
+
+    foreach (OptionWidget* widget , optionWidgets) {
+
+        QString line = widget->selection2CLI();
+
+        out << line << '\n';
+    }
+
+    qDebug() << "Settings dumped";
+
+}
+
+void SettingsWidget::loadSettings() {
+
+    QFile file(setFileName);
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+
+        qDebug() << "Failed to open " << setFileName;
+
+        return;
+    }
+
+    QTextStream in(&file);
+
+    int n = optionWidgets.size();
+
+    for (int i=0; (!in.atEnd()) && i<n; ++i) {
+
+        QString line = in.readLine();
+
+        optionWidgets.at(i)->set(line);
+    }
+}

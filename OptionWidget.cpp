@@ -9,8 +9,8 @@
 #include "LayoutConstants.hpp"
 
 
-OptionWidget::OptionWidget(QWidget* parent, const Option& opt)
-    : QWidget(parent)
+OptionWidget::OptionWidget(QWidget* parent, const Option& option)
+    : QWidget(parent), opt(option)
 {
 
     label = new QLabel(opt.key, this);
@@ -19,9 +19,7 @@ OptionWidget::OptionWidget(QWidget* parent, const Option& opt)
 
     comboBox->addItems(opt.values);
 
-    defaultElem = opt.defaultElem;
-
-    comboBox->setCurrentIndex(defaultElem);
+    comboBox->setCurrentIndex(opt.defaultElem);
 
 //    QFont labelFont = label->font();
 //    labelFont.setStretch(QFont::SemiCondensed);
@@ -47,5 +45,19 @@ OptionWidget::OptionWidget(QWidget* parent, const Option& opt)
 
 void OptionWidget::selectDefault() {
 
-    comboBox->setCurrentIndex(defaultElem);
+    comboBox->setCurrentIndex(opt.defaultElem);
+}
+
+QString OptionWidget::selection2CLI() const {
+
+    int i = comboBox->currentIndex();
+
+    return opt.toCLIString(i);
+}
+
+void OptionWidget::set(const QString& cliLine) {
+
+    int i = opt.toIndex(cliLine);
+
+    comboBox->setCurrentIndex(i);
 }

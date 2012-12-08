@@ -18,6 +18,10 @@ public:
 
     explicit Runner(QWidget* parent);
 
+signals:
+
+    void generateSetFile();
+
 public slots:
 
     void inputFileSelected(const QString& name);

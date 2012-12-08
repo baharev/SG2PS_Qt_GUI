@@ -5,6 +5,7 @@
 #define SETTINGSWIDGET_HPP
 
 #include <QWidget>
+#include <QString>
 #include <QVector>
 
 class QHBoxLayout;
@@ -24,11 +25,17 @@ public slots:
 
     void tryLoadSettings(const QString& rgfFileName);
 
+    void writeSettings();
+
 private:
 
     void fillColumn(QVBoxLayout* col, int row_beg, int row_end);
 
     void reset_defaults();
+
+    void loadSettings();
+
+    QString setFileName;
 
     QHBoxLayout* panel;
 

@@ -81,6 +81,10 @@ void Runner::runButtonClicked() {
         return;
     }
 
+    emit generateSetFile();
+
+    qDebug() << "Runner invokes external exe";
+
     QStringList args;
 
     args.append(croppedFileName());
