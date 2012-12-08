@@ -12,30 +12,6 @@
 #include "GUISettings.hpp"
 #include "ErrorMsg.hpp"
 
-namespace {
-
-const char EDITOR[] =
-#if defined _WIN32
-        "notepad"
-#elif (defined __linux__)
-        "kate"
-#else
-        #error Define your text editor
-#endif
-;
-
-// TODO Clean up this mess: decorate filename with /root,?
-const char FILE_MANAGER[] =
-#if defined _WIN32
-        "explorer /root," // Otherwise a malformed window pops up
-#elif (defined __linux__)
-        "konqueror " // The space is important, due to Windows quirks...
-#else
-        #error Define your file manager
-#endif
-;
-
-}
 
 struct Pair {
     Pair() { }
@@ -55,9 +31,9 @@ GUISettings::GUISettings()
 
     strOptions["start_browsing_from_directory"] = QDir::homePath();
 
-    strOptions["text_editor"] = EDITOR;
+    strOptions["text_editor"] = QString();
 
-    strOptions["file_manager"] = FILE_MANAGER;
+    strOptions["file_manager"] = QString();
 
     strOptions["show_logfile"] = "yes"; // TODO Stringly typed...
 

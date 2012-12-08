@@ -34,7 +34,7 @@ private slots:
 
     void exeStarted();
 
-    void exeError(QProcess::ProcessError error);
+    void exeError(QProcess::ProcessError errorCode);
 
     void exeFinished(int exitCode, QProcess::ExitStatus exitStatus);
 

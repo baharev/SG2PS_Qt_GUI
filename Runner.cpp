@@ -7,9 +7,11 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "Runner.hpp"
-#include "ProcessManager.hpp"
-#include "GlobalSettings.hpp"
 #include "ErrorMsg.hpp"
+#include "Launcher.hpp"
+#include "GlobalSettings.hpp"
+#include "ProcessManager.hpp"
+
 
 namespace {
 
@@ -117,9 +119,7 @@ void Runner::showLog() const {
 
     if (getStrOption("show_logfile")=="yes") {
 
-        QString editor = getStrOption("text_editor");
-
-        QProcess::startDetached(editor+" "+workingDirectory+"/"+logFile);
+        openInTextEditor(workingDirectory+"/"+logFile);
     }
 }
 
@@ -127,11 +127,7 @@ void Runner::showResultDir() const {
 
     if (getStrOption("show_result_directory")=="yes") {
 
-        QString file_manager = getStrOption("file_manager");
-
-        QString cmd = file_manager+QDir::toNativeSeparators(workingDirectory);
-
-        QProcess::startDetached(cmd);
+        showInFileManager(workingDirectory);
     }
 }
 

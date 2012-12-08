@@ -3,21 +3,20 @@
 // This code is published under the GNU Lesser General Public License.
 #include <QMessageBox>
 #include <QDir>
-#include <QProcess>
 #include <QMenuBar>
 #include <QVBoxLayout>
 #include <QDebug>
 #include "MainWindow.hpp"
 #include "InputWidget.hpp"
-#include "GlobalSettings.hpp"
-#include "SettingsWidget.hpp"
+#include "Launcher.hpp"
 #include "Runner.hpp"
+#include "SettingsWidget.hpp"
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    setWindowTitle("SG2PS Qt Frontend");
+    setWindowTitle(QString::fromWCharArray(L"SG2PS — Structural Geology to PostScript Qt Frontend"));
 
     set_menu();
 
@@ -78,26 +77,55 @@ void MainWindow::set_menu() {
 
     QAction *showAbout = new QAction("About", this);
 
-    QAction *editSettings = new QAction("Preferences", this);
-
-
-    QMenu* menu = menuBar()->addMenu("Misc");
-
-    menu->addAction(showAbout);
-
-    menu->addAction(editSettings);
-
     connect(showAbout, SIGNAL(triggered()), SLOT(about()));
 
+
+    QAction *editSettings = new QAction("Preferences", this);
+
     connect(editSettings, SIGNAL(triggered()), SLOT(editGUISettings()));
+
+
+    QAction *manual = new QAction("Manual", this);
+
+    connect(manual, SIGNAL(triggered()), SLOT(showManual()));
+
+
+    QAction *homepage = new QAction("Jump to the homepage", this);
+
+    connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
+
+
+    QMenu* settingsMenu = menuBar()->addMenu("Settings");
+
+    settingsMenu->addAction(editSettings);
+
+
+    QMenu* help = menuBar()->addMenu("Help");
+
+    help->addAction(manual);
+
+    help->addAction(homepage);
+
+    help->addAction(showAbout);
 }
 
 void MainWindow::about() {
 
-    QMessageBox::about(this, "About", "Built on " __DATE__ " at " __TIME__ "\n\n"
-                       "The program is provided AS IS with NO WARRANTY OF ANY KIND, "
-                       "INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS "
-                       "FOR A PARTICULAR PURPOSE.");
+    QMessageBox::about(this, "About", QString::fromWCharArray(
+
+                       L"Built on " __DATE__ " at " __TIME__ "\n\n"
+
+                       L"This application is just a graphical front end for the "
+                       L"command line application sg2ps, written and maintened by "
+                       L"Ágoston Sasvári.\n\n"
+
+                       L"The grapical user interface is written and mainted by Ali Baharev "
+                       L"based on Qt " QT_VERSION_STR ".\n\n"
+
+                       L"The program is provided AS IS with NO WARRANTY OF ANY KIND, "
+                       L"INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS "
+                       L"FOR A PARTICULAR PURPOSE.")
+                       );
 
     qDebug() << "Built on " << __DATE__ << " at " << __TIME__;
 }
@@ -108,11 +136,9 @@ void MainWindow::editGUISettings() {
     QMessageBox::information(this, "Reminder", "After editing the options, don\'t forget "
                              "to restart the application!");
 
-    QString editor = getStrOption("text_editor");
-
     QString path = QDir::currentPath();
 
-    QProcess::startDetached(editor+" "+path+"/settings.txt");
+    openInTextEditor(path+"/settings.txt");
 }
 
 MainWindow::~MainWindow()

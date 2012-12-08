@@ -3,7 +3,6 @@
 // This code is published under the GNU Lesser General Public License.
 #include <QDebug>
 #include <QMutex>
-#include <QProcess>
 #include "ProcessManager.hpp"
 #include "GlobalSettings.hpp"
 #include "ErrorMsg.hpp"

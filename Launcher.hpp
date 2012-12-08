@@ -10,4 +10,8 @@ void openWithDefaultApp(const QString& file);
 
 void openDirectoryWithFileManager(const QString& directory);
 
+void openInTextEditor(const QString& fileName);
+
+void showInFileManager(const QString& directory);
+
 #endif // LAUNCHER_HPP
