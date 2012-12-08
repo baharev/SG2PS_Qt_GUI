@@ -131,12 +131,12 @@ void MainWindow::about() {
 
                        L"Built on " __DATE__ " at " __TIME__ "\n\n"
 
-                       L"This application is just a graphical front end for the "
+                       L"The heavy lifting is done by the back end, the external "
                        L"command line application sg2ps, written and maintened by "
                        L"Ágoston Sasvári.\n\n"
 
-                       L"The grapical user interface is written and mainted by Ali Baharev "
-                       L"based on Qt " QT_VERSION_STR ".\n\n"
+                       L"This grapical front end is written and mainted by Ali Baharev "
+                       L"and is based on Qt " QT_VERSION_STR ".\n\n"
 
                        L"The program is provided AS IS with NO WARRANTY OF ANY KIND, "
                        L"INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS "
