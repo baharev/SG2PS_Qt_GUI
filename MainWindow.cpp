@@ -100,6 +100,8 @@ void MainWindow::set_menu() {
     // TODO Connect and implement
     QAction* createRGF = new QAction("New RGF file", this);
     QAction* editRGF = new QAction("Edit existing RGF", this);
+    QAction* createXY = new QAction("New XY file", this);
+    QAction* editXY = new QAction("Edit existing XY", this);
 
 
     QMenu* file = menuBar()->addMenu("File");
@@ -107,6 +109,10 @@ void MainWindow::set_menu() {
     file->addAction(createRGF);
 
     file->addAction(editRGF);
+
+    file->addAction(createXY);
+
+    file->addAction(editXY);
 
 
 

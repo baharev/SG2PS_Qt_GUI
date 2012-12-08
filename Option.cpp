@@ -204,8 +204,7 @@ int Option::toIndex(const QString& cliLine) const {
 
         index = (pos>=0) ? pos : defaultElem;
 
-        qDebug() << key << index << "(" << defaultElem << ")";
-
+        //qDebug() << key << index << "(" << defaultElem << ")";
     }
 
     return index;
