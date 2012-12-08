@@ -110,9 +110,9 @@ void Runner::onRunFinished(bool success, const QString& errorMsg) {
 
     qDebug() << "Button enabled!";
 
-    showLog();
-
     showResultDir();
+
+    showLog();
 }
 
 void Runner::showLog() const {

@@ -3,12 +3,11 @@
 // This code is published under the GNU Lesser General Public License.
 #include <QDir>
 #include <QDebug>
+#include <QProcess>
+#include <QString>
 #ifdef _WIN32
 #include <windows.h>
 #include <ShellApi.h>
-#include <QString>
-#else
-#include <QProcess>
 #endif
 #include "Launcher.hpp"
 #include "GlobalSettings.hpp"
