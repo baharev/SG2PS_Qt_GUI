@@ -16,4 +16,6 @@ void openPDF(const QString& fileName);
 
 void showInFileManager(const QString& directory);
 
+void openSpreadsheet(const QString& file);
+
 #endif // LAUNCHER_HPP

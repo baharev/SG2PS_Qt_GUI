@@ -6,6 +6,10 @@
 
 QT       += core gui
 
+win32 {
+    LIBS += -lshlwapi
+}
+
 TARGET = sg2ps_gui
 TEMPLATE = app
 

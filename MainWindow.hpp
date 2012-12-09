@@ -34,6 +34,8 @@ private slots:
 
     void showManual();
 
+    void editRGFRequested();
+
 private:
 
     void connect_signal_slots();

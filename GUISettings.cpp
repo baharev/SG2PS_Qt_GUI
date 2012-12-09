@@ -41,6 +41,10 @@ GUISettings::GUISettings()
 
     strOptions["pdf_viewer"] = QString();
 
+    strOptions["spreadsheet"] = QString();
+
+    strOptions["spreadsheet_flag"] = QString();
+
     qDebug() << "Current path: " << QDir::currentPath();
 }
 

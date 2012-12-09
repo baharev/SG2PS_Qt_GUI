@@ -8,9 +8,11 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <ShellApi.h>
+#include <Shlwapi.h>
 #endif
 #include "Launcher.hpp"
 #include "GlobalSettings.hpp"
+#include "ErrorMsg.hpp"
 
 #ifdef _WIN32
 
@@ -25,6 +27,42 @@ void openDirectoryWithFileManager(const QString& directory) {
     ShellExecute(GetDesktopWindow(), L"explore", (wchar_t*)directory.utf16(), NULL, NULL, SW_SHOWMAXIMIZED);
 }
 
+QString getAssociatedApp(const wchar_t* extension, const wchar_t* word = L"open") {
+
+    DWORD dwSize = 512;
+
+    wchar_t appPath[512] = { 0 };
+
+    HRESULT hr = AssocQueryStringW(ASSOCF_VERIFY,
+                                   ASSOCSTR_EXECUTABLE,
+                                   extension,
+                                   word,
+                                   appPath,
+                                   &dwSize );
+
+    QString app;
+
+    switch (hr) {
+
+    case S_OK:
+        app = QString::fromWCharArray(appPath);
+        app = QDir::toNativeSeparators(app);
+        qDebug() << "Extension" << extension;
+        qDebug() << "App" << app;
+        break;
+    case E_POINTER:
+        qDebug() << "AssocQueryStringW" << "E_POINTER";
+        break;
+    case S_FALSE:
+        qDebug() << "AssocQueryStringW" << "S_FALSE";
+        break;
+    default:
+        qDebug() << "unknown: " << hr << endl;
+    }
+
+    return app;
+}
+
 #else
 
 void openWithDefaultApp(const QString& file) {
@@ -36,6 +74,12 @@ void openWithDefaultApp(const QString& file) {
 void openDirectoryWithFileManager(const QString& directory) {
 
     openWithDefaultApp(directory);
+}
+
+QString getAssociatedApp(const wchar_t* , const wchar_t* word = L"open") {
+
+    return QString();
+
 }
 
 #endif
@@ -107,4 +151,36 @@ void openPDF(const QString& fileName) {
             openWithDefaultApp(nativeFileName);
         }
     }
+}
+
+void openSpreadsheet(const QString& file) {
+
+    QString spreadsheet = getStrOption("spreadsheet");
+
+    if (spreadsheet.isEmpty()) {
+
+        spreadsheet = getAssociatedApp(L".xls");
+    }
+
+    if (spreadsheet.isEmpty()) {
+
+        showErrorMsg("could not find the default application associated with spreadsheet documents, "
+                     "please give the full path under Options > Preferences "
+                     "(e.g. spreadsheet  C:\\Program Files\\OpenOffice.org 3\\program\\scalc.exe)");
+        return;
+    }
+
+    QStringList args;
+
+    QString flag = getStrOption("spreadsheet_flag");
+
+    if (!flag.isEmpty()) {
+
+        args.append(flag);
+    }
+
+    args.append( QDir::toNativeSeparators(file) );
+
+    QProcess::startDetached(spreadsheet, args);
+
 }

@@ -2,11 +2,13 @@
 // All rights reserved.
 // This code is published under the GNU Lesser General Public License.
 #include <QMessageBox>
+#include <QFileDialog>
 #include <QDir>
 #include <QMenuBar>
 #include <QVBoxLayout>
 #include <QDebug>
 #include "MainWindow.hpp"
+#include "GlobalSettings.hpp" // TODO Remove if option is retrieved from InputWidget
 #include "InputWidget.hpp"
 #include "Launcher.hpp"
 #include "Runner.hpp"
@@ -99,9 +101,12 @@ void MainWindow::set_menu() {
 
     // TODO Connect and implement
     QAction* createRGF = new QAction("New RGF file", this);
-    QAction* editRGF = new QAction("Edit existing RGF", this);
     QAction* createXY = new QAction("New XY file", this);
     QAction* editXY = new QAction("Edit existing XY", this);
+
+    QAction* editRGF = new QAction("Edit existing RGF", this);
+
+    connect(editRGF, SIGNAL(triggered()), SLOT(editRGFRequested()));
 
 
     QMenu* file = menuBar()->addMenu("File");
@@ -173,6 +178,20 @@ void MainWindow::showManual() {
     QString path = QDir::currentPath();
 
     openPDF(path+"/manual.pdf");
+}
+
+void MainWindow::editRGFRequested() {
+
+    QString startDir = getStrOption("start_browsing_from_directory"); // TODO Update with InputWidget
+
+    QString file = QFileDialog::getOpenFileName(this, "Select File to Edit", startDir, "*.rgf (*.rgf)");
+
+    QFileInfo fileInfo(file);
+
+    if (fileInfo.exists() && fileInfo.suffix()=="rgf") {
+
+        openSpreadsheet(file);
+    }
 }
 
 MainWindow::~MainWindow()
