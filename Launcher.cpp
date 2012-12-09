@@ -78,6 +78,8 @@ void openDirectoryWithFileManager(const QString& directory) {
 
 QString getAssociatedApp(const wchar_t* , const wchar_t* word = L"open") {
 
+    if (word==word) { ;} // to make the compiler shut up
+
     return QString();
 
 }
@@ -164,6 +166,7 @@ void openSpreadsheet(const QString& file) {
 
     if (spreadsheet.isEmpty()) {
 
+        // TODO make message platform specific
         showErrorMsg("could not find the default application associated with spreadsheet documents, "
                      "please give the full path under Options > Preferences "
                      "(e.g. spreadsheet  C:\\Program Files\\OpenOffice.org 3\\program\\scalc.exe)");
