@@ -24,14 +24,30 @@ MainWindow::MainWindow(QWidget *parent)
 
     add_elements();
 
+    startDir = getStrOption("start_browsing_from_directory"); // TODO Redundant that InputWidget asks for this again
+
     connect_signal_slots();
 }
 
 void MainWindow::connect_signal_slots() {
 
+    // TODO Make it clear at the args that a valid rgf is assumed
+    // TODO Combinatorial explosion of the possibilities
+
     connect(inputWidget, SIGNAL(inputFileSelected(QString)), runner, SLOT(inputFileSelected(QString)));
 
     connect(inputWidget, SIGNAL(inputFileSelected(QString)), settingsWidget, SLOT(tryLoadSettings(QString)));
+
+    connect(inputWidget, SIGNAL(inputFileSelected(QString)), this, SLOT(inputFileSelected(QString)));
+
+
+    connect(this,        SIGNAL(fileSelected(QString)), runner, SLOT(inputFileSelected(QString)));
+
+    connect(this,        SIGNAL(fileSelected(QString)), settingsWidget, SLOT(tryLoadSettings(QString)));
+
+    // TODO Perhaps we should only tell inputWidget and then let him call the others.
+    connect(this,        SIGNAL(fileSelected(QString)), inputWidget, SLOT(validRgfSelected(QString)));
+
 
     connect(runner, SIGNAL(generateSetFile()), settingsWidget, SLOT(writeSettings()));
 }
@@ -102,11 +118,16 @@ void MainWindow::set_menu() {
     // TODO Connect and implement
     QAction* createRGF = new QAction("New RGF file", this);
     QAction* createXY = new QAction("New XY file", this);
-    QAction* editXY = new QAction("Edit existing XY", this);
+
 
     QAction* editRGF = new QAction("Edit existing RGF", this);
 
     connect(editRGF, SIGNAL(triggered()), SLOT(editRGFRequested()));
+
+
+    QAction* editXY = new QAction("Edit existing XY", this);
+
+    connect(editXY, SIGNAL(triggered()), SLOT(editXYRequested()));
 
 
     QMenu* file = menuBar()->addMenu("File");
@@ -138,7 +159,9 @@ void MainWindow::set_menu() {
 
 void MainWindow::about() {
 
-    QMessageBox::about(this, "About", QString::fromWCharArray(
+    QMessageBox::about(this, "About SG2PS", QString::fromWCharArray(
+
+                       L"SG2PS — Structural Geology to PostScript\n\n"
 
                        L"Built on " __DATE__ " at " __TIME__ "\n\n"
 
@@ -180,21 +203,57 @@ void MainWindow::showManual() {
     openPDF(path+"/manual.pdf");
 }
 
-void MainWindow::editRGFRequested() {
+QString MainWindow::selectFile(const QString& extension) {
 
-    QString startDir = getStrOption("start_browsing_from_directory"); // TODO Update with InputWidget
+    QString filter = "*."+extension+" (*."+extension+")";
 
-    QString file = QFileDialog::getOpenFileName(this, "Select File to Edit", startDir, "*.rgf (*.rgf)");
+    QString file = QFileDialog::getOpenFileName(this,"Select File to Edit",startDir,filter);
 
     QFileInfo fileInfo(file);
 
-    if (fileInfo.exists() && fileInfo.suffix()=="rgf") {
+    if (fileInfo.exists() && fileInfo.suffix()==extension) {
+
+        startDir = fileInfo.absolutePath();
+    }
+    else {
+
+        file = QString();
+    }
+
+    return file;
+}
+
+void MainWindow::editRGFRequested() {
+
+    QString file = selectFile("rgf");
+
+    if (!file.isEmpty()) {
+
+        emit fileSelected(file);
 
         openSpreadsheet(file);
     }
 }
 
-MainWindow::~MainWindow()
-{
+void MainWindow::editXYRequested() {
+
+    QString file = selectFile("xy");
+
+    if (!file.isEmpty()) {
+
+        // TODO Tricky emit signal: others are expecting an existing *.rgf
+
+        openSpreadsheet(file);
+    }
+}
+
+void MainWindow::inputFileSelected(const QString& name) {
+
+    QFileInfo file(name);
+
+    startDir = file.absolutePath();
+}
+
+MainWindow::~MainWindow() {
     
 }

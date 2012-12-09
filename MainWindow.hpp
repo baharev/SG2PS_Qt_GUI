@@ -5,6 +5,7 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
+#include <QString>
 
 class QVBoxLayout;
 
@@ -24,7 +25,13 @@ public:
 
     ~MainWindow();
 
+signals:
+
+    void fileSelected(const QString& rgfFile);
+
 private slots:
+
+    void inputFileSelected(const QString& name);
 
     void about();
 
@@ -36,6 +43,8 @@ private slots:
 
     void editRGFRequested();
 
+    void editXYRequested();
+
 private:
 
     void connect_signal_slots();
@@ -44,6 +53,7 @@ private:
 
     void set_menu();
 
+    QString selectFile(const QString& extension);
 
     InputWidget* inputWidget;
 
@@ -52,6 +62,8 @@ private:
     Runner* runner;
 
     QVBoxLayout* mainLayout;
+
+    QString startDir;
 };
 
 #endif // MAINWINDOW_HPP

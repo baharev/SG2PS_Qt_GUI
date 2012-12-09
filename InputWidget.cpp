@@ -91,3 +91,13 @@ void InputWidget::showSelectFileDialog() {
         emit inputFileSelected(filePath);
     }
 }
+
+void InputWidget::validRgfSelected(const QString& file) { // TODO Remove duplication
+
+    QFileInfo fileInfo(file);
+
+    startDir = fileInfo.absolutePath();
+
+    fileNameLabel->setText(QDir::toNativeSeparators(file));
+}
+

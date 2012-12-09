@@ -27,6 +27,10 @@ signals:
 
     void inputFileSelected(const QString& fileNameWithPath);
 
+public slots:
+
+    void validRgfSelected(const QString& file);
+
 private slots:
 
     void showSelectFileDialog();

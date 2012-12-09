@@ -166,10 +166,12 @@ void openSpreadsheet(const QString& file) {
 
     if (spreadsheet.isEmpty()) {
 
-        // TODO make message platform specific
+        // TODO Make sure the Manual actuall has such a section
+        // TODO Try to resolve it on loading the applicaton,
+        // somewhat ugly that it occurs later on demand
+
         showErrorMsg("could not find the default application associated with spreadsheet documents, "
-                     "please give the full path under Options > Preferences "
-                     "(e.g. spreadsheet  C:\\Program Files\\OpenOffice.org 3\\program\\scalc.exe)");
+                     "please read the manual under Editing RGF files");
         return;
     }
 

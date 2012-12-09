@@ -83,7 +83,7 @@ void GUISettings::setValue(const QString& key, const QString& value) {
     }
 }
 
-
+// TODO Replace with names accessor at the very least...
 QString GUISettings::getStrOption(const QString& key) const {
 
     Map::const_iterator it = strOptions.find(key);
