@@ -16,7 +16,7 @@ namespace {
 
 const char SELECT_FILE_TEXT[] = "Select .rgf file";
 
-const char FILE_NAME[] = "(please select the .rgf file)";
+const char FILE_NAME[] = "(please create new / load existing *.rgf file)";
 
 }
 
@@ -32,6 +32,9 @@ InputWidget::InputWidget(QWidget* parent)
     QFontMetrics fontMetrics(selectButton->font());
 
     selectButton->setMinimumWidth(fontMetrics.width(SELECT_FILE_TEXT)*1.5);
+
+    // TODO Remove hack
+    selectButton->hide();
 
     connect(selectButton, SIGNAL(clicked()), SLOT(showSelectFileDialog()));
 

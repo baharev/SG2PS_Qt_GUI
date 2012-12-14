@@ -43,3 +43,6 @@ HEADERS  += \
     ErrorMsg.hpp \
     ResolveExitCode.hpp \
     Launcher.hpp
+
+RESOURCES += \
+    resources.qrc

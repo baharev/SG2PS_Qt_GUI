@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QMenuBar>
+#include <QToolBar>
 #include <QVBoxLayout>
 #include <QDebug>
 #include "MainWindow.hpp"
@@ -105,22 +106,23 @@ void MainWindow::set_menu() {
     connect(editSettings, SIGNAL(triggered()), SLOT(editGUISettings()));
 
 
-    QAction *manual = new QAction("Manual", this);
+    QAction *manual = new QAction(QIcon(":images/acroread.ico"), "Manual", this);
 
     connect(manual, SIGNAL(triggered()), SLOT(showManual()));
 
 
-    QAction *homepage = new QAction("Jump to the homepage", this);
+    QAction *homepage = new QAction(QIcon(":images/package_internet.ico"), "Jump to the homepage", this);
 
     connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
 
 
     // TODO Connect and implement
-    QAction* createRGF = new QAction("New RGF file", this);
+    QAction* createRGF = new QAction(QIcon(":images/inserttable.ico"), "New RGF", this);
     QAction* createXY = new QAction("New XY file", this);
+    QAction* loadRGF  = new QAction(QIcon(":images/document_import.ico"), "Load RGF", this);
 
 
-    QAction* editRGF = new QAction("Edit existing RGF", this);
+    QAction* editRGF = new QAction(QIcon(":images/spreadsheet.ico"), "Edit RGF", this);
 
     connect(editRGF, SIGNAL(triggered()), SLOT(editRGFRequested()));
 
@@ -140,6 +142,16 @@ void MainWindow::set_menu() {
 
     file->addAction(editXY);
 
+
+    QToolBar* fileToolBar = addToolBar("File");
+
+    fileToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+
+    fileToolBar->addAction(createRGF);
+
+    fileToolBar->addAction(editRGF);
+
+    fileToolBar->addAction(loadRGF);
 
 
     QMenu* settingsMenu = menuBar()->addMenu("Options");
