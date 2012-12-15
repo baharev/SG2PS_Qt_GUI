@@ -1,5 +1,5 @@
-<RCC>
-    <qresource prefix="/">
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource>
         <file>images/spreadsheet.ico</file>
         <file>images/acroread.ico</file>
         <file>images/inserttable.ico</file>
