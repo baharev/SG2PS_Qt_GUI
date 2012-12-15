@@ -46,3 +46,12 @@ HEADERS  += \
 
 RESOURCES += \
     resources.qrc
+
+OTHER_FILES += \
+    images/package_internet.ico \
+    images/open.ico \
+    images/inserttable.ico \
+    images/exec.ico \
+    images/document_import.ico \
+    images/acroread.ico \
+    images/spreadsheet.ico
