@@ -1,9 +1,9 @@
-<!DOCTYPE RCC><RCC version="1.0">
-    <qresource>
-        <file>images/spreadsheet.ico</file>
-        <file>images/acroread.ico</file>
-        <file>images/inserttable.ico</file>
-        <file>images/document_import.ico</file>
-        <file>images/package_internet.ico</file>
+<RCC>
+    <qresource prefix="/">
+        <file>images/spreadsheet48.png</file>
+        <file>images/document_import48.png</file>
+        <file>images/acroread48.png</file>
+        <file>images/package_internet48.png</file>
+        <file>images/insert_table48.png</file>
     </qresource>
 </RCC>

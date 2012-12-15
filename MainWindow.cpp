@@ -106,23 +106,23 @@ void MainWindow::set_menu() {
     connect(editSettings, SIGNAL(triggered()), SLOT(editGUISettings()));
 
 
-    QAction *manual = new QAction(QIcon(":/images/acroread.ico"), "Manual", this);
+    QAction *manual = new QAction(QIcon(":/images/acroread48.png"), "Manual", this);
 
     connect(manual, SIGNAL(triggered()), SLOT(showManual()));
 
 
-    QAction *homepage = new QAction(QIcon(":/images/package_internet.ico"), "Jump to the homepage", this);
+    QAction *homepage = new QAction(QIcon(":/images/package_internet48.png"), "Jump to the homepage", this);
 
     connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
 
 
     // TODO Connect and implement
-    QAction* createRGF = new QAction(QIcon(":/images/inserttable.ico"), "New RGF", this);
+    QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "New RGF", this);
     QAction* createXY = new QAction("New XY file", this);
-    QAction* loadRGF  = new QAction(QIcon(":/images/document_import.ico"), "Load RGF", this);
+    QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Load RGF", this);
 
 
-    QAction* editRGF = new QAction(QIcon(":/images/spreadsheet.ico"), "Edit RGF", this);
+    QAction* editRGF = new QAction(QIcon(":/images/spreadsheet48.png"), "Edit RGF", this);
 
     connect(editRGF, SIGNAL(triggered()), SLOT(editRGFRequested()));
 

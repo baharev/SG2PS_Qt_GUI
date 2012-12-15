@@ -48,10 +48,8 @@ RESOURCES += \
     resources.qrc
 
 OTHER_FILES += \
-    images/package_internet.ico \
-    images/open.ico \
-    images/inserttable.ico \
-    images/exec.ico \
-    images/document_import.ico \
-    images/acroread.ico \
-    images/spreadsheet.ico
+    images/insert_table48.png \
+    images/package_internet48.png \
+    images/acroread48.png \
+    images/document_import48.png \
+    images/spreadsheet48.png
