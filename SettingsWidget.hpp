@@ -21,9 +21,9 @@ public:
 
     explicit SettingsWidget(QWidget* parent);
 
-public slots:
+    void newProjectSelected(const QString& newProjectPath, const QString& newProjectName);
 
-    void tryLoadSettings(const QString& rgfFileName);
+public slots:
 
     void writeSettings();
 
@@ -32,6 +32,8 @@ private:
     void fillColumn(QVBoxLayout* col, int row_beg, int row_end);
 
     void reset_defaults();
+
+    void tryLoadSettings();
 
     void loadSettings();
 
@@ -44,6 +46,10 @@ private:
     QVBoxLayout* rightColumn;
 
     QVector<OptionWidget*> optionWidgets;
+
+    QString projectPath;
+
+    QString projectName;
 };
 
 #endif // SETTINGSWIDGET_HPP

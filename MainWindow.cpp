@@ -15,11 +15,16 @@
 #include "Runner.hpp"
 #include "SettingsWidget.hpp"
 
+namespace {
+
+const wchar_t TITLE[] = L" — Structural Geology to PostScript";
+
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    setWindowTitle(QString::fromWCharArray(L"SG2PS — Structural Geology to PostScript Qt Frontend"));
+    setWindowTitle(QString::fromWCharArray(L"SG2PS")+QString::fromWCharArray(TITLE));
 
     set_menu();
 
@@ -219,13 +224,21 @@ QString MainWindow::selectFile(const QString& extension) {
 
     QString filter = "*."+extension+" (*."+extension+")";
 
-    QString file = QFileDialog::getOpenFileName(this,"Select File to Edit",startDir,filter);
+    QString file = QFileDialog::getOpenFileName(this,"Select File",startDir,filter);
 
     QFileInfo fileInfo(file);
 
     if (fileInfo.exists() && fileInfo.suffix()==extension) {
 
-        startDir = fileInfo.absolutePath();
+        projectPath = fileInfo.absolutePath();
+
+        projectName = fileInfo.fileName();
+
+        projectName.chop(extension.length()+1);
+
+        qDebug() << "New projected selected, file name:" << file;
+
+        newProjectSelected();
     }
     else {
 
@@ -241,10 +254,13 @@ void MainWindow::editRGFRequested() {
 
     if (!file.isEmpty()) {
 
-        emit fileSelected(file);
-
         openSpreadsheet(file);
     }
+}
+
+void MainWindow::loadRGFRequested() {
+
+    selectFile("rgf");
 }
 
 void MainWindow::editXYRequested() {
@@ -259,11 +275,17 @@ void MainWindow::editXYRequested() {
     }
 }
 
-void MainWindow::inputFileSelected(const QString& name) {
+void MainWindow::newProjectSelected() {
 
-    QFileInfo file(name);
+    startDir = projectPath;
 
-    startDir = file.absolutePath();
+    inputWidget->newProjectSelected(projectPath, projectName);
+
+    settingsWidget->newProjectSelected(projectPath, projectName);
+
+    runner->newProjectSelected(projectPath, projectName);
+
+    setWindowTitle(projectName + QString::fromWCharArray(TITLE));
 }
 
 MainWindow::~MainWindow() {

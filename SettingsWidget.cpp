@@ -87,18 +87,19 @@ void SettingsWidget::reset_defaults() {
 
 }
 
-void SettingsWidget::tryLoadSettings(const QString& rgfFileName) {
+void SettingsWidget::newProjectSelected(const QString& newProjectPath,
+                                        const QString& newProjectName)
+{
+    projectPath = newProjectPath;
 
-    qDebug() << "Selected: " << rgfFileName;
+    projectName = newProjectName;
 
-    if (rgfFileName.size() > 4) {
+    tryLoadSettings();
+}
 
-        setFileName = rgfFileName.left(rgfFileName.size()-4) + ".set";
-    }
-    else {
-        Q_ASSERT(false);
-        setFileName = QString();
-    }
+void SettingsWidget::tryLoadSettings() {
+
+    setFileName = projectName + "/" + projectPath + ".set";
 
     QFileInfo setFile = QFileInfo(setFileName);
 

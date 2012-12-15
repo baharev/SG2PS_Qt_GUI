@@ -52,32 +52,23 @@ Runner::Runner(QWidget *parent)
     connect(processManager, SIGNAL(runStarted()), SLOT(onRunStarted()));
 }
 
-void Runner::inputFileSelected(const QString& name) {
+void Runner::newProjectSelected(const QString& newProjectPath,
+                                        const QString& newProjectName)
+{
+    projectPath = newProjectPath;
 
-    QFileInfo file(name);
-
-    workingDirectory = file.absolutePath();
-
-    fileName = file.fileName();
+    projectName = newProjectName;
 
     logFile = "log.txt";
 }
 
-QString Runner::croppedFileName() const {
-
-    if (fileName.size() > 4) {
-
-        return fileName.left(fileName.size()-4);
-    }
-
-    return fileName;
-}
-
 void Runner::runButtonClicked() {
 
-    if (workingDirectory.isEmpty()) {
+    QFileInfo rgfFile(projectPath+"/"+projectName+".rgf");
 
-        showErrorMsg("no input .rgf file selected yet");
+    if (!rgfFile.exists() || !rgfFile.isFile()) {
+
+        showErrorMsg("the rgf file is not selected or created yet");
         return;
     }
 
@@ -87,9 +78,9 @@ void Runner::runButtonClicked() {
 
     QStringList args;
 
-    args.append(croppedFileName());
+    args.append(projectName);
 
-    processManager->run(workingDirectory, args, logFile);
+    processManager->run(projectPath, args, logFile);
 }
 
 void Runner::onRunStarted() {
@@ -123,7 +114,7 @@ void Runner::showLog() const {
 
     if (getStrOption("show_logfile")=="yes") {
 
-        openInTextEditor(workingDirectory+"/"+logFile);
+        openInTextEditor(projectPath+"/"+logFile);
     }
 }
 
@@ -131,7 +122,7 @@ void Runner::showResultDir() const {
 
     if (getStrOption("show_result_directory")=="yes") {
 
-        showInFileManager(workingDirectory);
+        showInFileManager(projectPath);
     }
 }
 

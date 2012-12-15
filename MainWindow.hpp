@@ -25,13 +25,7 @@ public:
 
     ~MainWindow();
 
-signals:
-
-    void fileSelected(const QString& rgfFile);
-
 private slots:
-
-    void inputFileSelected(const QString& name);
 
     void about();
 
@@ -45,6 +39,8 @@ private slots:
 
     void editXYRequested();
 
+    void loadRGFRequested();
+
 private:
 
     void connect_signal_slots();
@@ -55,6 +51,8 @@ private:
 
     QString selectFile(const QString& extension);
 
+    void newProjectSelected();
+
     InputWidget* inputWidget;
 
     SettingsWidget* settingsWidget;
@@ -64,6 +62,11 @@ private:
     QVBoxLayout* mainLayout;
 
     QString startDir;
+
+    QString projectPath;
+
+    QString projectName;
+
 };
 
 #endif // MAINWINDOW_HPP

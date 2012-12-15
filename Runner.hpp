@@ -18,13 +18,11 @@ public:
 
     explicit Runner(QWidget* parent);
 
+    void newProjectSelected(const QString& newProjectPath, const QString& newProjectName);
+
 signals:
 
     void generateSetFile();
-
-public slots:
-
-    void inputFileSelected(const QString& name);
 
 private slots:
 
@@ -36,8 +34,6 @@ private slots:
 
 private:
 
-    QString croppedFileName() const;
-
     void showLog() const;
 
     void showResultDir() const;
@@ -48,11 +44,11 @@ private:
 
     ProcessManager* processManager;
 
-    QString fileName;
-
-    QString workingDirectory;
-
     QString logFile;
+
+    QString projectPath;
+
+    QString projectName;
 };
 
 #endif // RUNNER_HPP

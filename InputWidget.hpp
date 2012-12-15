@@ -19,21 +19,11 @@ class InputWidget : public QFrame {
 
 public:
 
-    explicit InputWidget(QWidget* parent = 0);
+    explicit InputWidget(QWidget* parent);
 
     void freezeLabelSize();
 
-signals:
-
-    void inputFileSelected(const QString& fileNameWithPath);
-
-public slots:
-
-    void validRgfSelected(const QString& file);
-
-private slots:
-
-    void showSelectFileDialog();
+    void newProjectSelected(const QString& newProjectPath, const QString& newProjectName);
 
 private:
 
@@ -47,11 +37,9 @@ private:
 
     QLabel* fileNameLabel;
 
-    QFileDialog* dialog;
+    QString projectPath;
 
-    QString filePath;
-
-    QString startDir;
+    QString projectName;
 };
 
 

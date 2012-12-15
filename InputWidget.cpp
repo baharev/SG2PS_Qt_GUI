@@ -14,7 +14,7 @@
 
 namespace {
 
-const char SELECT_FILE_TEXT[] = "Select .rgf file";
+const char SELECT_FILE_TEXT[] = "Select .rgf file"; // TODO Remove with the button
 
 const char FILE_NAME[] = "(please create new / load existing *.rgf file)";
 
@@ -67,40 +67,19 @@ InputWidget::InputWidget(QWidget* parent)
 
     //setFrameStyle(QFrame::WinPanel | QFrame::Raised);
 
-
-
-    dialog = new QFileDialog(this);
-
-    startDir = getStrOption("start_browsing_from_directory");
 }
 
 void InputWidget::freezeLabelSize() {
 
+        // TODO No longer necessary...
         fileNameFrame->setFixedWidth(fileNameFrame->width());
 }
 
-void InputWidget::showSelectFileDialog() {
+void InputWidget::newProjectSelected(const QString& newProjectPath, const QString& newProjectName) {
 
-    filePath = dialog->getOpenFileName(this, "Select File", startDir, "*.rgf (*.rgf)");
+    projectPath = newProjectPath;
 
-    QFileInfo fileInfo(filePath);
+    projectName = newProjectName;
 
-    if (fileInfo.exists() && fileInfo.suffix()=="rgf") {
-
-        startDir = fileInfo.absolutePath();
-
-        fileNameLabel->setText(QDir::toNativeSeparators(filePath));
-
-        emit inputFileSelected(filePath);
-    }
+    fileNameLabel->setText("Project name: <b>"+projectName+"</b>,  path: "+QDir::toNativeSeparators(projectPath));
 }
-
-void InputWidget::validRgfSelected(const QString& file) { // TODO Remove duplication
-
-    QFileInfo fileInfo(file);
-
-    startDir = fileInfo.absolutePath();
-
-    fileNameLabel->setText(QDir::toNativeSeparators(file));
-}
-
