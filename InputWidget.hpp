@@ -6,12 +6,9 @@
 
 #include <QFrame>
 
-class HandleSelectedFile;
 class QHBoxLayout;
-class QPushButton;
 class QFrame;
 class QLabel;
-class QFileDialog;
 
 class InputWidget : public QFrame {
 
@@ -27,11 +24,7 @@ public:
 
 private:
 
-    HandleSelectedFile* input_handler;
-
     QHBoxLayout* fileSelectLayout;
-
-    QPushButton* selectButton;
 
     QFrame* fileNameFrame;
 

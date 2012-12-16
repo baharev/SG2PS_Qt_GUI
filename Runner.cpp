@@ -68,7 +68,7 @@ void Runner::runButtonClicked() {
 
     if (!rgfFile.exists() || !rgfFile.isFile()) {
 
-        showErrorMsg("the rgf file is not selected or created yet");
+        showErrorMsg("the RGF file is not created or selected yet");
         return;
     }
 

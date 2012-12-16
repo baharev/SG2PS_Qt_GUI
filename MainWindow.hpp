@@ -8,6 +8,7 @@
 #include <QString>
 
 class QVBoxLayout;
+class QFileDialog;
 
 class InputWidget;
 class SettingsWidget;
@@ -41,6 +42,10 @@ private slots:
 
     void loadRGFRequested();
 
+    void newRGFRequested();
+
+    void newXYRequested();
+
 private:
 
     void connect_signal_slots();
@@ -51,7 +56,17 @@ private:
 
     QString selectFile(const QString& extension);
 
+    QString saveFileAsDialog(const QString& extension);
+
     void newProjectSelected();
+
+    QString newFileRequested(const QString& extension, const char header[]);
+
+    void dumpHeader(const QString& newFile, const char header[]);
+
+    QString tryToSetFileAsProject(const QString& file, const QString& extension);
+
+    QFileDialog* fileDialog;
 
     InputWidget* inputWidget;
 

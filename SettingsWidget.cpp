@@ -99,7 +99,7 @@ void SettingsWidget::newProjectSelected(const QString& newProjectPath,
 
 void SettingsWidget::tryLoadSettings() {
 
-    setFileName = projectName + "/" + projectPath + ".set";
+    setFileName = projectPath + "/" + projectName + ".set";
 
     QFileInfo setFile = QFileInfo(setFileName);
 

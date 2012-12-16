@@ -9,7 +9,7 @@
 #include <QVBoxLayout>
 #include <QDebug>
 #include "MainWindow.hpp"
-#include "GlobalSettings.hpp" // TODO Remove if option is retrieved from InputWidget
+#include "GlobalSettings.hpp"
 #include "InputWidget.hpp"
 #include "Launcher.hpp"
 #include "Runner.hpp"
@@ -17,43 +17,31 @@
 
 namespace {
 
-const wchar_t TITLE[] = L" — Structural Geology to PostScript";
+const char TITLE[] = " - Structural Geology to PostScript";
+
+const char RGF_HEADER[] = "DATA_ID\tGC\tCOLOR\tLOC\tLOCX\tLOCY\tFORMATION\t"
+                          "DATATYPE\tcorrDIPDIR\tcorrDIP\tcorrLDIR\tcorrLDIP\t"
+                          "SENSE\tPALEONORTH\tCOMMENT";
+
+const char  XY_HEADER[] = "NAME\tLATTITUDE\tLONGITUDE";
 
 }
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent), fileDialog(new QFileDialog(this))
 {
-    setWindowTitle(QString::fromWCharArray(L"SG2PS")+QString::fromWCharArray(TITLE));
+    setWindowTitle(QString("SG2PS")+TITLE);
 
     set_menu();
 
     add_elements();
 
-    startDir = getStrOption("start_browsing_from_directory"); // TODO Redundant that InputWidget asks for this again
+    startDir = getStrOption("start_browsing_from_directory");
 
     connect_signal_slots();
 }
 
 void MainWindow::connect_signal_slots() {
-
-    // TODO Make it clear at the args that a valid rgf is assumed
-    // TODO Combinatorial explosion of the possibilities
-
-    connect(inputWidget, SIGNAL(inputFileSelected(QString)), runner, SLOT(inputFileSelected(QString)));
-
-    connect(inputWidget, SIGNAL(inputFileSelected(QString)), settingsWidget, SLOT(tryLoadSettings(QString)));
-
-    connect(inputWidget, SIGNAL(inputFileSelected(QString)), this, SLOT(inputFileSelected(QString)));
-
-
-    connect(this,        SIGNAL(fileSelected(QString)), runner, SLOT(inputFileSelected(QString)));
-
-    connect(this,        SIGNAL(fileSelected(QString)), settingsWidget, SLOT(tryLoadSettings(QString)));
-
-    // TODO Perhaps we should only tell inputWidget and then let him call the others.
-    connect(this,        SIGNAL(fileSelected(QString)), inputWidget, SLOT(validRgfSelected(QString)));
-
 
     connect(runner, SIGNAL(generateSetFile()), settingsWidget, SLOT(writeSettings()));
 }
@@ -101,7 +89,7 @@ void MainWindow::fixSize() {
 
 void MainWindow::set_menu() {
 
-    QAction *showAbout = new QAction("About", this);
+    QAction *showAbout = new QAction("About SG2PS", this);
 
     connect(showAbout, SIGNAL(triggered()), SLOT(about()));
 
@@ -122,9 +110,15 @@ void MainWindow::set_menu() {
 
 
     // TODO Connect and implement
+
     QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "New RGF", this);
-    QAction* createXY = new QAction("New XY file", this);
-    QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Load RGF", this);
+
+    connect(createRGF, SIGNAL(triggered()), SLOT(newRGFRequested()));
+
+
+    QAction* createXY = new QAction(QIcon(":/images/document_new48.png"), "New XY file", this);
+
+    connect(createXY, SIGNAL(triggered()), SLOT(newXYRequested()));
 
 
     QAction* editRGF = new QAction(QIcon(":/images/spreadsheet48.png"), "Edit RGF", this);
@@ -132,9 +126,14 @@ void MainWindow::set_menu() {
     connect(editRGF, SIGNAL(triggered()), SLOT(editRGFRequested()));
 
 
-    QAction* editXY = new QAction("Edit existing XY", this);
+    QAction* editXY = new QAction(QIcon(":/images/spreadsheetB48.png"), "Edit XY", this);
 
     connect(editXY, SIGNAL(triggered()), SLOT(editXYRequested()));
+
+
+    QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Load RGF", this);
+
+    connect(loadRGF, SIGNAL(triggered()), SLOT(loadRGFRequested()));
 
 
     QMenu* file = menuBar()->addMenu("File");
@@ -142,6 +141,8 @@ void MainWindow::set_menu() {
     file->addAction(createRGF);
 
     file->addAction(editRGF);
+
+    file->addAction(loadRGF);
 
     file->addAction(createXY);
 
@@ -157,6 +158,10 @@ void MainWindow::set_menu() {
     fileToolBar->addAction(editRGF);
 
     fileToolBar->addAction(loadRGF);
+
+    fileToolBar->addAction(createXY);
+
+    fileToolBar->addAction(editXY);
 
 
     QMenu* settingsMenu = menuBar()->addMenu("Options");
@@ -224,28 +229,9 @@ QString MainWindow::selectFile(const QString& extension) {
 
     QString filter = "*."+extension+" (*."+extension+")";
 
-    QString file = QFileDialog::getOpenFileName(this,"Select File",startDir,filter);
+    QString file = fileDialog->getOpenFileName(this,"Select File",startDir,filter);
 
-    QFileInfo fileInfo(file);
-
-    if (fileInfo.exists() && fileInfo.suffix()==extension) {
-
-        projectPath = fileInfo.absolutePath();
-
-        projectName = fileInfo.fileName();
-
-        projectName.chop(extension.length()+1);
-
-        qDebug() << "New projected selected, file name:" << file;
-
-        newProjectSelected();
-    }
-    else {
-
-        file = QString();
-    }
-
-    return file;
+    return tryToSetFileAsProject(file, extension);
 }
 
 void MainWindow::editRGFRequested() {
@@ -269,9 +255,88 @@ void MainWindow::editXYRequested() {
 
     if (!file.isEmpty()) {
 
-        // TODO Tricky emit signal: others are expecting an existing *.rgf
+        openSpreadsheet(file);
+    }
+}
+
+QString MainWindow::saveFileAsDialog(const QString& extension) {
+
+    QString filter = "*."+extension+" (*."+extension+")";
+
+    return fileDialog->getSaveFileName(this, "Create file", startDir, filter);
+}
+
+QString MainWindow::newFileRequested(const QString& extension, const char header[]) {
+
+    QString newFile = saveFileAsDialog(extension);
+
+    if (newFile.isEmpty()) {
+
+        return QString();
+    }
+
+    dumpHeader(newFile, header);
+
+    return tryToSetFileAsProject(newFile, extension);
+}
+
+void MainWindow::newRGFRequested() {
+
+    QString file = newFileRequested("rgf", RGF_HEADER);
+
+    if (!file.isEmpty()) {
 
         openSpreadsheet(file);
+    }
+}
+
+void MainWindow::newXYRequested() {
+
+    QString file = newFileRequested("xy", XY_HEADER);
+
+    if (!file.isEmpty()) {
+
+        openSpreadsheet(file);
+    }
+}
+
+// TODO All file IO should be moved to a separate class, widgets should deal with files
+// TODO Remove duplication, file IO fits a pattern
+void MainWindow::dumpHeader(const QString& newFile, const char header[]) {
+
+    QFile file(newFile);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+
+        return;
+    }
+
+    QTextStream out(&file);
+
+    out << header << '\n';
+}
+
+QString MainWindow::tryToSetFileAsProject(const QString& file, const QString& extension) {
+
+    QFileInfo fileInfo(file);
+
+    if (fileInfo.exists() && fileInfo.isFile() && fileInfo.suffix()==extension) {
+
+        projectPath = fileInfo.absolutePath();
+
+        projectName = fileInfo.fileName();
+
+        projectName.chop(extension.length()+1);
+
+        qDebug() << "New projected selected, file name:" << file;
+
+        newProjectSelected();
+
+        return file;
+    }
+    else {
+
+        return QString();
     }
 }
 
@@ -285,7 +350,7 @@ void MainWindow::newProjectSelected() {
 
     runner->newProjectSelected(projectPath, projectName);
 
-    setWindowTitle(projectName + QString::fromWCharArray(TITLE));
+    setWindowTitle(projectName + TITLE);
 }
 
 MainWindow::~MainWindow() {

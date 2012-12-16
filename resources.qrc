@@ -5,5 +5,7 @@
         <file>images/acroread48.png</file>
         <file>images/package_internet48.png</file>
         <file>images/insert_table48.png</file>
+        <file>images/spreadsheetB48.png</file>
+        <file>images/document_new48.png</file>
     </qresource>
 </RCC>

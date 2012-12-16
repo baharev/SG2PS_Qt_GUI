@@ -166,7 +166,7 @@ void openSpreadsheet(const QString& file) {
 
     if (spreadsheet.isEmpty()) {
 
-        // TODO Make sure the Manual actuall has such a section
+        // TODO Make sure the Manual actually has such a section
         // TODO Try to resolve it on loading the applicaton,
         // somewhat ugly that it occurs later on demand
 
