@@ -78,6 +78,8 @@ void Runner::runButtonClicked() {
 
     QStringList args;
 
+    args.append("-gui_calls");
+
     args.append(projectName);
 
     processManager->run(projectPath, args, logFile);
