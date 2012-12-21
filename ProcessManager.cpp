@@ -143,7 +143,7 @@ void ProcessManager::callExecutable(const QString& workingDirectory, const QStri
 
     init();
 
-    const QString exeName = getStrOption("executable_name");
+    const QString exeName = opts().getExecutableName();
 
     qDebug() << "Working directory: " << workingDirectory;
 

@@ -112,7 +112,7 @@ void Runner::onRunFinished(bool success, const QString& errorMsg) {
 
 void Runner::showLog() const {
 
-    if (getStrOption("show_logfile")=="yes") {
+    if (opts().getShowLogfile()) {
 
         openInTextEditor(projectPath+"/"+logFile);
     }
@@ -120,7 +120,7 @@ void Runner::showLog() const {
 
 void Runner::showResultDir() const {
 
-    if (getStrOption("show_result_directory")=="yes") {
+    if (opts().getShowResultDirectory()) {
 
         showInFileManager(projectPath);
     }

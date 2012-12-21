@@ -90,7 +90,7 @@ void openInTextEditor(const QString& fileName) {
 
     QString nativeFileName = QDir::toNativeSeparators(fileName);
 
-    QString editor = getStrOption("text_editor");
+    QString editor = opts().getTextEditor();
 
     if (editor.isEmpty()) {
 
@@ -113,7 +113,7 @@ void showInFileManager(const QString& directory) {
 
     QString nativeDirectory = QDir::toNativeSeparators(directory);
 
-    QString file_manager = getStrOption("file_manager");
+    QString file_manager = opts().getFileManager();
 
     if (file_manager.isEmpty()) {
 
@@ -136,7 +136,7 @@ void openPDF(const QString& fileName) {
 
     QString nativeFileName = QDir::toNativeSeparators(fileName);
 
-    QString pdf_viewer = getStrOption("pdf_viewer");
+    QString pdf_viewer = opts().getPdfViewer();
 
     if (pdf_viewer.isEmpty()) {
 
@@ -157,7 +157,7 @@ void openPDF(const QString& fileName) {
 
 void openSpreadsheet(const QString& file) {
 
-    QString spreadsheet = getStrOption("spreadsheet");
+    QString spreadsheet = opts().getSpreadsheet();
 
     if (spreadsheet.isEmpty()) {
 
@@ -177,7 +177,7 @@ void openSpreadsheet(const QString& file) {
 
     QStringList args;
 
-    QString flag = getStrOption("spreadsheet_flag");
+    QString flag = opts().getSpreadsheetFlag();
 
     if (!flag.isEmpty()) {
 

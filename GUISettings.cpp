@@ -27,23 +27,23 @@ GUISettings::GUISettings()
     userOptions(*new QVector<Pair>)
 {
 
-    strOptions["executable_name"]  = "sg2ps";
+    strOptions[executable_name()]  = "sg2ps";
 
-    strOptions["start_browsing_from_directory"] = QDir::homePath();
+    strOptions[start_browsing_from_directory()] = QDir::homePath();
 
-    strOptions["text_editor"] = QString();
+    strOptions[text_editor()] = QString();
 
-    strOptions["file_manager"] = QString();
+    strOptions[file_manager()] = QString();
 
-    strOptions["show_logfile"] = "yes"; // TODO Stringly typed...
+    strOptions[show_logfile()] = "yes"; // TODO Stringly typed...
 
-    strOptions["show_result_directory"] = "yes";
+    strOptions[show_result_directory()] = "yes";
 
-    strOptions["pdf_viewer"] = QString();
+    strOptions[pdf_viewer()] = QString();
 
-    strOptions["spreadsheet"] = QString();
+    strOptions[spreadsheet()] = QString();
 
-    strOptions["spreadsheet_flag"] = QString();
+    strOptions[spreadsheet_flag()] = QString();
 
     qDebug() << "Current path: " << QDir::currentPath();
 }
@@ -53,6 +53,96 @@ GUISettings::~GUISettings() {
     delete &strOptions;
 
     delete &userOptions;
+}
+
+QString GUISettings::executable_name() const {
+
+    return "executable_name";
+}
+
+QString GUISettings::getExecutableName() const {
+
+    return getStrOption(executable_name());
+}
+
+QString GUISettings::start_browsing_from_directory() const {
+
+    return "start_browsing_from_directory";
+}
+
+QString GUISettings::getStartBrowsingFromDirectory() const {
+
+    return getStrOption(start_browsing_from_directory());
+}
+
+QString GUISettings::text_editor() const {
+
+    return "text_editor";
+}
+
+QString GUISettings::getTextEditor() const {
+
+    return getStrOption(text_editor());
+}
+
+QString GUISettings::file_manager() const {
+
+    return "file_manager";
+}
+
+QString GUISettings::getFileManager() const {
+
+    return getStrOption(file_manager());
+}
+
+QString GUISettings::show_logfile() const {
+
+    return "show_logfile";
+}
+
+bool GUISettings::getShowLogfile() const {
+
+    return getStrOption(show_logfile())=="yes";
+}
+
+QString GUISettings::show_result_directory() const {
+
+    return "show_result_directory";
+}
+
+bool GUISettings::getShowResultDirectory() const {
+
+    return getStrOption(show_result_directory())=="yes";
+}
+
+QString GUISettings::pdf_viewer() const {
+
+    return "pdf_viewer";
+}
+
+QString GUISettings::getPdfViewer() const {
+
+    return getStrOption(pdf_viewer());
+}
+
+QString GUISettings::spreadsheet() const {
+
+    return "spreadsheet";
+}
+
+QString GUISettings::getSpreadsheet() const {
+
+    return getStrOption(spreadsheet());
+}
+
+QString GUISettings::spreadsheet_flag() const {
+
+    return "spreadsheet_flag";
+}
+
+QString GUISettings::getSpreadsheetFlag() const {
+
+    return getStrOption(spreadsheet_flag());
 }
 
 void GUISettings::readSettings() {
@@ -83,7 +173,6 @@ void GUISettings::setValue(const QString& key, const QString& value) {
     }
 }
 
-// TODO Replace with names accessor at the very least...
 QString GUISettings::getStrOption(const QString& key) const {
 
     Map::const_iterator it = strOptions.find(key);

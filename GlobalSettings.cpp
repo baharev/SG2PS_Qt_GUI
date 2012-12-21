@@ -16,8 +16,7 @@ void initGlobalSettings(const GUISettings *settings) {
 
 }
 
-QString getStrOption(const QString& key) {
+const GUISettings& opts() {
 
-    return ::options->getStrOption(key);
+    return *options;
 }
-

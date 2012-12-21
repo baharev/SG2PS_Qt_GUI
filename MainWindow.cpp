@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     add_elements();
 
-    startDir = getStrOption("start_browsing_from_directory");
+    startDir = opts().getStartBrowsingFromDirectory();
 
     connect_signal_slots();
 }
@@ -109,8 +109,6 @@ void MainWindow::set_menu() {
     connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
 
 
-    // TODO Connect and implement
-
     QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "New RGF", this);
 
     connect(createRGF, SIGNAL(triggered()), SLOT(newRGFRequested()));
@@ -131,7 +129,7 @@ void MainWindow::set_menu() {
     connect(editXY, SIGNAL(triggered()), SLOT(editXYRequested()));
 
 
-    QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Load RGF", this);
+    QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Select RGF", this);
 
     connect(loadRGF, SIGNAL(triggered()), SLOT(loadRGFRequested()));
 
@@ -300,7 +298,7 @@ void MainWindow::newXYRequested() {
     }
 }
 
-// TODO All file IO should be moved to a separate class, widgets should deal with files
+// TODO All file IO should be moved to a separate class, widgets should not deal with files
 // TODO Remove duplication, file IO fits a pattern
 void MainWindow::dumpHeader(const QString& newFile, const char header[]) {
 

@@ -67,7 +67,8 @@ Option opts[] = {
     << "Shan et al (2003)" << "S"
     << "Michael (1984)"  << "M"
     << "Angelier (1990)" << "A"
-    << "Mostafa (2005)"  << "O",
+    << "Mostafa (2005)"  << "O"
+    << "None"            << "N",
 
 
     Option("Virtual symmetrical data set", "VIRTUAL")
@@ -104,16 +105,16 @@ Option opts[] = {
 
     // TODO Spinbox would be more appropriate
     Option("Line width used on stereonets in points", "LINEWIDTH")
-    << "0.1" << "0.1"
-    << "0.2" << "0.2"
-    << "0.3" << "0.3"
-    << "0.4" << "0.4"
-    << "0.5" << "0.5"
-    << "0.6" << "0.6" << setDefault
-    << "0.7" << "0.7"
-    << "0.8" << "0.8"
-    << "0.9" << "0.9"
-    << "1.0" << "1.0",
+    << "0.1" << "1"
+    << "0.2" << "2"
+    << "0.3" << "3"
+    << "0.4" << "4"
+    << "0.5" << "5"
+    << "0.6" << "6" << setDefault
+    << "0.7" << "7"
+    << "0.8" << "8"
+    << "0.9" << "9"
+    << "1.0" << "0",
 
 
     Option("Type of the rose plot", "ROSETYPE")
@@ -122,10 +123,10 @@ Option opts[] = {
 
 
     Option("Bin size for rose plot in degrees", "ROSEBINNING")
-    <<  "2.5" <<  "2.5"
-    <<  "5.0" <<  "5.0"
-    << "10.0" << "10.0" << setDefault
-    << "22.5" << "22.5"
+    <<  "2.5" << "A"
+    <<  "5.0" << "B"
+    << "10.0" << "C" << setDefault
+    << "22.5" << "D"
 
 };
 

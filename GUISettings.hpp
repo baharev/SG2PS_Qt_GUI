@@ -20,11 +20,47 @@ public:
 
     void readSettings();
 
-    QString getStrOption(const QString& key) const;
+    QString getExecutableName() const;
+
+    QString getStartBrowsingFromDirectory() const;
+
+    QString getTextEditor() const;
+
+    QString getFileManager() const;
+
+    bool getShowLogfile() const;
+
+    bool getShowResultDirectory() const;
+
+    QString getPdfViewer() const;
+
+    QString getSpreadsheet() const;
+
+    QString getSpreadsheetFlag() const;
 
     ~GUISettings();
 
 private:
+
+    QString executable_name() const;
+
+    QString start_browsing_from_directory() const;
+
+    QString text_editor() const;
+
+    QString file_manager() const;
+
+    QString show_logfile() const;
+
+    QString show_result_directory() const;
+
+    QString pdf_viewer() const;
+
+    QString spreadsheet() const;
+
+    QString spreadsheet_flag() const;
+
+    QString getStrOption(const QString& key) const;
 
     void errorKeyNotFound(const QString& key) const;
 

@@ -5,7 +5,8 @@
 #define GLOBALSETTINGS_HPP
 
 #include <QString>
+#include "GUISettings.hpp"
 
-QString getStrOption(const QString& key);
+const GUISettings& opts();
 
 #endif // GLOBALSETTINGS_HPP
