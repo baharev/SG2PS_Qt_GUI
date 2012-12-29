@@ -10,6 +10,7 @@
 class QVBoxLayout;
 class QFileDialog;
 
+class InfoWidget;
 class InputWidget;
 class SettingsWidget;
 class Runner;
@@ -69,6 +70,8 @@ private:
     QFileDialog* fileDialog;
 
     InputWidget* inputWidget;
+
+    InfoWidget* infoWidget;
 
     SettingsWidget* settingsWidget;
 

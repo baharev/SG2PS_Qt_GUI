@@ -10,6 +10,7 @@
 #include <QDebug>
 #include "MainWindow.hpp"
 #include "GlobalSettings.hpp"
+#include "InfoWidget.hpp"
 #include "InputWidget.hpp"
 #include "Launcher.hpp"
 #include "Runner.hpp"
@@ -59,6 +60,10 @@ void MainWindow::add_elements() {
     mainLayout->addWidget(inputWidget);
 
 
+    infoWidget = new InfoWidget(this);
+
+    mainLayout->addWidget(infoWidget);
+
 
     settingsWidget = new SettingsWidget(this);
 
@@ -84,6 +89,8 @@ void MainWindow::fixSize() {
 
     inputWidget->freezeLabelSize();
 
+    infoWidget->freezeLabelSize();
+
     qDebug() << "Size: " << width() << "x" << height();
 }
 
@@ -94,7 +101,7 @@ void MainWindow::set_menu() {
     connect(showAbout, SIGNAL(triggered()), SLOT(about()));
 
 
-    QAction *editSettings = new QAction("Preferences", this);
+    QAction *editSettings = new QAction("GUI Settings", this);
 
     connect(editSettings, SIGNAL(triggered()), SLOT(editGUISettings()));
 
@@ -162,7 +169,7 @@ void MainWindow::set_menu() {
     fileToolBar->addAction(editXY);
 
 
-    QMenu* settingsMenu = menuBar()->addMenu("Options");
+    QMenu* settingsMenu = menuBar()->addMenu("Advanced");
 
     settingsMenu->addAction(editSettings);
 
@@ -343,6 +350,8 @@ void MainWindow::newProjectSelected() {
     startDir = projectPath;
 
     inputWidget->newProjectSelected(projectPath, projectName);
+
+    infoWidget->newProjectSelected(projectPath, projectName);
 
     settingsWidget->newProjectSelected(projectPath, projectName);
 

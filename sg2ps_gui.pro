@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     ErrorMsg.cpp \
     ResolveExitCode.cpp \
     Option.cpp \
-    Launcher.cpp
+    Launcher.cpp \
+    InfoWidget.cpp
 
 HEADERS  += \
     InputWidget.hpp \
@@ -42,7 +43,8 @@ HEADERS  += \
     GlobalSettings.hpp \
     ErrorMsg.hpp \
     ResolveExitCode.hpp \
-    Launcher.hpp
+    Launcher.hpp \
+    InfoWidget.hpp
 
 RESOURCES += \
     resources.qrc
