@@ -6,7 +6,7 @@
 
 class QString;
 
-void openWithDefaultApp(const QString& file);
+bool openWithDefaultApp(const QString& file);
 
 void openDirectoryWithFileManager(const QString& directory);
 

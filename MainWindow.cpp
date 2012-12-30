@@ -96,6 +96,11 @@ void MainWindow::set_menu() {
     connect(showAbout, SIGNAL(triggered()), SLOT(about()));
 
 
+    QAction *showAboutQt = new QAction("About Qt", this);
+
+    connect(showAboutQt, SIGNAL(triggered()), SLOT(aboutQt()));
+
+
     QAction *editSettings = new QAction("GUI Settings", this);
 
     connect(editSettings, SIGNAL(triggered()), SLOT(editGUISettings()));
@@ -178,6 +183,8 @@ void MainWindow::set_menu() {
 
     help->addAction(homepage);
 
+    help->addAction(showAboutQt);
+
     help->addAction(showAbout);
 }
 
@@ -202,6 +209,46 @@ void MainWindow::about() {
                        );
 
     qDebug() << "Built on " << __DATE__ << " at " << __TIME__;
+}
+
+void MainWindow::aboutQt() {
+
+    QMessageBox::about(this, "About Qt",
+
+                       "This program uses Qt version " QT_VERSION_STR ".\n\n"
+
+                       "Qt is a C++ toolkit for cross-platform application development.\n\n"
+
+                       "Qt provides single-source portability across MS Windows, Mac OS X, "
+                       "Linux, and all major commercial Unix variants. Qt is also available "
+                       "for embedded devices as Qt for Embedded Linux and Qt for Windows CE.\n\n"
+
+                       "Qt is available under three different licensing options designed to "
+                       "accommodate the needs of our various users.\n\n"
+
+                       "Qt licensed under our commercial license agreement is appropriate for "
+                       "development of proprietary/commercial software where you do not want "
+                       "to share any source code with third parties or otherwise cannot "
+                       "comply with the terms of the GNU LGPL version 2.1 or GNU GPL version "
+                       "3.0.\n\n"
+
+                       "Qt licensed under the GNU LGPL version 2.1 is appropriate for the "
+                       "development of Qt applications (proprietary or open source) provided "
+                       "you can comply with the terms and conditions of the GNU LGPL version "
+                       "2.1.\n\n"
+
+                       "Qt licensed under the GNU General Public License version 3.0 is "
+                       "appropriate for the development of Qt applications where you wish to "
+                       "use such applications in combination with software subject to the "
+                       "terms of the GNU GPL version 3.0 or where you are otherwise willing "
+                       "to comply with the terms of the GNU GPL version 3.0.\n\n"
+
+                       "Please see qt.nokia.com/products/licensing for an overview of Qt "
+                       "licensing.\n\n"
+
+                       "Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).\n\n"
+
+                       "Qt is a Nokia product. See qt.nokia.com for more information.\n\n");
 }
 
 void MainWindow::editGUISettings() {

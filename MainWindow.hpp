@@ -31,6 +31,8 @@ private slots:
 
     void about();
 
+    void aboutQt();
+
     void editGUISettings();
 
     void showHomepage();
