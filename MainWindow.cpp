@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::connect_signal_slots() {
 
     connect(runner, SIGNAL(generateSetFile()), settingsWidget, SLOT(writeSettings()));
+
+    connect(runner, SIGNAL(generateSetFile()), infoWidget, SLOT(checkSetFile()));
 }
 
 void MainWindow::add_elements() {
@@ -53,11 +55,6 @@ void MainWindow::add_elements() {
 
     mainLayout = new QVBoxLayout;
 
-
-
-    inputWidget = new InputWidget(this);
-
-    mainLayout->addWidget(inputWidget);
 
 
     infoWidget = new InfoWidget(this);
@@ -86,8 +83,6 @@ void MainWindow::add_elements() {
 void MainWindow::fixSize() {
 
     setFixedSize(width(), height());
-
-    inputWidget->freezeLabelSize();
 
     infoWidget->freezeLabelSize();
 
@@ -167,6 +162,8 @@ void MainWindow::set_menu() {
     fileToolBar->addAction(createXY);
 
     fileToolBar->addAction(editXY);
+
+    fileToolBar->addAction(manual);
 
 
     QMenu* settingsMenu = menuBar()->addMenu("Advanced");
@@ -348,8 +345,6 @@ QString MainWindow::tryToSetFileAsProject(const QString& file, const QString& ex
 void MainWindow::newProjectSelected() {
 
     startDir = projectPath;
-
-    inputWidget->newProjectSelected(projectPath, projectName);
 
     infoWidget->newProjectSelected(projectPath, projectName);
 

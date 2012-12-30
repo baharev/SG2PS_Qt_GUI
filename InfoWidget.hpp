@@ -23,6 +23,10 @@ public:
 
     void newProjectSelected(const QString& newProjectPath, const QString& newProjectName);
 
+public slots:
+
+    void checkSetFile();
+
 private:
 
     void updateRgfLabel();
@@ -33,11 +37,13 @@ private:
 
     bool fileExists(const char extension[]);
 
-    QString okText(const QString& msg);
+    void setOkText(QLabel* lbl, const QString& msg);
 
-    QString warnText(const QString& msg);
+    void setWarnText(QLabel* lbl, const QString& msg);
 
-    QString errorText(const QString& msg);
+    void setErrorText(QLabel* lbl, const QString& msg);
+
+    void freezeWidth(QLabel* lbl);
 
     QLabel* projectLabel;
 

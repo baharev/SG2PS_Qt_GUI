@@ -2,18 +2,24 @@
 // All rights reserved.
 // This code is published under the GNU Lesser General Public License.
 #include <QBoxLayout>
+#include <QDebug>
 #include <QDir>
 #include <QFileInfo>
 #include <QLabel>
 #include "InfoWidget.hpp"
+#include "LayoutConstants.hpp"
 
 namespace {
+
+const char GREEN[]  = "QLabel { background-color : #33FF00; }";
+const char YELLOW[] = "QLabel { background-color : #FFFF00; }";
+const char RED[]    = "QLabel { background-color : #FF0000; }";
 
 }
 
 InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
 
-    projectLabel = new QLabel("(please create / edit / select a file above)", this);
+    projectLabel = new QLabel("Please create new or edit / select an existing file by clicking on one of icons above!", this);
 
     projectLabel->setAlignment(Qt::AlignHCenter);
 
@@ -47,7 +53,12 @@ InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
 
     setLayout(vboxLayout);
 
-    setFrameStyle(QFrame::WinPanel | QFrame::Raised);
+    setFrameStyle(QFrame::Box | QFrame::Raised);
+}
+
+void InfoWidget::checkSetFile() {
+
+    updateSetLabel();
 }
 
 void InfoWidget::newProjectSelected(const QString& newProjectPath, const QString& newProjectName) {
@@ -72,30 +83,37 @@ bool InfoWidget::fileExists(const char extension[]) {
     return (finfo.exists() && finfo.isFile()) ? true : false;
 }
 
-QString InfoWidget::okText(const QString& msg) {
+void InfoWidget::setOkText(QLabel* lbl, const QString& msg) {
 
-    return "<font style=\"background: #33FF00; color: black;\">"+msg+"</font>";
+    lbl->setText(msg);
+
+    lbl->setStyleSheet(GREEN);
 }
 
-QString InfoWidget::warnText(const QString& msg) {
+void InfoWidget::setWarnText(QLabel* lbl, const QString& msg) {
 
-    return "<font style=\"background: #FFFF00; color: black;\">"+msg+"</font>";
+    lbl->setText(msg);
+
+    lbl->setStyleSheet(YELLOW);
 }
 
-QString InfoWidget::errorText(const QString& msg) {
+void InfoWidget::setErrorText(QLabel* lbl, const QString& msg) {
 
-    return "<font style=\"background: #FF0000; color: black;\">"+msg+"</font>";
+    lbl->setText(msg);
+
+    lbl->setStyleSheet(RED);
 }
 
 void InfoWidget::updateRgfLabel() {
 
     if (fileExists(".rgf")) {
 
-        rgfLabel->setText(okText("Data file found"));
-     }
+        setOkText(rgfLabel, "Data file found");
+
+    }
     else {
 
-        rgfLabel->setText(errorText("Don\'t forget to create the data file!"));
+        setErrorText(rgfLabel, "Don\'t forget to create the data file!");
     }
 }
 
@@ -103,11 +121,11 @@ void InfoWidget::updateSetLabel() {
 
     if (fileExists(".set")) {
 
-        setLabel->setText(okText("Settings have been checked"));
+        setOkText(setLabel, "Settings have been found");
     }
     else {
 
-        setLabel->setText(warnText("The settings below need your attention"));
+        setWarnText(setLabel, "The settings below need your attention");
     }
 }
 
@@ -115,19 +133,24 @@ void InfoWidget::updateXyLabel() {
 
     if (fileExists(".xy")) {
 
-        xyLabel->setText(okText("Coordinate file found"));
+        setOkText(xyLabel, "Coordinate file found");
     }
     else {
 
-        xyLabel->setText(warnText("Not using any coordinate file"));
+        setWarnText(xyLabel, "Not using any coordinate file");
     }
 }
 
-
 void InfoWidget::freezeLabelSize() {
 
-    rgfLabel->setFixedSize(rgfLabel->size());
-    setLabel->setFixedSize(setLabel->size());
-     xyLabel->setFixedSize( xyLabel->size());
+    freezeWidth(projectLabel);
+    freezeWidth(rgfLabel);
+    freezeWidth(setLabel);
+    freezeWidth(xyLabel);
 
+}
+
+void InfoWidget::freezeWidth(QLabel* lbl) {
+
+    lbl->setFixedWidth(lbl->width());
 }

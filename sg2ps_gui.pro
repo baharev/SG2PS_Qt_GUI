@@ -15,7 +15,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    InputWidget.cpp \
     SettingsWidget.cpp \
     MainWindow.cpp \
     OptionWidget.cpp \
@@ -30,7 +29,6 @@ SOURCES += main.cpp\
     InfoWidget.cpp
 
 HEADERS  += \
-    InputWidget.hpp \
     LayoutConstants.hpp \
     SettingsWidget.hpp \
     MainWindow.hpp \

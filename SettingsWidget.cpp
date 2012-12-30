@@ -72,10 +72,6 @@ void SettingsWidget::fillColumn(QVBoxLayout* col, int opt_first, int opt_last) {
     }
 
     col->addStretch(1);
-
-    col->setMargin(MARGIN);
-
-    col->setSpacing(SPACING);
 }
 
 void SettingsWidget::reset_defaults() {

@@ -69,8 +69,6 @@ private:
 
     QFileDialog* fileDialog;
 
-    InputWidget* inputWidget;
-
     InfoWidget* infoWidget;
 
     SettingsWidget* settingsWidget;
