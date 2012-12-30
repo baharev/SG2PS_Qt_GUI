@@ -14,7 +14,7 @@ QString resolveExitCode(int exitCode) {
     case ExitStatus::OK:
         break;
     case ExitStatus::RGF_ERROR:
-        msg = "failed to read the RGF file, please check the log";
+        msg = "failed to read the data file, please check the log";
         break;
     case ExitStatus::RUNTIME_ERROR:
         msg = "runtime error occured in the external executable, please check the log";

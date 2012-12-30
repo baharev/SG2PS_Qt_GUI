@@ -111,27 +111,27 @@ void MainWindow::set_menu() {
     connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
 
 
-    QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "New RGF", this);
+    QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "New Data File", this);
 
     connect(createRGF, SIGNAL(triggered()), SLOT(newRGFRequested()));
 
 
-    QAction* createXY = new QAction(QIcon(":/images/document_new48.png"), "New XY file", this);
+    QAction* createXY = new QAction(QIcon(":/images/document_new48.png"), "New Coordinate File", this);
 
     connect(createXY, SIGNAL(triggered()), SLOT(newXYRequested()));
 
 
-    QAction* editRGF = new QAction(QIcon(":/images/spreadsheet48.png"), "Edit RGF", this);
+    QAction* editRGF = new QAction(QIcon(":/images/spreadsheet48.png"), "Edit Data", this);
 
     connect(editRGF, SIGNAL(triggered()), SLOT(editRGFRequested()));
 
 
-    QAction* editXY = new QAction(QIcon(":/images/spreadsheetB48.png"), "Edit XY", this);
+    QAction* editXY = new QAction(QIcon(":/images/spreadsheetB48.png"), "Edit Coordinate", this);
 
     connect(editXY, SIGNAL(triggered()), SLOT(editXYRequested()));
 
 
-    QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Select RGF", this);
+    QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Select Data File", this);
 
     connect(loadRGF, SIGNAL(triggered()), SLOT(loadRGFRequested()));
 
