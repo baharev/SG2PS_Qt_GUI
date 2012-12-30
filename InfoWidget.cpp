@@ -121,7 +121,7 @@ void InfoWidget::updateSetLabel() {
 
     if (fileExists(".set")) {
 
-        setOkText(setLabel, "Settings have been found");
+        setOkText(setLabel, "Settings from a previous run found");
     }
     else {
 
