@@ -14,7 +14,13 @@ QString resolveExitCode(int exitCode) {
     case ExitStatus::OK:
         break;
     case ExitStatus::RGF_ERROR:
-        msg = "failed to read the data file, please check the log";
+        msg = "problems with the data file, please check the log / read the manual";
+        break;
+    case ExitStatus::SET_ERROR:
+        msg = "failed to pass the settings, this is likely to be a bug, please report it";
+        break;
+    case ExitStatus::XY_ERROR:
+        msg = "problems with the coordinate file, please check the log / read the manual";
         break;
     case ExitStatus::RUNTIME_ERROR:
         msg = "runtime error occured in the external executable, please check the log";
