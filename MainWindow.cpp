@@ -8,23 +8,21 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 #include <QDebug>
+#include <QVector>
+#include <string>
+#include <vector>
 #include "MainWindow.hpp"
 #include "GlobalSettings.hpp"
 #include "InfoWidget.hpp"
 #include "InputWidget.hpp"
 #include "Launcher.hpp"
+#include "ReservedColumnNames.hpp"
 #include "Runner.hpp"
 #include "SettingsWidget.hpp"
 
 namespace {
 
 const char TITLE[] = " - Structural Geology to PostScript";
-
-const char RGF_HEADER[] = "DATA_ID\tGC\tCOLOR\tLOC\tLOCX\tLOCY\tFORMATION\t"
-                          "DATATYPE\tcorrDIPDIR\tcorrDIP\tcorrLDIR\tcorrLDIP\t"
-                          "SENSE\tPALEONORTH\tCOMMENT";
-
-const char  XY_HEADER[] = "NAME\tLATTITUDE\tLONGITUDE";
 
 }
 
@@ -315,7 +313,7 @@ QString MainWindow::saveFileAsDialog(const QString& extension) {
     return fileDialog->getSaveFileName(this, "Create file", startDir, filter);
 }
 
-QString MainWindow::newFileRequested(const QString& extension, const char header[]) {
+QString MainWindow::newFileRequested(const QString& extension, const QVector<QString>& header) {
 
     QString newFile = saveFileAsDialog(extension);
 
@@ -331,7 +329,16 @@ QString MainWindow::newFileRequested(const QString& extension, const char header
 
 void MainWindow::newRGFRequested() {
 
-    QString file = newFileRequested("rgf", RGF_HEADER);
+    QVector<QString> rgf_header;
+
+    const std::vector<std::string>& header = reserved_column_names();
+
+    for (std::size_t i=0; i<header.size(); ++i) {
+
+        rgf_header.append(header.at(i).c_str());
+    }
+
+    QString file = newFileRequested("rgf", rgf_header);
 
     if (!file.isEmpty()) {
 
@@ -340,6 +347,8 @@ void MainWindow::newRGFRequested() {
 }
 
 void MainWindow::newXYRequested() {
+
+    const QVector<QString> XY_HEADER = QVector<QString>() << "NAME" << "LATTITUDE" << "LONGITUDE";
 
     QString file = newFileRequested("xy", XY_HEADER);
 
@@ -351,7 +360,7 @@ void MainWindow::newXYRequested() {
 
 // TODO All file IO should be moved to a separate class, widgets should not deal with files
 // TODO Remove duplication, file IO fits a pattern
-void MainWindow::dumpHeader(const QString& newFile, const char header[]) {
+void MainWindow::dumpHeader(const QString& newFile, const QVector<QString>& header) {
 
     QFile file(newFile);
 
@@ -362,7 +371,10 @@ void MainWindow::dumpHeader(const QString& newFile, const char header[]) {
 
     QTextStream out(&file);
 
-    out << header << '\n';
+    for (int i=0; i<header.size(); ++i) {
+
+        out << header.at(i) << ((i==header.size()-1)?'\n':'\t');
+    }
 }
 
 QString MainWindow::tryToSetFileAsProject(const QString& file, const QString& extension) {

@@ -19,7 +19,7 @@ const char RED[]    = "QLabel { background-color : #FF0000; }";
 
 InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
 
-    projectLabel = new QLabel("Please create new or edit / select an existing file by clicking on one of icons above!", this);
+    projectLabel = new QLabel("Please create a new or edit / select an existing file by clicking on one of icons above!", this);
 
     projectLabel->setAlignment(Qt::AlignHCenter);
 

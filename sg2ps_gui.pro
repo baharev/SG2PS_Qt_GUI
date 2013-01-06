@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     ResolveExitCode.cpp \
     Option.cpp \
     Launcher.cpp \
-    InfoWidget.cpp
+    InfoWidget.cpp \
+    ReservedColumnNames.cpp
 
 HEADERS  += \
     LayoutConstants.hpp \
@@ -42,7 +43,8 @@ HEADERS  += \
     ErrorMsg.hpp \
     ResolveExitCode.hpp \
     Launcher.hpp \
-    InfoWidget.hpp
+    InfoWidget.hpp \
+    ReservedColumnNames.hpp
 
 RESOURCES += \
     resources.qrc

@@ -63,9 +63,9 @@ private:
 
     void newProjectSelected();
 
-    QString newFileRequested(const QString& extension, const char header[]);
+    QString newFileRequested(const QString& extension, const QVector<QString>& header);
 
-    void dumpHeader(const QString& newFile, const char header[]);
+    void dumpHeader(const QString& newFile, const QVector<QString>& header);
 
     QString tryToSetFileAsProject(const QString& file, const QString& extension);
 
