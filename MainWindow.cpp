@@ -348,7 +348,8 @@ void MainWindow::newRGFRequested() {
 
 void MainWindow::newXYRequested() {
 
-    const QVector<QString> XY_HEADER = QVector<QString>() << "NAME" << "LATTITUDE" << "LONGITUDE";
+    // TODO Duplication: These are the same column names also apperaring in the reserved column names
+    const QVector<QString> XY_HEADER = QVector<QString>() << "LOCATION" << "LOC_X" << "LOC_Y" << "FORMATION";
 
     QString file = newFileRequested("xy", XY_HEADER);
 

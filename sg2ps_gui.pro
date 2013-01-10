@@ -49,6 +49,8 @@ HEADERS  += \
 RESOURCES += \
     resources.qrc
 
+RC_FILE = sg2ps_gui.rc
+
 OTHER_FILES += \
     images/insert_table48.png \
     images/package_internet48.png \
