@@ -266,7 +266,7 @@ void MainWindow::editGUISettings() {
 
 void MainWindow::showHomepage() {
 
-    openWithDefaultApp("http://www.sg2ps.eu/?version="+back_end_version_id());
+    openWithDefaultApp("http://www.sg2ps.eu/index.htm?version="+back_end_version_id());
 }
 
 void MainWindow::showManual() {
