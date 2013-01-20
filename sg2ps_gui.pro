@@ -58,4 +58,5 @@ OTHER_FILES += \
     images/document_import48.png \
     images/spreadsheet48.png \
     images/spreadsheetB48.png \
-    images/document_new48.png
+    images/document_new48.png \
+    images/sg2ps.ico

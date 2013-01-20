@@ -188,23 +188,27 @@ void MainWindow::set_menu() {
 
 void MainWindow::about() {
 
-    QMessageBox::about(this, "About SG2PS", QString::fromWCharArray(
+    QString msg("SG2PS "+QString::fromStdWString(L"—") +" Structural Geology to PostScript\n\n");
 
-                       L"SG2PS — Structural Geology to PostScript\n\n"
+    msg.append("Command line application built on ");
 
-                       L"Built on " __DATE__ " at " __TIME__ "\n\n"
+    msg.append(back_end_version()+"\n");
 
-                       L"The heavy lifting is done by the back end, the external "
-                       L"command line application sg2ps, written and maintened by "
-                       L"Ágoston Sasvári.\n\n"
+    msg.append( "GUI built on " __DATE__ " at " __TIME__ "\n\n");
 
-                       L"This grapical front end is written and mainted by Ali Baharev "
-                       L"and is based on Qt " QT_VERSION_STR ".\n\n"
+    msg.append( "The heavy lifting is done by the back end, the external "
+                "command line application sg2ps, written and maintened by ");
 
-                       L"The program is provided AS IS with NO WARRANTY OF ANY KIND, "
-                       L"INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS "
-                       L"FOR A PARTICULAR PURPOSE.")
-                       );
+    msg.append(QString::fromStdWString(L"Ágoston Sasvári.\n\n"));
+
+    msg.append( "This grapical front end is written and mainted by Ali Baharev "
+                "and is based on Qt " QT_VERSION_STR ".\n\n"
+
+                "The program is provided AS IS with NO WARRANTY OF ANY KIND, "
+                "INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS "
+                "FOR A PARTICULAR PURPOSE.");
+
+    QMessageBox::about(this, "About SG2PS", msg);
 
     qDebug() << "Built on " << __DATE__ << " at " << __TIME__;
 }
@@ -262,7 +266,7 @@ void MainWindow::editGUISettings() {
 
 void MainWindow::showHomepage() {
 
-    openWithDefaultApp("http://www.sg2ps.eu/"); // TODO ?gui=201212081605
+    openWithDefaultApp("http://www.sg2ps.eu/?version="+back_end_version_id());
 }
 
 void MainWindow::showManual() {

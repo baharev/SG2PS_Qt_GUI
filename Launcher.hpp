@@ -18,4 +18,8 @@ void showInFileManager(const QString& directory);
 
 void openSpreadsheet(const QString& file);
 
+QString back_end_version();
+
+QString back_end_version_id();
+
 #endif // LAUNCHER_HPP

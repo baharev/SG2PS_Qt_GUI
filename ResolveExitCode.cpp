@@ -22,11 +22,17 @@ QString resolveExitCode(int exitCode) {
     case ExitStatus::XY_ERROR:
         msg = "problems with the coordinate file, please check the log / read the manual";
         break;
-    case ExitStatus::RUNTIME_ERROR:
-        msg = "runtime error occured in the external executable, please check the log";
-        break;
     case ExitStatus::BUG:
         msg = "this is a bug, please report it";
+        break;
+    case ExitStatus::LOGIC_ERROR:
+        msg = "a bug has been detected in the external executable, please report it";
+        break;
+    case ExitStatus::RUNTIME_ERROR:
+        msg = "a runtime error has occured, please check the log";
+        break;
+    case ExitStatus::STD_EXCEPTION:
+        msg = "please check the log, not quite clear what happened, please report it";
         break;
     case ExitStatus::UNKNOWN_ERROR:
         msg = "unknown error happened in the external executable, please report it";

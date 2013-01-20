@@ -180,8 +180,8 @@ void openSpreadsheet(const QString& file) {
         // TODO Try to resolve it on loading the applicaton,
         // somewhat ugly that it occurs later on demand
 
-        showErrorMsg("could not find the default application associated with spreadsheet documents, "
-                     "please read the manual under Editing RGF files");
+        showErrorMsg("could not find the default application associated with spreadsheet documents. "
+                     "Please read the manual under <b>Editing data files</b>");
         return;
     }
 
@@ -198,4 +198,31 @@ void openSpreadsheet(const QString& file) {
 
     QProcess::startDetached(spreadsheet, args);
 
+}
+
+QString run_back_end_with(const char flag[]) {
+
+    QProcess p;
+
+    QStringList args(flag);
+
+    p.start( opts().getExecutableName(), args );
+
+    bool success = p.waitForFinished(3000);
+
+    return success ? QString(p.readAllStandardOutput()) : QString();
+}
+
+QString back_end_version() {
+
+    QString version = run_back_end_with("-v");
+
+    return version.isEmpty() ? QString("(failed to find it)\n") : version;
+}
+
+QString back_end_version_id() {
+
+    QString id = run_back_end_with("--version-id");
+
+    return id.isEmpty() ? QString("unknown") : id;
 }
