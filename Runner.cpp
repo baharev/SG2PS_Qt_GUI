@@ -122,9 +122,11 @@ void Runner::showLog() const {
 
 void Runner::showResultDir() const {
 
+    QString dir_to_show = dirToShow(); // Side effect: always deletes the pointer
+
     if (opts().getShowResultDirectory()) {
 
-        showInFileManager(dirToShow());
+        showInFileManager(dir_to_show);
     }
 }
 
