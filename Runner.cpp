@@ -124,7 +124,28 @@ void Runner::showResultDir() const {
 
     if (opts().getShowResultDirectory()) {
 
-        showInFileManager(projectPath);
+        showInFileManager(dirToShow());
     }
 }
 
+QString Runner::dirToShow() const {
+
+    QString dir_to_show = projectPath;
+
+    QFile file(projectPath+"/project_folder_name"); // TODO Another magic constant...
+
+    if (file.open(QIODevice::ReadOnly)) {
+
+        QString folder_name = projectPath + "/" +QTextStream(&file).readLine();
+
+        if (folder_name.endsWith(projectName, Qt::CaseInsensitive) &&
+            QFileInfo(folder_name).isDir())
+        {
+            dir_to_show =  folder_name;
+        }
+    }
+
+    file.remove();
+
+    return dir_to_show;
+}

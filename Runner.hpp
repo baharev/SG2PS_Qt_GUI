@@ -38,6 +38,8 @@ private:
 
     void showResultDir() const;
 
+    QString dirToShow() const;
+
     QPushButton* runButton;
 
     QHBoxLayout* layout;
