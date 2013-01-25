@@ -6,11 +6,11 @@
 
 namespace {
 
-const GUISettings* options;
+GUISettings* options;
 
 }
 
-void initGlobalSettings(const GUISettings *settings) {
+void initGlobalSettings(GUISettings *settings) {
 
     options = settings;
 
@@ -19,4 +19,9 @@ void initGlobalSettings(const GUISettings *settings) {
 const GUISettings& opts() {
 
     return *options;
+}
+
+void reloadGlobalSettings() {
+
+    options->readSettings();
 }

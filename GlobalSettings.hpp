@@ -9,4 +9,6 @@
 
 const GUISettings& opts();
 
+void reloadGlobalSettings();
+
 #endif // GLOBALSETTINGS_HPP

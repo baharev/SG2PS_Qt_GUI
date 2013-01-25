@@ -22,10 +22,7 @@ struct Pair {
 
 typedef QMap<QString,QString> Map;
 
-GUISettings::GUISettings()
-    :   strOptions(*new Map()),
-    userOptions(*new QVector<Pair>)
-{
+GUISettings::GUISettings() : strOptions(*new Map()) {
 
     strOptions[executable_name()]  = "sg2ps";
 
@@ -51,8 +48,11 @@ GUISettings::GUISettings()
 GUISettings::~GUISettings() {
 
     delete &strOptions;
+}
 
-    delete &userOptions;
+QString GUISettings::getSettingsFileName() const {
+
+    return "settings.txt";
 }
 
 QString GUISettings::executable_name() const {
@@ -147,9 +147,7 @@ QString GUISettings::getSpreadsheetFlag() const {
 
 void GUISettings::readSettings() {
 
-    userOptions.clear();
-
-    readPairs();
+    QVector<Pair> userOptions = readPairs();
 
     foreach (Pair option, userOptions) {
 
@@ -197,39 +195,44 @@ void GUISettings::errorKeyNotFound(const QString& key) const {
 void GUISettings::showError(const QString &what) const {
 
     showErrorMsg(what);
-
-    // TODO Exit here?
 }
 
-void GUISettings::readPairs() {
+QVector<Pair> GUISettings::readPairs() const {
 
-    QFile file("settings.txt");
+    QVector<Pair> userOptions;
 
-    if(!file.open(QIODevice::ReadOnly)) {
+    QFile file(getSettingsFileName());
+
+    if (file.open(QIODevice::ReadOnly)) {
+
+        QTextStream in(&file);
+
+        parseSettingsFile(in, userOptions);
+    }
+    else {
 
         qDebug() << "Settings file not found!";
 
         dumpSettings();
-
-        return;
     }
 
-    QTextStream in(&file);
+    return userOptions;
+}
+
+void GUISettings::parseSettingsFile(QTextStream& in, QVector<Pair>& userOptions) const {
+
+    QRegExp rx("(\\w+)(\\s+)(.+)");
 
     while(!in.atEnd()) {
 
         const QString origLine = in.readLine();
 
-        QString line = removeComment(origLine);
-
-        line = line.trimmed();
+        QString line = removeComment(origLine).trimmed();
 
         if (line.isEmpty()) {
 
             continue;
         }
-
-        QRegExp rx("(\\w+)(\\s+)(.+)");
 
         int pos = rx.indexIn(line);
 
@@ -245,22 +248,18 @@ void GUISettings::readPairs() {
         else {
 
             showError("reading line \""+origLine+"\"");
-
-            break;
         }
     }
-
-    file.close();
 }
 
-QString GUISettings::removeComment(const QString &origLine) {
+QString GUISettings::removeComment(const QString &origLine) const {
 
     return origLine.left( origLine.indexOf('#') );
 }
 
-void GUISettings::dumpSettings() {
+void GUISettings::dumpSettings() const {
 
-    QFile settings("settings.txt");
+    QFile settings(getSettingsFileName());
 
     if (!settings.open(QIODevice::WriteOnly | QIODevice::Text)) {
 

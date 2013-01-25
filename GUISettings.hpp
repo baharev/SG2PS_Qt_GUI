@@ -8,9 +8,10 @@ template <class Key, class T> class QMap;
 template <typename T> class QVector;
 class QString;
 class GUISettings;
+class QTextStream;
 struct Pair;
 
-void initGlobalSettings(const GUISettings* settings);
+void initGlobalSettings(GUISettings* settings);
 
 class GUISettings {
 
@@ -19,6 +20,8 @@ public:
     GUISettings();
 
     void readSettings();
+
+    QString getSettingsFileName() const;
 
     QString getExecutableName() const;
 
@@ -41,6 +44,8 @@ public:
     ~GUISettings();
 
 private:
+
+    void setValue(const QString& key, const QString& value);
 
     QString executable_name() const;
 
@@ -66,17 +71,15 @@ private:
 
     void showError(const QString& what) const;
 
-    void setValue(const QString& key, const QString& value);
+    QVector<Pair> readPairs() const;
 
-    void readPairs();
+    void parseSettingsFile(QTextStream& in, QVector<Pair>& userOptions) const;
 
-    void dumpSettings();
+    void dumpSettings() const;
 
-    QString removeComment(const QString& origLine);
+    QString removeComment(const QString& origLine) const;
 
     QMap<QString,QString>& strOptions;
-
-    QVector<Pair>& userOptions;
 
 };
 

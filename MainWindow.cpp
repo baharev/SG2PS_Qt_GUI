@@ -255,13 +255,13 @@ void MainWindow::aboutQt() {
 
 void MainWindow::editGUISettings() {
 
-    // TODO Reload it automatically instead!
-    QMessageBox::information(this, "Reminder", "After editing the options, don\'t forget "
-                             "to restart the application!");
-
     QString path = QDir::currentPath();
 
-    openInTextEditor(path+"/settings.txt");
+    openInTextEditor(path+"/"+opts().getSettingsFileName());
+
+    QMessageBox::information(this, "Info", "If you are done editing the settings file, hit OK!");
+
+    reloadGlobalSettings(); // I don't like it, global settings are now mutable
 }
 
 void MainWindow::showHomepage() {
