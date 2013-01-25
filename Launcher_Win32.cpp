@@ -2,7 +2,8 @@
 // All rights reserved.
 // This code is published under the GNU Lesser General Public License.
 #ifdef _WIN32
-
+#include <QDebug>
+#include <QDir>
 #include <QString>
 #include <windows.h>
 #include <ShellApi.h>
