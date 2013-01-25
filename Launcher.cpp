@@ -90,7 +90,7 @@ void openPDF(const QString& fileName) {
     }
 }
 
-void openSpreadsheet(const QString& file) {
+bool openSpreadsheet(const QString& file) {
 
     QString spreadsheet = opts().getSpreadsheet();
 
@@ -107,7 +107,8 @@ void openSpreadsheet(const QString& file) {
 
         showErrorMsg("could not find the default application associated with spreadsheet documents. "
                      "Please read the manual under <b>Editing data files</b>");
-        return;
+
+        return false;
     }
 
     QStringList args;
@@ -121,7 +122,7 @@ void openSpreadsheet(const QString& file) {
 
     args.append( QDir::toNativeSeparators(file) );
 
-    QProcess::startDetached(spreadsheet, args);
+    return QProcess::startDetached(spreadsheet, args);
 
 }
 
@@ -138,16 +139,64 @@ QString run_back_end_with(const char flag[]) {
     return success ? QString(p.readAllStandardOutput()) : QString();
 }
 
-QString back_end_version() {
+QString back_end_was_built_on() {
 
     QString version = run_back_end_with("-v");
 
     return version.isEmpty() ? QString("(failed to find it)\n") : version;
 }
 
-QString back_end_version_id() {
+QString version_id_of_back_end() {
 
     QString id = run_back_end_with("--version-id");
 
     return id.isEmpty() ? QString("unknown") : id;
 }
+
+bool epsFileRecognizedBySystem(const QString& file) {
+
+    QString epsViewer = getAssociatedApp(L".eps");
+
+    if (epsViewer.isEmpty()) {
+
+        return openWithDefaultApp(file);
+    }
+    else {
+
+        qDebug() << epsViewer;
+
+        return true; // Hopefully something valid is given...
+    }
+}
+
+bool xlsFileRecognizedBySystem(const QString& file) {
+
+    QString xlsEditor = getAssociatedApp(L".xls");
+
+    if (xlsEditor.isEmpty()) {
+
+        return openSpreadsheet(file); // also varies, compared to xls
+    }
+    else {
+
+        qDebug() << xlsEditor;
+
+        return true; // Hopefully something valid is given...
+    }
+}
+
+bool isInstalledSoftwareOK() {
+
+    if (!epsFileRecognizedBySystem("demo.eps")) {
+
+        return false;
+    }
+
+    if (!xlsFileRecognizedBySystem("demo.csv")) {
+
+        return false;
+    }
+
+    return true;
+}
+

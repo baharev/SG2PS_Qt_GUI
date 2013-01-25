@@ -1,17 +1,19 @@
 // Copyright (C) 2012, Ali Baharev
 // All rights reserved.
 // This code is published under the GNU Lesser General Public License.
-#include <QMessageBox>
-#include <QFileDialog>
+#include <QCoreApplication>
+#include <QDebug>
 #include <QDir>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <QMenuBar>
 #include <QToolBar>
 #include <QVBoxLayout>
-#include <QDebug>
 #include <QVector>
 #include <string>
 #include <vector>
 #include "MainWindow.hpp"
+#include "ErrorMsg.hpp"
 #include "GlobalSettings.hpp"
 #include "InfoWidget.hpp"
 #include "InputWidget.hpp"
@@ -109,6 +111,11 @@ void MainWindow::set_menu() {
     connect(manual, SIGNAL(triggered()), SLOT(showManual()));
 
 
+    QAction* demo = new QAction(QIcon(":/images/smile_icon.png"), "Demo", this) ;
+
+    connect(demo, SIGNAL(triggered()), SLOT(runDemo()));
+
+
     QAction *homepage = new QAction(QIcon(":/images/package_internet48.png"), "Jump to the homepage", this);
 
     connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
@@ -168,6 +175,8 @@ void MainWindow::set_menu() {
 
     fileToolBar->addAction(manual);
 
+    fileToolBar->addAction(demo);
+
 
     QMenu* settingsMenu = menuBar()->addMenu("Advanced");
 
@@ -178,6 +187,8 @@ void MainWindow::set_menu() {
     QMenu* help = menuBar()->addMenu("Help");
 
     help->addAction(manual);
+
+    help->addAction(demo);
 
     help->addAction(homepage);
 
@@ -192,7 +203,7 @@ void MainWindow::about() {
 
     msg.append("Command line application built on ");
 
-    msg.append(back_end_version()+"\n");
+    msg.append(back_end_was_built_on()+"\n");
 
     msg.append( "GUI built on " __DATE__ " at " __TIME__ "\n\n");
 
@@ -259,14 +270,14 @@ void MainWindow::editGUISettings() {
 
     openInTextEditor(path+"/"+opts().getSettingsFileName());
 
-    QMessageBox::information(this, "Info", "If you are done editing the settings file, hit OK!");
+    QMessageBox::information(this, "Info", "If you are done editing the settings file, hit OK to reload the new settings!");
 
     reloadGlobalSettings(); // I don't like it, global settings are now mutable
 }
 
 void MainWindow::showHomepage() {
 
-    openWithDefaultApp("http://www.sg2ps.eu/index.htm?version="+back_end_version_id());
+    openWithDefaultApp("http://www.sg2ps.eu/index.htm?version="+version_id_of_back_end());
 }
 
 void MainWindow::showManual() {
@@ -274,6 +285,54 @@ void MainWindow::showManual() {
     QString path = QDir::currentPath();
 
     openPDF(path+"/manual.pdf");
+}
+
+void MainWindow::runDemo() {
+
+    // FIXME Check the existence of the demo files!
+    QMessageBox mbox(QMessageBox::Information, "Demo", "First, your installed software will be checked.");
+    mbox.exec();
+
+    if (!isInstalledSoftwareOK()) {
+        return;
+    }
+
+    mbox.setText("Your installed software seems to be OK. "
+                 "Now, an attempt will be made to evaluate a demo data file. "
+                 "You will be asked to save the demo file where you like.");
+    mbox.exec();
+
+    if (!setupDemoRgf()) {
+         return;
+    }
+
+    mbox.setText("Almost there! :) Hit the <b>Run</b> button at the bottom of the main window and hopefully everthing works.");
+    mbox.exec();
+}
+
+bool MainWindow::setupDemoRgf() {
+
+    QString file = fileDialog->getSaveFileName(this, "Select where you wish to place the demo file",
+                                               startDir+"/demo.rgf", "*.rgf (*.rgf)");
+    if (file.isEmpty()) {
+        return false;
+    }
+
+    QFile::remove(file);
+
+    QString src = QCoreApplication::applicationDirPath()+"/demo.rgf";
+
+    if (!QFile::copy(src,file)) {
+        showErrorMsg("copying "+QDir::toNativeSeparators(src)+" to "+
+                                QDir::toNativeSeparators(file)+" failed");
+        return false;
+    }
+
+    if (tryToSetFileAsProject(file, "rgf").isEmpty()) {
+        return false;
+    }
+
+    return true;
 }
 
 QString MainWindow::selectFile(const QString& extension) {

@@ -16,10 +16,12 @@ void openPDF(const QString& fileName);
 
 void showInFileManager(const QString& directory);
 
-void openSpreadsheet(const QString& file);
+bool openSpreadsheet(const QString& file);
 
-QString back_end_version();
+bool isInstalledSoftwareOK();
 
-QString back_end_version_id();
+QString back_end_was_built_on();
+
+QString version_id_of_back_end();
 
 #endif // LAUNCHER_HPP

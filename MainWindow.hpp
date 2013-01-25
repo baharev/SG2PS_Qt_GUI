@@ -39,6 +39,8 @@ private slots:
 
     void showManual();
 
+    void runDemo();
+
     void editRGFRequested();
 
     void editXYRequested();
@@ -68,6 +70,8 @@ private:
     void dumpHeader(const QString& newFile, const QVector<QString>& header);
 
     QString tryToSetFileAsProject(const QString& file, const QString& extension);
+
+    bool setupDemoRgf();
 
     QFileDialog* fileDialog;
 
