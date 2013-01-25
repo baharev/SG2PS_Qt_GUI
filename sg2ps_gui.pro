@@ -27,7 +27,9 @@ SOURCES += main.cpp\
     Option.cpp \
     Launcher.cpp \
     InfoWidget.cpp \
-    ReservedColumnNames.cpp
+    ReservedColumnNames.cpp \
+    Launcher_Win32.cpp \
+    Launcher_Linux.cpp
 
 HEADERS  += \
     LayoutConstants.hpp \
