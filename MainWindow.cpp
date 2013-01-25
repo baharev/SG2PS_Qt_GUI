@@ -121,12 +121,12 @@ void MainWindow::set_menu() {
     connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
 
 
-    QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "New Data File", this);
+    QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "New Data", this);
 
     connect(createRGF, SIGNAL(triggered()), SLOT(newRGFRequested()));
 
 
-    QAction* createXY = new QAction(QIcon(":/images/document_new48.png"), "New Coordinate File", this);
+    QAction* createXY = new QAction(QIcon(":/images/document_new48.png"), "New Coordinate", this);
 
     connect(createXY, SIGNAL(triggered()), SLOT(newXYRequested()));
 
@@ -141,7 +141,7 @@ void MainWindow::set_menu() {
     connect(editXY, SIGNAL(triggered()), SLOT(editXYRequested()));
 
 
-    QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Select Data File", this);
+    QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Select Data", this);
 
     connect(loadRGF, SIGNAL(triggered()), SLOT(loadRGFRequested()));
 
