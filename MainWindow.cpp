@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QMenuBar>
+#include <QStatusBar>
 #include <QToolBar>
 #include <QVBoxLayout>
 #include <QVector>
@@ -67,7 +68,16 @@ void MainWindow::add_elements() {
     mainLayout->addWidget(settingsWidget);
 
 
-    runner = new Runner(this);
+
+    statusBar = new QStatusBar;
+
+    statusBar->showMessage("Ready", 2000);
+
+    setStatusBar(statusBar);
+
+
+
+    runner = new Runner(this, statusBar);
 
     mainLayout->addWidget(runner);
 
@@ -460,6 +470,8 @@ QString MainWindow::tryToSetFileAsProject(const QString& file, const QString& ex
         return file;
     }
     else {
+
+        qDebug() << "File: " << file;
 
         return QString();
     }

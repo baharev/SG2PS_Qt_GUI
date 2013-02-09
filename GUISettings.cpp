@@ -26,13 +26,19 @@ GUISettings::GUISettings() : strOptions(*new Map()) {
 
     strOptions[executable_name()]  = "sg2ps";
 
+    strOptions[eps2pdf_converter()] = "ps2pdf";
+
     strOptions[start_browsing_from_directory()] = QDir::homePath();
 
     strOptions[text_editor()] = QString();
 
     strOptions[file_manager()] = QString();
 
-    strOptions[show_logfile()] = "yes"; // TODO Stringly typed...
+    strOptions[convert_to_pdf()] = "yes"; // TODO Stringly typed...
+
+    strOptions[delete_eps_on_success()] = "yes";
+
+    strOptions[show_logfile()] = "yes";
 
     strOptions[show_result_directory()] = "yes";
 
@@ -65,6 +71,16 @@ QString GUISettings::getExecutableName() const {
     return getStrOption(executable_name());
 }
 
+QString GUISettings::eps2pdf_converter() const {
+
+    return "eps2pdf_converter";
+}
+
+QString GUISettings::getEps2PdfConverter() const {
+
+    return getStrOption(eps2pdf_converter());
+}
+
 QString GUISettings::start_browsing_from_directory() const {
 
     return "start_browsing_from_directory";
@@ -93,6 +109,26 @@ QString GUISettings::file_manager() const {
 QString GUISettings::getFileManager() const {
 
     return getStrOption(file_manager());
+}
+
+QString GUISettings::convert_to_pdf() const {
+
+    return "convert_to_pdf";
+}
+
+bool GUISettings::getConvertToPdf() const {
+
+    return getStrOption(convert_to_pdf()) == "yes";
+}
+
+QString GUISettings::delete_eps_on_success() const {
+
+    return "delete_eps_on_success";
+}
+
+bool GUISettings::getDeleteEpsOnSuccess() const {
+
+    return getStrOption(delete_eps_on_success()) == "yes";
 }
 
 QString GUISettings::show_logfile() const {

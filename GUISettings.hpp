@@ -25,11 +25,17 @@ public:
 
     QString getExecutableName() const;
 
+    QString getEps2PdfConverter() const;
+
     QString getStartBrowsingFromDirectory() const;
 
     QString getTextEditor() const;
 
     QString getFileManager() const;
+
+    bool getConvertToPdf() const;
+
+    bool getDeleteEpsOnSuccess() const;
 
     bool getShowLogfile() const;
 
@@ -49,11 +55,17 @@ private:
 
     QString executable_name() const;
 
+    QString eps2pdf_converter() const;
+
     QString start_browsing_from_directory() const;
 
     QString text_editor() const;
 
     QString file_manager() const;
+
+    QString convert_to_pdf() const;
+
+    QString delete_eps_on_success() const;
 
     QString show_logfile() const;
 

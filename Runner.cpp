@@ -7,11 +7,11 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "Runner.hpp"
+#include "ConvertAllEps.hpp"
 #include "ErrorMsg.hpp"
 #include "Launcher.hpp"
 #include "GlobalSettings.hpp"
 #include "ProcessManager.hpp"
-
 
 namespace {
 
@@ -21,7 +21,7 @@ const char RUNNING[] = "Please wait...";
 
 }
 
-Runner::Runner(QWidget *parent)
+Runner::Runner(QWidget *parent, QStatusBar* mainWindowStatusBar)
 :   QWidget(parent)
 {
 
@@ -44,12 +44,16 @@ Runner::Runner(QWidget *parent)
     layout->addStretch(1);
 
 
-
     processManager = new ProcessManager(this);
+
+    converter = new ConvertAllEps(this, mainWindowStatusBar);
+
 
     connect(processManager, SIGNAL(runFinished(bool,QString)), SLOT(onRunFinished(bool,QString)));
 
     connect(processManager, SIGNAL(runStarted()), SLOT(onRunStarted()));
+
+    connect(converter, SIGNAL(finished()), SLOT(onConversionFinished()));
 }
 
 void Runner::newProjectSelected(const QString& newProjectPath,
@@ -101,6 +105,24 @@ void Runner::onRunFinished(bool success, const QString& errorMsg) {
         showErrorMsg(errorMsg);
     }
 
+    showLog();
+
+    bool pointerToFolderOK = false;
+
+    finalProjectFolder = dirToShow(pointerToFolderOK); // Side effect: always deletes the pointer
+
+    if (pointerToFolderOK && opts().getConvertToPdf()) {
+
+        converter->run(finalProjectFolder);  // calls onConversionFinished in the end
+    }
+    else {
+
+        onConversionFinished();
+    }
+}
+
+void Runner::onConversionFinished() {
+
     runButton->setText(RUN);
 
     runButton->setEnabled(true);
@@ -108,8 +130,6 @@ void Runner::onRunFinished(bool success, const QString& errorMsg) {
     qDebug() << "Button enabled!";
 
     showResultDir();
-
-    showLog();
 }
 
 void Runner::showLog() const {
@@ -122,15 +142,15 @@ void Runner::showLog() const {
 
 void Runner::showResultDir() const {
 
-    QString dir_to_show = dirToShow(); // Side effect: always deletes the pointer
-
     if (opts().getShowResultDirectory()) {
 
-        showInFileManager(dir_to_show);
+        showInFileManager(finalProjectFolder);
     }
 }
 
-QString Runner::dirToShow() const {
+QString Runner::dirToShow(bool& pointerToFolderOK) const {
+
+    pointerToFolderOK = false;
 
     QString dir_to_show = projectPath;
 
@@ -144,6 +164,7 @@ QString Runner::dirToShow() const {
             QFileInfo(folder_name).isDir())
         {
             dir_to_show =  folder_name;
+            pointerToFolderOK = true;
         }
     }
 

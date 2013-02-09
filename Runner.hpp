@@ -8,7 +8,9 @@
 
 class QPushButton;
 class QHBoxLayout;
+class QStatusBar;
 class ProcessManager;
+class ConvertAllEps;
 
 class Runner : public QWidget {
 
@@ -16,7 +18,7 @@ class Runner : public QWidget {
 
 public:
 
-    explicit Runner(QWidget* parent);
+    explicit Runner(QWidget* parent, QStatusBar* mainWindowStatusBar);
 
     void newProjectSelected(const QString& newProjectPath, const QString& newProjectName);
 
@@ -32,13 +34,17 @@ private slots:
 
     void onRunFinished(bool success, const QString& errorMsg);
 
+    void onConversionFinished();
+
 private:
+
+    void convertEps2Pdf();
 
     void showLog() const;
 
     void showResultDir() const;
 
-    QString dirToShow() const;
+    QString dirToShow(bool& pointerToFolderOK) const;
 
     QPushButton* runButton;
 
@@ -46,11 +52,15 @@ private:
 
     ProcessManager* processManager;
 
+    ConvertAllEps* converter;
+
     QString logFile;
 
     QString projectPath;
 
     QString projectName;
+
+    QString finalProjectFolder;
 };
 
 #endif // RUNNER_HPP

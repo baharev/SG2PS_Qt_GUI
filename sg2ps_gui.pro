@@ -29,7 +29,9 @@ SOURCES += main.cpp\
     InfoWidget.cpp \
     ReservedColumnNames.cpp \
     Launcher_Win32.cpp \
-    Launcher_Linux.cpp
+    Launcher_Linux.cpp \
+    ConvertEPS2PDF.cpp \
+    ConvertAllEps.cpp
 
 HEADERS  += \
     LayoutConstants.hpp \
@@ -46,7 +48,9 @@ HEADERS  += \
     ResolveExitCode.hpp \
     Launcher.hpp \
     InfoWidget.hpp \
-    ReservedColumnNames.hpp
+    ReservedColumnNames.hpp \
+    ConvertEPS2PDF.hpp \
+    ConvertAllEps.hpp
 
 RESOURCES += \
     resources.qrc

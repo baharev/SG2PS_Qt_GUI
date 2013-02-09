@@ -81,6 +81,8 @@ private:
 
     Runner* runner;
 
+    QStatusBar* statusBar;
+
     QVBoxLayout* mainLayout;
 
     QString startDir;
