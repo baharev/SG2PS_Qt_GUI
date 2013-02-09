@@ -187,10 +187,12 @@ bool xlsFileRecognizedBySystem(const QString& file) {
 
 bool isInstalledSoftwareOK() {
 
-    if (!epsFileRecognizedBySystem("demo.eps")) {
-
-        return false;
-    }
+// FIXME Not clear what to do if the user did not accept
+// the GS licence that comes with the program
+//    if (!epsFileRecognizedBySystem("demo.eps")) {
+//
+//        return false;
+//    }
 
     if (!xlsFileRecognizedBySystem("demo.csv")) {
 

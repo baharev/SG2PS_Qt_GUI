@@ -299,7 +299,7 @@ void MainWindow::showManual() {
 
 void MainWindow::runDemo() {
 
-    // FIXME Check the existence of the demo files!
+    // FIXME Check the existence of the demo files! (rgf is checked)
     QMessageBox mbox(QMessageBox::Information, "Demo", "First, your installed software will be checked.");
     mbox.exec();
 
@@ -316,29 +316,42 @@ void MainWindow::runDemo() {
          return;
     }
 
-    mbox.setText("Almost there! :) Hit the <b>Run</b> button at the bottom of the main window and hopefully everthing works.");
+    mbox.setText("Hit the <b>Run</b> button at the bottom of the main window and hopefully everthing works.");
     mbox.exec();
+
+    // TODO Show the plot after the run is finished?
 }
 
 bool MainWindow::setupDemoRgf() {
 
-    QString file = fileDialog->getSaveFileName(this, "Select where you wish to place the demo file",
+    QString dest = fileDialog->getSaveFileName(this, "Select where you wish to place the demo file",
                                                startDir+"/demo.rgf", "*.rgf (*.rgf)");
-    if (file.isEmpty()) {
+    if (dest.isEmpty()) {
         return false;
     }
 
-    QFile::remove(file);
+    dest = QDir::toNativeSeparators(dest);
 
     QString src = QCoreApplication::applicationDirPath()+"/demo.rgf";
 
-    if (!QFile::copy(src,file)) {
-        showErrorMsg("copying "+QDir::toNativeSeparators(src)+" to "+
-                                QDir::toNativeSeparators(file)+" failed");
+    src  = QDir::toNativeSeparators(src);
+
+    if (!QFileInfo(src).exists()) {
+        showErrorMsg("problems with installation, the demo.rgf file is missing");
         return false;
     }
 
-    if (tryToSetFileAsProject(file, "rgf").isEmpty()) {
+    if (src!=dest) { // stupid but legal to overwrite the file with itself
+
+        QFile::remove(dest); // User already confirmed forced overwrite
+
+        if (!QFile::copy(src,dest)) {
+            showErrorMsg("copying "+src+" to "+dest+" failed");
+            return false;
+        }
+    }
+
+    if (tryToSetFileAsProject(dest, "rgf").isEmpty()) {
         return false;
     }
 
