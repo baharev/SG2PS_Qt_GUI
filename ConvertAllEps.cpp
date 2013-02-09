@@ -63,9 +63,9 @@ void ConvertAllEps::loop() {
 
     if (eps_files->empty()) {
 
-        statusBar->showMessage("Done", 2000);
+        statusBar->clearMessage();
 
-        emit finished();
+        emit finished(true);
 
         return;
     }
@@ -99,8 +99,8 @@ void ConvertAllEps::onSingleFileConversionFinished(bool success) {
 
         showErrorMsg("converting "+QDir::toNativeSeparators(currentFile->filePath())+" to PDF failed");
 
-        statusBar->showMessage("Error during conversion", 2000);
+        statusBar->clearMessage();
 
-        emit finished();
+        emit finished(false);
     }
 }

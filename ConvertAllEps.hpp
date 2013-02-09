@@ -28,7 +28,7 @@ public:
 
 signals:
 
-    void finished();
+    void finished(bool done); // false means failed
 
 private slots:
 

@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QStatusBar>
 #include "Runner.hpp"
 #include "ConvertAllEps.hpp"
 #include "ErrorMsg.hpp"
@@ -22,7 +23,8 @@ const char RUNNING[] = "Please wait...";
 }
 
 Runner::Runner(QWidget *parent, QStatusBar* mainWindowStatusBar)
-:   QWidget(parent)
+:   QWidget(parent),
+    statusBar(mainWindowStatusBar)
 {
 
     layout = new QHBoxLayout(this);
@@ -53,7 +55,7 @@ Runner::Runner(QWidget *parent, QStatusBar* mainWindowStatusBar)
 
     connect(processManager, SIGNAL(runStarted()), SLOT(onRunStarted()));
 
-    connect(converter, SIGNAL(finished()), SLOT(onConversionFinished()));
+    connect(converter, SIGNAL(finished(bool)), SLOT(onConversionFinished(bool)));
 }
 
 void Runner::newProjectSelected(const QString& newProjectPath,
@@ -95,6 +97,8 @@ void Runner::onRunStarted() {
 
     runButton->setText(RUNNING);
 
+    statusBar->showMessage("Running, please be patient...");
+
     qDebug() << "Button disabled!";
 }
 
@@ -117,15 +121,19 @@ void Runner::onRunFinished(bool success, const QString& errorMsg) {
     }
     else {
 
-        onConversionFinished();
+        onConversionFinished(success && pointerToFolderOK);
     }
 }
 
-void Runner::onConversionFinished() {
+void Runner::onConversionFinished(bool done) {
 
     runButton->setText(RUN);
 
     runButton->setEnabled(true);
+
+    QString msg = done ? QString("Done") : QString("Error occured");
+
+    statusBar->showMessage(msg, 2000);
 
     qDebug() << "Button enabled!";
 

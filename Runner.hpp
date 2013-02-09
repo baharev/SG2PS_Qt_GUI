@@ -34,7 +34,7 @@ private slots:
 
     void onRunFinished(bool success, const QString& errorMsg);
 
-    void onConversionFinished();
+    void onConversionFinished(bool done);
 
 private:
 
@@ -53,6 +53,8 @@ private:
     ProcessManager* processManager;
 
     ConvertAllEps* converter;
+
+    QStatusBar* statusBar;
 
     QString logFile;
 
