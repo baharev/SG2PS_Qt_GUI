@@ -312,23 +312,20 @@ void MainWindow::showManual() {
 void MainWindow::runDemo() {
 
     // FIXME Check the existence of the demo files! (rgf is checked)
-    QMessageBox mbox(QMessageBox::Information, "Demo", "First, your installed software will be checked.");
-    mbox.exec();
-
     if (!isInstalledSoftwareOK()) {
         return;
     }
 
-    mbox.setText("Your installed software seems to be OK. "
-                 "Now, an attempt will be made to evaluate a demo data file. "
-                 "You will be asked to save the demo file where you like.");
+    QMessageBox mbox;
+    mbox.setText("You will be asked to save the demo data file somewhere.\n"
+                 "Choose a directory at your convenience.");
     mbox.exec();
 
     if (!setupDemoRgf()) {
          return;
     }
 
-    mbox.setText("Hit the <b>Run</b> button at the bottom of the main window and hopefully everthing works.");
+    mbox.setText("Hit the <b>Run</b> button at the bottom of the main window. Let\'s hope everthing works.");
     mbox.exec();
 
     // TODO Show the plot after the run is finished?

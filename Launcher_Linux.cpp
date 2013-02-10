@@ -2,6 +2,7 @@
 // All rights reserved.
 // This code is published under the GNU Lesser General Public License.
 #ifdef __linux__
+#include <QDebug>
 #include <QProcess>
 #include <QString>
 #include "Launcher.hpp"

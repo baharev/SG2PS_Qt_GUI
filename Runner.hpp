@@ -44,6 +44,8 @@ private:
 
     void showResultDir() const;
 
+    void showPdfIfDemo() const;
+
     QString dirToShow(bool& pointerToFolderOK) const;
 
     QPushButton* runButton;

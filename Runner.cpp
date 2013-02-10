@@ -138,6 +138,8 @@ void Runner::onConversionFinished(bool done) {
     qDebug() << "Button enabled!";
 
     showResultDir();
+
+    showPdfIfDemo();
 }
 
 void Runner::showLog() const {
@@ -153,6 +155,22 @@ void Runner::showResultDir() const {
     if (opts().getShowResultDirectory()) {
 
         showInFileManager(finalProjectFolder);
+    }
+}
+
+void Runner::showPdfIfDemo() const {
+
+    if (projectName!="demo") {
+        return;
+    }
+
+    QString demoPDF = finalProjectFolder+"/5_ps_separated/STRIAE/ANG001_STRIAE_X.pdf";
+
+    qDebug() << "Trying to open demo pdf at" << demoPDF;
+
+    if (QFile::exists(demoPDF)) {
+
+        openPDF(demoPDF);
     }
 }
 
