@@ -123,7 +123,7 @@ void MainWindow::set_menu() {
     connect(manual, SIGNAL(triggered()), SLOT(showManual()));
 
 
-    QAction* demo = new QAction(QIcon(":/images/smile_icon.png"), "Demo", this) ;
+    QAction* demo = new QAction(QIcon(":/images/blockdevice-cubes-icon.png"), "Demo", this) ;
 
     connect(demo, SIGNAL(triggered()), SLOT(runDemo()));
 
@@ -282,7 +282,17 @@ void MainWindow::editGUISettings() {
 
     openInTextEditor(path+"/"+opts().getSettingsFileName());
 
-    QMessageBox::information(this, "Info", "If you are done editing the settings file, hit OK to reload the new settings!");
+    QMessageBox mbox;
+
+    mbox.setWindowTitle("Information");
+
+    mbox.setText("Only if you are done editing the settings file, hit the button below!");
+
+    mbox.setIcon(QMessageBox::Information);
+
+    mbox.setButtonText(QMessageBox::Ok, "OK, I am done, reload the settings now!");
+
+    mbox.exec();
 
     reloadGlobalSettings(); // I don't like it, global settings are now mutable
 }

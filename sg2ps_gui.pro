@@ -65,6 +65,6 @@ OTHER_FILES += \
     images/spreadsheet48.png \
     images/spreadsheetB48.png \
     images/document_new48.png \
-    images/smile_icon.png
+    images/blockdevice-cubes-icon.png
 
 
