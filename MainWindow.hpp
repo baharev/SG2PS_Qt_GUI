@@ -63,6 +63,8 @@ private:
 
     QString saveFileAsDialog(const QString& extension);
 
+    QString suggestedFileName(const QString& extension, bool read_only = true) const;
+
     void newProjectSelected();
 
     QString newFileRequested(const QString& extension, const QVector<QString>& header);

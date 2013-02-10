@@ -71,6 +71,8 @@ void MainWindow::add_elements() {
 
     statusBar = new QStatusBar;
 
+    statusBar->setStyleSheet("QStatusBar { border: 1px solid grey; border-radius: 3px; } ");
+
     statusBar->showMessage("Ready", 2000);
 
     setStatusBar(statusBar);
@@ -362,7 +364,7 @@ QString MainWindow::selectFile(const QString& extension) {
 
     QString filter = "*."+extension+" (*."+extension+")";
 
-    QString file = fileDialog->getOpenFileName(this,"Select File",startDir,filter);
+    QString file = fileDialog->getOpenFileName(this,"Select an existing file",suggestedFileName(extension),filter);
 
     return tryToSetFileAsProject(file, extension);
 }
@@ -396,7 +398,26 @@ QString MainWindow::saveFileAsDialog(const QString& extension) {
 
     QString filter = "*."+extension+" (*."+extension+")";
 
-    return fileDialog->getSaveFileName(this, "Create file", startDir, filter);
+    bool read_only = false;
+
+    return fileDialog->getSaveFileName(this, "Create a new empty file", suggestedFileName(extension, read_only), filter);
+}
+
+QString MainWindow::suggestedFileName(const QString& extension, bool read_only) const {
+
+    if (projectName.isEmpty()) {
+
+        return startDir;
+    }
+
+    QString suggest_file = startDir+"/"+projectName+"."+extension;
+
+    bool exists = QFile::exists(suggest_file);
+
+    qDebug() << "File" << suggest_file << (exists?"exists":"doesn't exist");
+
+    // XOR
+    return ( (exists&&read_only) || (!exists&&!read_only) ) ? suggest_file : startDir;
 }
 
 QString MainWindow::newFileRequested(const QString& extension, const QVector<QString>& header) {
