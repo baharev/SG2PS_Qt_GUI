@@ -33,7 +33,7 @@ Runner::Runner(QWidget *parent, QStatusBar* mainWindowStatusBar)
 
     runButton = new QPushButton(RUN);
 
-    QFontMetrics fontMetrics = runButton->font();
+    QFontMetrics fontMetrics = runButton->fontMetrics();
 
     runButton->setMinimumWidth(fontMetrics.width(RUNNING)*1.5);
 
