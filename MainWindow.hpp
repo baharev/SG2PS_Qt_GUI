@@ -75,6 +75,8 @@ private:
 
     bool setupDemoRgf();
 
+    bool copyDemoRgf(const QString& src);
+
     QFileDialog* fileDialog;
 
     InfoWidget* infoWidget;

@@ -314,35 +314,20 @@ void MainWindow::showManual() {
 
 void MainWindow::runDemo() {
 
-    // FIXME Check the existence of the demo files! (rgf is checked)
     if (!isInstalledSoftwareOK()) {
         return;
     }
-
-    QMessageBox mbox;
-    mbox.setText("You will be asked to save the demo data file somewhere.\n"
-                 "Choose a directory at your convenience.");
-    mbox.exec();
 
     if (!setupDemoRgf()) {
          return;
     }
 
+    QMessageBox mbox;
     mbox.setText("Hit the <b>Run</b> button at the bottom of the main window. Let\'s hope everthing works.");
     mbox.exec();
-
-    // TODO Show the plot after the run is finished?
 }
 
 bool MainWindow::setupDemoRgf() {
-
-    QString dest = fileDialog->getSaveFileName(this, "Select where you wish to place the demo file",
-                                               startDir+"/demo.rgf", "*.rgf (*.rgf)");
-    if (dest.isEmpty()) {
-        return false;
-    }
-
-    dest = QDir::toNativeSeparators(dest);
 
     QString src = QCoreApplication::applicationDirPath()+"/demo.rgf";
 
@@ -352,6 +337,24 @@ bool MainWindow::setupDemoRgf() {
         showErrorMsg("problems with installation, the demo.rgf file is missing");
         return false;
     }
+
+    return copyDemoRgf(src);
+}
+
+bool MainWindow::copyDemoRgf(const QString& src) {
+
+    QMessageBox mbox;
+    mbox.setText("You will be asked to save the demo data file somewhere.\n"
+                 "Choose a directory at your convenience.");
+    mbox.exec();
+
+    QString dest = fileDialog->getSaveFileName(this, "Select where you wish to place the demo file",
+                                               startDir+"/demo.rgf", "*.rgf (*.rgf)");
+    if (dest.isEmpty()) {
+        return false;
+    }
+
+    dest = QDir::toNativeSeparators(dest);
 
     if (src!=dest) { // stupid but legal to overwrite the file with itself
 
