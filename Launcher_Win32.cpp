@@ -22,7 +22,7 @@ void openDirectoryWithFileManager(const QString& directory) {
     ShellExecute(GetDesktopWindow(), L"explore", (wchar_t*)directory.utf16(), NULL, NULL, SW_SHOWMAXIMIZED);
 }
 
-QString getAssociatedApp(const wchar_t* extension, const wchar_t* word = L"open") {
+QString getAssociatedApp(const wchar_t* extension, const wchar_t* word /* = L"open" */) {
 
     DWORD dwSize = 512;
 

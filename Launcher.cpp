@@ -7,10 +7,8 @@
 #include <QProcess>
 #include <QString>
 #include "Launcher.hpp"
-#include "GlobalSettings.hpp"
 #include "ErrorMsg.hpp"
-
-QString getAssociatedApp(const wchar_t* extension, const wchar_t* word = L"open");
+#include "GlobalSettings.hpp"
 
 void openInTextEditor(const QString& fileName) {
 
@@ -90,26 +88,33 @@ void openPDF(const QString& fileName) {
     }
 }
 
-bool openSpreadsheet(const QString& file) {
+void handle_missing_spreadsheet_editor() {
 
-    QString spreadsheet = opts().getSpreadsheet();
+    // TODO Make sure the Manual actually has such a section
+    // TODO Try to resolve it on loading the applicaton,
+    // somewhat ugly that it occurs later on demand
 
-    if (spreadsheet.isEmpty()) {
+    showErrorMsg("could not find the default application associated with spreadsheet documents. "
+                 "Please read the manual under <b>Editing data files</b>");
+}
 
-        spreadsheet = getAssociatedApp(L".xls");
+bool openSpreadsheetWithDefault(const QString& nativeFileName) {
+
+    if (canOpenFileExtension(L".csv")) {
+
+        qDebug() << "Attempting to open " << nativeFileName << " with default application";
+
+        return openWithDefaultApp(nativeFileName);
     }
+    else {
 
-    if (spreadsheet.isEmpty()) {
-
-        // TODO Make sure the Manual actually has such a section
-        // TODO Try to resolve it on loading the applicaton,
-        // somewhat ugly that it occurs later on demand
-
-        showErrorMsg("could not find the default application associated with spreadsheet documents. "
-                     "Please read the manual under <b>Editing data files</b>");
+        handle_missing_spreadsheet_editor();
 
         return false;
     }
+}
+
+bool openSpreadsheetWithUserSpecified(const QString& spreadsheet, const QString& nativeFileName) {
 
     QStringList args;
 
@@ -120,10 +125,27 @@ bool openSpreadsheet(const QString& file) {
         args.append(flag);
     }
 
-    args.append( QDir::toNativeSeparators(file) );
+    args.append( nativeFileName );
+
+    qDebug() << "Attempting to execute " << spreadsheet << "   " << args;
 
     return QProcess::startDetached(spreadsheet, args);
+}
 
+bool openSpreadsheet(const QString& file) {
+
+    QString spreadsheet = opts().getSpreadsheet();
+
+    QString nativeFileName = QDir::toNativeSeparators( file );
+
+    if (spreadsheet.isEmpty()) {
+
+        return openSpreadsheetWithDefault(nativeFileName);
+    }
+    else {
+
+        return openSpreadsheetWithUserSpecified(spreadsheet, nativeFileName);
+    }
 }
 
 QString run_back_end_with(const char flag[]) {
@@ -153,52 +175,76 @@ QString version_id_of_back_end() {
     return id.isEmpty() ? QString("unknown") : id;
 }
 
-bool epsFileRecognizedBySystem(const QString& file) {
+bool isPdfViewerOK() {
 
-    QString epsViewer = getAssociatedApp(L".eps");
+    // TODO Not clear what to do if the user did not accept
+    // the GS licence that comes with the program
 
-    if (epsViewer.isEmpty()) {
+    if (opts().hasDefinedPdfViewer()) {
 
-        return openWithDefaultApp(file);
+        return true; // and hope it is OK...
+    }
+    else if (canOpenFileExtension(L".pdf")) {
+
+        return true;
     }
     else {
 
-        qDebug() << epsViewer;
+        qDebug() << "Neither defined, nor associated pdf viewer!";
 
-        return true; // Hopefully something valid is given...
+        handle_missing_pdf_viewer();
+
+        return false;
     }
 }
 
-bool xlsFileRecognizedBySystem(const QString& file) {
+bool isSpreadsheetOK() {
 
-    QString xlsEditor = getAssociatedApp(L".xls");
+    if (opts().hasDefinedSpreadsheet()) {
 
-    if (xlsEditor.isEmpty()) {
+        return true; // and hope it is OK...
+    }
+    else if (canOpenFileExtension(L".csv")) {
 
-        return openSpreadsheet(file); // also varies, compared to xls
+        // TODO On Linux it is not OK, the user must define it anyway
+        // because .rgf is likely to be mapped to the text editor but we check
+        // for the .csv extension... :(
+
+        return true;
     }
     else {
 
-        qDebug() << xlsEditor;
+        qDebug() << "Neither defined, nor associated app for editing CSV files!";
 
-        return true; // Hopefully something valid is given...
+        handle_missing_spreadsheet_editor();
+
+        return false;
+    }
+}
+
+bool isBackendOK() {
+
+    QString id = run_back_end_with("--version-id");
+
+    if (id.isEmpty()) {
+
+        showErrorMsg("failed to start command line backend sg2ps");
+
+        return false;
+    }
+    else {
+
+        return true;
     }
 }
 
 bool isInstalledSoftwareOK() {
 
-// FIXME Not clear what to do if the user did not accept
-// the GS licence that comes with the program
-//    if (!epsFileRecognizedBySystem("demo.eps")) {
-//
-//        return false;
-//    }
+    bool pdfOK = isPdfViewerOK();
 
-    if (!xlsFileRecognizedBySystem("demo.csv")) {
+    bool spreadsheetOK = isSpreadsheetOK();
 
-        return false;
-    }
+    bool backendOK = isBackendOK();
 
-    return true;
+    return pdfOK && spreadsheetOK && backendOK;
 }
-

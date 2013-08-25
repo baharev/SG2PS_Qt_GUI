@@ -8,6 +8,8 @@ class QString;
 
 bool openWithDefaultApp(const QString& file);
 
+bool canOpenFileExtension(const wchar_t* extension);
+
 void openDirectoryWithFileManager(const QString& directory);
 
 void openInTextEditor(const QString& fileName);

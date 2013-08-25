@@ -47,6 +47,10 @@ public:
 
     QString getSpreadsheetFlag() const;
 
+    bool hasDefinedPdfViewer() const;
+
+    bool hasDefinedSpreadsheet() const;
+
     ~GUISettings();
 
 private:

@@ -181,6 +181,16 @@ QString GUISettings::getSpreadsheetFlag() const {
     return getStrOption(spreadsheet_flag());
 }
 
+bool GUISettings::hasDefinedPdfViewer() const {
+
+    return !getPdfViewer().isEmpty();
+}
+
+bool GUISettings::hasDefinedSpreadsheet() const {
+
+    return !getSpreadsheet().isEmpty();
+}
+
 void GUISettings::readSettings() {
 
     QVector<Pair> userOptions = readPairs();
