@@ -11,8 +11,6 @@ win32 {
     LIBS += -lshlwapi
 }
 
-#CONFIG += c++11
-
 TARGET = sg2ps_gui
 TEMPLATE = app
 

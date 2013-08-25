@@ -60,7 +60,13 @@ bool hasAssociatedApp(const QString& mime) {
 
     QProcess p;
 
-    QStringList args({"query", "default", mime});
+    QStringList args;
+
+    args.append("query");
+
+    args.append("default");
+
+    args.append(mime);
 
     p.start("xdg-mime", args );
 
