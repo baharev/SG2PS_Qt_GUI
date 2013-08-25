@@ -98,9 +98,15 @@ void handle_missing_spreadsheet_editor() {
                  "Please read the manual under <b>Editing data files</b>");
 }
 
+bool canOpenSpreadsheet() {
+
+    return (canOpenFileExtension(L".xls")); // .csv is often associated with the text editor
+
+}
+
 bool openSpreadsheetWithDefault(const QString& nativeFileName) {
 
-    if (canOpenFileExtension(L".csv")) {
+    if (canOpenSpreadsheet()) {
 
         qDebug() << "Attempting to open " << nativeFileName << " with default application";
 
@@ -204,11 +210,11 @@ bool isSpreadsheetOK() {
 
         return true; // and hope it is OK...
     }
-    else if (canOpenFileExtension(L".csv")) {
+    else if (canOpenSpreadsheet()) {
 
         // TODO On Linux it is not OK, the user must define it anyway
         // because .rgf is likely to be mapped to the text editor but we check
-        // for the .csv extension... :(
+        // for the .xls extension... :(
 
         return true;
     }
@@ -246,5 +252,5 @@ bool isInstalledSoftwareOK() {
 
     bool backendOK = isBackendOK();
 
-    return pdfOK && spreadsheetOK && backendOK;
+    return pdfOK && spreadsheetOK  && backendOK;
 }

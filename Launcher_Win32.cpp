@@ -22,7 +22,7 @@ void openDirectoryWithFileManager(const QString& directory) {
     ShellExecute(GetDesktopWindow(), L"explore", (wchar_t*)directory.utf16(), NULL, NULL, SW_SHOWMAXIMIZED);
 }
 
-QString getAssociatedApp(const wchar_t* extension, const wchar_t* word /* = L"open" */) {
+QString getAssociatedApp(const wchar_t* extension, const wchar_t* word = L"open") {
 
     DWORD dwSize = 512;
 
@@ -42,7 +42,7 @@ QString getAssociatedApp(const wchar_t* extension, const wchar_t* word /* = L"op
     case S_OK:
         app = QString::fromWCharArray(appPath);
         app = QDir::toNativeSeparators(app);
-        qDebug() << "Extension" << extension;
+        qDebug() << "Extension" << QString::fromWCharArray(extension);
         qDebug() << "App" << app;
         break;
     case E_POINTER:
@@ -56,6 +56,17 @@ QString getAssociatedApp(const wchar_t* extension, const wchar_t* word /* = L"op
     }
 
     return app;
+}
+
+bool canOpenFileExtension(const wchar_t* ext) {
+
+    QString extension = QString::fromWCharArray(ext);
+
+    qDebug() << "Looking for the associated app for extension " << extension;
+
+    QString app = getAssociatedApp(ext);
+
+    return !app.isEmpty();
 }
 
 
