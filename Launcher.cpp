@@ -71,20 +71,55 @@ void handle_missing_pdf_viewer() {
     }
 }
 
-void openPDF(const QString& fileName) {
+bool canOpenPDF() {
 
-    QString nativeFileName = QDir::toNativeSeparators(fileName);
+    return canOpenFileExtension(L".pdf");
+}
+
+bool openPDFWithDefault(const QString& nativeFileName) {
+
+    if (canOpenPDF()) {
+
+        qDebug() << "Attempting to open " << nativeFileName << " with default application";
+
+        return openWithDefaultApp(nativeFileName);
+    }
+    else {
+
+        handle_missing_pdf_viewer();
+
+        return false;
+    }
+}
+
+bool openPDFWithUserSpecified(const QString& pdf_viewer, const QString& nativeFileName) {
+
+    qDebug() << "Attempting to execute " << pdf_viewer << "   " << nativeFileName;
+
+    return QProcess::startDetached(pdf_viewer+" "+nativeFileName);
+}
+
+bool openPDF(const QString& fileName) {
 
     QString pdf_viewer = opts().getPdfViewer();
 
-    if (pdf_viewer.isEmpty() || !QProcess::startDetached(pdf_viewer+" " +nativeFileName)) {
+    QString nativeFileName = QDir::toNativeSeparators( fileName );
 
-        bool success = openWithDefaultApp(nativeFileName);
+    QFile file(nativeFileName);
 
-        if (!success) {
+    if (!file.exists()) {
 
-            handle_missing_pdf_viewer();
-        }
+        showErrorMsg("file "+nativeFileName+" does not exist");
+
+        return false;
+    }
+    else if (pdf_viewer.isEmpty()) {
+
+        return openPDFWithDefault(nativeFileName);
+    }
+    else {
+
+        return openPDFWithUserSpecified(pdf_viewer, nativeFileName);
     }
 }
 
@@ -190,7 +225,7 @@ bool isPdfViewerOK() {
 
         return true; // and hope it is OK...
     }
-    else if (canOpenFileExtension(L".pdf")) {
+    else if (canOpenPDF()) {
 
         return true;
     }

@@ -14,7 +14,7 @@ void openDirectoryWithFileManager(const QString& directory);
 
 void openInTextEditor(const QString& fileName);
 
-void openPDF(const QString& fileName);
+bool openPDF(const QString& fileName);
 
 void showInFileManager(const QString& directory);
 
