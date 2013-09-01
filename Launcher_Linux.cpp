@@ -23,6 +23,29 @@ bool openWithDefaultApp(const QString& file) {
     return success;
 }
 
+bool openWithAppAssoc(const QString& nativeFileName, const QString& extension) {
+
+    qDebug() << "Extension" << extension << "ignored, opening with xdg-open instead";
+
+    return openWithDefaultApp(nativeFileName);
+}
+
+bool openWithShortAppname(const QString& filename, const QString& appname, const QString& flag) {
+
+    QStringList args;
+
+    if (!flag.isEmpty()) {
+
+        args.append(flag);
+    }
+
+    args.append(filename);
+
+    qDebug() << "Attempting to execute" << appname << args;
+
+    return QProcess::startDetached(appname, args);
+}
+
 void openDirectoryWithFileManager(const QString& directory) {
 
     openWithDefaultApp(directory);
@@ -51,7 +74,7 @@ QString getMimeTypeForExtension(const QString& extension) {
     return mime;
 }
 
-bool hasAssociatedApp(const QString& mime) {
+bool associatedAppExists(const QString& mime) {
 
     if (mime.isEmpty()) {
 
@@ -91,7 +114,7 @@ bool hasAssociatedApp(const QString& mime) {
     return !defaultApp.isEmpty();
 }
 
-bool canOpenFileExtension(const wchar_t* ext) {
+bool hasAssociatedApp(const wchar_t* ext) {
 
     QString extension = QString::fromWCharArray(ext);
 
@@ -99,7 +122,7 @@ bool canOpenFileExtension(const wchar_t* ext) {
 
     QString mime = getMimeTypeForExtension(extension);
 
-    return hasAssociatedApp(mime);
+    return associatedAppExists(mime);
 }
 
 #endif

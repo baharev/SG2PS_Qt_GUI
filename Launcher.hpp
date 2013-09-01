@@ -6,6 +6,13 @@
 
 class QString;
 
+// FIXME Clean up the mess: which open does what?
+// Which is platform specific, which isn't?
+// When is it necessary to enclose the program name / file name with "-s?
+// Like this:
+
+// Linux: calls xdg-open <file>
+// Win32: calls ShellExecute open <file>
 bool openWithDefaultApp(const QString& file);
 
 bool openWithAppAssoc(const QString& file, const QString& extension);
