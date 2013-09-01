@@ -58,7 +58,7 @@ QString getAssociatedApp(const wchar_t* extension, const wchar_t* word = L"open"
     return app;
 }
 
-bool canOpenFileExtension(const wchar_t* ext) {
+bool hasAssociatedApp(const wchar_t* ext) {
 
     QString extension = QString::fromWCharArray(ext);
 
@@ -69,5 +69,31 @@ bool canOpenFileExtension(const wchar_t* ext) {
     return !app.isEmpty();
 }
 
+bool openWithShortAppname(const QString& nativeFilename, const QString& shortAppName, const QString& ) {
+
+    QString file("\""+nativeFilename+"\"");
+
+    qDebug() << "Attempting to execute command" << shortAppName << file;
+
+    int ret = (int) ShellExecute(GetDesktopWindow(), L"open", (wchar_t*)shortAppName.utf16(), (wchar_t*)file.utf16(), NULL, SW_SHOWNORMAL);
+
+    return ret > 32;
+}
+
+bool openWithAppAssoc(const QString& file, const QString& extension) {
+
+    QString app = getAssociatedApp((const wchar_t*)extension.utf16());
+
+    if (app.isEmpty()) {
+
+        return false;
+    }
+    else {
+
+        QString dummy; // TODO Default arg instead?
+
+        return openWithShortAppname(file, app, dummy);
+    }
+}
 
 #endif

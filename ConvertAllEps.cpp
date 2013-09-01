@@ -45,9 +45,9 @@ void ConvertAllEps::findAllFiles() {
 
     eps_files->clear();
 
-    QDir dir = QDir(projectFolder+"/5_ps_separated/");
+    QDir dir = QDir(projectFolder+"/5_ps_separated/");  // TODO Another magic constant
 
-    *directories = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name); // TODO Another magic constant
+    *directories = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
 
     for (QList<QFileInfo>::iterator subdir=directories->begin(); subdir!=directories->end(); ++subdir) {
 

@@ -73,7 +73,7 @@ void handle_missing_pdf_viewer() {
 
 bool canOpenPDF() {
 
-    return canOpenFileExtension(L".pdf");
+    return hasAssociatedApp(L".pdf");
 }
 
 bool openPDFWithDefault(const QString& nativeFileName) {
@@ -96,6 +96,9 @@ bool openPDFWithUserSpecified(const QString& pdf_viewer, const QString& nativeFi
 
     qDebug() << "Attempting to execute " << pdf_viewer << "   " << nativeFileName;
 
+    // FIXME Open it as in spreadsheet, needs "program name" if constains spaces,
+    // otherwise must NOT use "acroread"
+    // grep for QProcess::startDetached where the changes are needed
     return QProcess::startDetached(pdf_viewer+" "+nativeFileName);
 }
 
@@ -135,7 +138,7 @@ void handle_missing_spreadsheet_editor() {
 
 bool canOpenSpreadsheet() {
 
-    return (canOpenFileExtension(L".xls")); // .csv is often associated with the text editor
+    return (hasAssociatedApp(L".xls")); // .csv is often associated with the text editor
 
 }
 
@@ -145,7 +148,7 @@ bool openSpreadsheetWithDefault(const QString& nativeFileName) {
 
         qDebug() << "Attempting to open " << nativeFileName << " with default application";
 
-        return openWithDefaultApp(nativeFileName);
+        return openWithAppAssoc(nativeFileName, QString::fromWCharArray(L".xls"));
     }
     else {
 
@@ -166,11 +169,7 @@ bool openSpreadsheetWithUserSpecified(const QString& spreadsheet, const QString&
         args.append(flag);
     }
 
-    args.append( nativeFileName );
-
-    qDebug() << "Attempting to execute " << spreadsheet << "   " << args;
-
-    return QProcess::startDetached(spreadsheet, args);
+    return openWithShortAppname(nativeFileName, spreadsheet, flag);
 }
 
 bool openSpreadsheet(const QString& file) {
@@ -181,9 +180,13 @@ bool openSpreadsheet(const QString& file) {
 
     if (spreadsheet.isEmpty()) {
 
+        qDebug() << "Opening with app associated with .xls";
+
         return openSpreadsheetWithDefault(nativeFileName);
     }
     else {
+
+         qDebug() << "Opening with" << spreadsheet;
 
         return openSpreadsheetWithUserSpecified(spreadsheet, nativeFileName);
     }
