@@ -125,7 +125,7 @@ Option opts[] = {
     << "Symmetric"  << "S" << setDefault
     << "Asymmetric" << "A",
 
-    Option("Rose diagram according to", "ROSEDIRECTION")
+    Option("Plot rose diagram according to", "ROSEDIRECTION")
     << "Strike directions" << "S" << setDefault
     << "Dip directions"    << "D",
 
