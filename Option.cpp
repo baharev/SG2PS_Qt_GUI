@@ -70,6 +70,10 @@ Option opts[] = {
     << "Mostafa (2005)"  << "O"
     << "None"            << "N",
 
+    Option("Stress estimator in clustering", "RUP_CLUSTERING")
+    << "Don\'t use"               << "N" << setDefault
+    << "Use angular misfit (ANG)" << "A"
+    << "Relative upsilon (RUP)"   << "R",
 
     Option("Virtual symmetrical data set", "VIRTUAL")
     << "Yes" << "Y"
@@ -121,12 +125,24 @@ Option opts[] = {
     << "Symmetric"  << "S" << setDefault
     << "Asymmetric" << "A",
 
+    Option("Rose diagram according to", "ROSEDIRECTION")
+    << "Strike directions" << "S" << setDefault
+    << "Dip directions"    << "D",
 
     Option("Bin size for rose plot in degrees", "ROSEBINNING")
     <<  "2.5" << "A"
     <<  "5.0" << "B"
     << "10.0" << "C" << setDefault
-    << "22.5" << "D"
+    << "22.5" << "D",
+
+    Option("Density contouring on stereonet", "CONTOURING")
+    << "None"                  << "N" << setDefault
+    << "Schmidt 1% method"     << "S"
+    << "Kamb\'s (1959) method" << "K",
+
+    Option("Grayscale", "GRAYSCALE")
+    << "Coloured output" << "N" << setDefault
+    << "Grayscale mode" << "Y"
 
 };
 
