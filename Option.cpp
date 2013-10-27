@@ -135,10 +135,10 @@ Option opts[] = {
     << "10.0" << "C" << setDefault
     << "22.5" << "D",
 
-    Option("Density contouring on stereonet", "CONTOURING")
-    << "None"                  << "N" << setDefault
-    << "Schmidt 1% method"     << "S"
-    << "Kamb\'s (1959) method" << "K",
+//    Option("Density contouring on stereonet", "CONTOURING")
+//    << "None"                  << "N" << setDefault
+//    << "Schmidt 1% method"     << "S"
+//    << "Kamb\'s (1959) method" << "K",
 
     Option("Grayscale", "GRAYSCALE")
     << "Coloured output" << "N" << setDefault
