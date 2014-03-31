@@ -37,6 +37,8 @@ private slots:
 
     void showHomepage();
 
+    void showPaper();
+
     void showManual();
 
     void runDemo();

@@ -133,6 +133,11 @@ void MainWindow::set_menu() {
     connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
 
 
+    QAction *paper = new QAction("Jump to the paper", this);
+
+    connect(paper, SIGNAL(triggered()), SLOT(showPaper()));
+
+
     QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "New Data", this);
 
     connect(createRGF, SIGNAL(triggered()), SLOT(newRGFRequested()));
@@ -203,6 +208,8 @@ void MainWindow::set_menu() {
     help->addAction(demo);
 
     help->addAction(homepage);
+
+    help->addAction(paper);
 
     help->addAction(showAboutQt);
 
@@ -313,6 +320,11 @@ void MainWindow::editGUISettings() {
 void MainWindow::showHomepage() {
 
     openWithDefaultApp("http://www.sg2ps.eu/index.htm?version="+version_id_of_back_end());
+}
+
+void MainWindow::showPaper() {
+
+    openWithDefaultApp("http://dx.doi.org/10.1016/j.cageo.2013.12.010");
 }
 
 void MainWindow::showManual() {
