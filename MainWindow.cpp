@@ -213,6 +213,16 @@ void MainWindow::about() {
 
     QString msg("SG2PS "+QString::fromStdWString(L"—") +" Structural Geology to PostScript\n\n");
 
+    msg.append( "Please cite us!\n\n" +
+                QString::fromStdWString(L"Á. Sasvári, ") +
+                "A. Baharev. SG2PS (structural geology to postscript "
+                "converter) " + QString::fromStdWString(L" — ")+
+                "A graphical solution for brittle structural data "
+                "evaluation and paleostress calculation. "
+                "Computers and Geosciences. 66, 81-93, 2014\n\n"
+
+                "http://dx.doi.org/10.1016/j.cageo.2013.12.010\n\n");
+
     msg.append("Command line application built on ");
 
     msg.append(back_end_was_built_on()+"\n");
