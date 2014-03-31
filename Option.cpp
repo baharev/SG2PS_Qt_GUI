@@ -68,6 +68,7 @@ Option opts[] = {
     << "Michael (1984)"  << "M"
     << "Angelier (1990)" << "A"
     << "Mostafa (2005)"  << "O"
+    << "Brute force"     << "B"
     << "None"            << "N",
 
     Option("Stress estimator in clustering", "RUP_CLUSTERING")
@@ -135,10 +136,14 @@ Option opts[] = {
     << "10.0" << "C" << setDefault
     << "22.5" << "D",
 
-//    Option("Density contouring on stereonet", "CONTOURING")
-//    << "None"                  << "N" << setDefault
-//    << "Schmidt 1% method"     << "S"
-//    << "Kamb\'s (1959) method" << "K",
+    Option("Density contouring on stereonet", "CONTOURING")
+    << "None"                       << "N" << setDefault
+    //<< "Schmidt 1% method"      << "S"
+    //<< "Kamb\'s (1959) method"  << "K"
+    << "Dip direction / bearing"    << "D"
+    << "Strike direction / bearing" << "S"
+    << "Plane normal / bearing"     << "O"
+    << "Striae bearing / bearing"   << "B",
 
     Option("Grayscale", "GRAYSCALE")
     << "Coloured output" << "N" << setDefault
