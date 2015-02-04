@@ -9,56 +9,40 @@ namespace {
 
 const Default setDefault = Default();
 
-Option opts[] = {
+Option plot_opts[] = {
 
     Option("Data convention", "DATARULE")
     << "German dip directon" << "G" << setDefault
     << "Right hand rule" << "R",
 
-
     Option("Plot type", "PLOT")
     << "Angelier plot" << "A" << setDefault
     << "Hoeppner pole point" << "H",
-
 
     Option("Projection type", "PLOTTYPE")
     << "Schmidt" << "S" << setDefault
     << "Wulff"   << "W",
 
-
     Option("Hemisphere", "HEMISPHERE")
     << "Upper" << "U"
     << "Lower" << "L" << setDefault,
 
+    Option("Contouring on stereonet", "CONTOURING")
+    << "None"                       << "N" << setDefault
+    //<< "Schmidt 1% method"      << "S"
+    //<< "Kamb\'s (1959) method"  << "K"
+    << "Dip direction / bearing"    << "D"
+    << "Strike direction / bearing" << "S"
+    << "Plane normal / bearing"     << "O"
+    << "Striae bearing / bearing"   << "B",
 
     Option("Bedding & palaeonorth correction", "TILTING")
     << "Re-tilt with the bedding" << "B"
     << "Only palaeonorth direction" << "P"
-    << "Both" << "A" << setDefault,
+    << "Both" << "A" << setDefault
+};
 
-
-    Option("Sort by groups as well", "GROUP")
-    << "Yes" << "Y" << setDefault
-    << "No"  << "N",
-
-
-    Option("Cluster numbers", "CLUSTERNUMBER")
-    << "Ideal" << "A"
-    << "Don\'t use" << "N" << setDefault
-    << "2" << "2"
-    << "3" << "3"
-    << "4" << "4"
-    << "5" << "5"
-    << "6" << "6"
-    << "7" << "7"
-    << "8" << "8"
-    << "9" << "9",
-
-
-    Option("Labelling", "LABELING")
-    << "Yes" << "Y"
-    << "No"  << "N" << setDefault,
-
+Option inver_opts[] = {
 
     Option("Inversion methodology", "INVERSION")
     << "NDA after Sprang (1972)" << "D" << setDefault
@@ -71,18 +55,9 @@ Option opts[] = {
     << "Brute force"     << "B"
     << "None"            << "N",
 
-    Option("Stress estimator in clustering", "RUP_CLUSTERING")
-    << "Don\'t use"               << "N" << setDefault
-    << "Use angular misfit (ANG)" << "A"
-    << "Relative upsilon (RUP)"   << "R",
-
-    Option("Virtual symmetrical data set", "VIRTUAL")
-    << "Yes" << "Y"
-    << "No"  << "N" << setDefault,
-
-    Option("Ideal movement direction display", "IDEALMOVEMENT")
-    << "Yes" << "Y"
-    << "No"  << "N" << setDefault,
+    Option("Fracture weight point statistics", "BINGHAM")
+    << "Bingham statistics" << "B" << setDefault
+    << "Not needed" << "N",
 
     // TODO Spinbox would be more appropriate
     Option("Maximum stress & slickenside direction angle", "STRESSANGLE")
@@ -102,11 +77,67 @@ Option opts[] = {
     << "75" << "75"
     << "80" << "80",
 
+    Option("Virtual symmetrical data set", "VIRTUAL")
+    << "Yes" << "Y"
+    << "No"  << "N" << setDefault
+};
 
-    Option("Fracture weight point statistics", "BINGHAM")
-    << "Bingham statistics" << "B" << setDefault
-    << "Not needed" << "N",
+// FIXME Incomplete
+Option group_opts[] = {
 
+    // FIXME Inputgroup
+
+    Option("Sort by groups as well", "GROUP")
+    << "Yes" << "Y" << setDefault
+    << "No"  << "N",
+
+    Option("Cluster numbers", "CLUSTERNUMBER")
+    << "Ideal" << "A"
+    << "Don\'t use" << "N" << setDefault
+    << "2" << "2"
+    << "3" << "3"
+    << "4" << "4"
+    << "5" << "5"
+    << "6" << "6"
+    << "7" << "7"
+    << "8" << "8"
+    << "9" << "9",
+
+    Option("Stress estimator in clustering", "RUP_CLUSTERING")
+    << "Don\'t use"               << "N" << setDefault
+    << "Use angular misfit (ANG)" << "A"
+    << "Relative upsilon (RUP)"   << "R",
+
+    // FIXME Group separation
+};
+
+Option rose_opts[] = {
+
+    Option("Type of the rose plot", "ROSETYPE")
+    << "Symmetric"  << "S" << setDefault
+    << "Asymmetric" << "A",
+
+    Option("Plot rose diagram according to", "ROSEDIRECTION")
+    << "Strike directions" << "S" << setDefault
+    << "Dip directions"    << "D",
+
+    Option("Bin size for rose plot in degrees", "ROSEBINNING")
+    <<  "2.5" << "A"
+    <<  "5.0" << "B"
+    << "10.0" << "C" << setDefault
+    << "22.5" << "D"
+};
+
+// FIXME Incomplete
+Option misc_opts[] = {
+
+    Option("Ideal movement direction display", "IDEALMOVEMENT")
+    << "Yes" << "Y"
+    << "No"  << "N" << setDefault,
+
+    Option("Labelling", "LABELING")
+    << "Yes" << "Y"
+    << "No"  << "N" << setDefault,
 
     // TODO Spinbox would be more appropriate
     Option("Line width used on stereonets in points", "LINEWIDTH")
@@ -121,29 +152,7 @@ Option opts[] = {
     << "0.9" << "9"
     << "1.0" << "0",
 
-
-    Option("Type of the rose plot", "ROSETYPE")
-    << "Symmetric"  << "S" << setDefault
-    << "Asymmetric" << "A",
-
-    Option("Plot rose diagram according to", "ROSEDIRECTION")
-    << "Strike directions" << "S" << setDefault
-    << "Dip directions"    << "D",
-
-    Option("Bin size for rose plot in degrees", "ROSEBINNING")
-    <<  "2.5" << "A"
-    <<  "5.0" << "B"
-    << "10.0" << "C" << setDefault
-    << "22.5" << "D",
-
-    Option("Contouring on stereonet", "CONTOURING")
-    << "None"                       << "N" << setDefault
-    //<< "Schmidt 1% method"      << "S"
-    //<< "Kamb\'s (1959) method"  << "K"
-    << "Dip direction / bearing"    << "D"
-    << "Strike direction / bearing" << "S"
-    << "Plane normal / bearing"     << "O"
-    << "Striae bearing / bearing"   << "B",
+    // FIXME Coloring missing
 
     Option("Grayscale", "GRAYSCALE")
     << "Coloured output" << "N" << setDefault
@@ -151,23 +160,22 @@ Option opts[] = {
 
 };
 
-}
-
-const Option* Option::getOpts() {
-
-    int n = getOptSize();
-
-    for (int i=0; i<n; ++i) {
-
-        opts[i].checkConsistency();
+template <int N>
+QVector<Option> arrayToVector(Option (&arr)[N]) {
+    QVector<Option> vec;
+    vec.reserve(N);
+    for (int i=0; i<N; ++i) {
+        vec.push_back(arr[i]);
     }
-
-    return opts;
+    return vec;
 }
 
-int Option::getOptSize() {
+QVector<Option> plot_group(  arrayToVector(plot_opts) );
+QVector<Option> inver_group( arrayToVector(inver_opts) );
+QVector<Option> group_group( arrayToVector(group_opts) );
+QVector<Option> rose_group(  arrayToVector(rose_opts) );
+QVector<Option> misc_group(   arrayToVector(misc_opts) );
 
-    return sizeof(opts) / sizeof(opts[0]);
 }
 
 Option::Option(const QString& guiKey, const QString& cliKey)
@@ -181,32 +189,25 @@ Option::Option(const QString& guiKey, const QString& cliKey)
 Option& Option::operator<<(const QString& value_str) {
 
     if (cliValues.size() == values.size()) {
-
         values.append(value_str);
     }
     else {
-
         cliValues.append(value_str);
     }
-
     return *this;
 }
 
 Option& Option::operator<<(const Default& ) {
 
     defaultElem = values.size() - 1;
-
     return *this;
 }
 
 void Option::checkConsistency() const {
 
     Q_ASSERT( values.size()==cliValues.size() );
-
     Q_ASSERT( 0 <= defaultElem);
-
     Q_ASSERT( defaultElem < values.size() );
-
 }
 
 QString Option::toCLIString(int i) const {
@@ -221,14 +222,9 @@ int Option::toIndex(const QString& cliLine) const {
     QStringList opt = cliLine.split(":\t", QString::SkipEmptyParts);
 
     if (opt.size()==2 && opt.at(0)==cliKey) {
-
         int pos = cliValues.indexOf(opt.at(1));
-
         index = (pos>=0) ? pos : defaultElem;
-
         //qDebug() << key << index << "(" << defaultElem << ")";
     }
-
     return index;
 }
-
