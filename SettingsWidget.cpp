@@ -19,14 +19,12 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
     QFrame* right = new QFrame(this);
     leftColumn  = new QVBoxLayout(left);
     rightColumn = new QVBoxLayout(right);
-    leftColumn->addWidget(new QLabel("Settings"));
-    rightColumn->addWidget(new QLabel(""));
 
-    int n_opts = Option::getOptSize();
-    int left_size = (n_opts+1) / 2;
+    int n_groups = numberOfGroups();
+    int left_size = n_groups / 2;
 
     fillColumn(leftColumn,          0, left_size);
-    fillColumn(rightColumn, left_size, n_opts);
+    fillColumn(rightColumn, left_size, n_groups);
 
     left->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
     right->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
@@ -38,14 +36,27 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
     setLayout(panel);
 }
 
-void SettingsWidget::fillColumn(QVBoxLayout* col, int opt_first, int opt_last) {
+void SettingsWidget::fillColumn(QVBoxLayout* col, int group_first, int group_end) {
 
-    const Option* opts = Option::getOpts();
+    const QVector<OptionGroup>& optionGroups = getOptionGroups();
 
-    for (int i=opt_first; i<opt_last; ++i) {
-        OptionWidget* optWidget = new OptionWidget(this, opts[i]);
-        optionWidgets.push_back(optWidget);
-        col->addWidget(optWidget);
+    for (int i=group_first; i<group_end; ++i) {
+
+        QString name = optionGroups.at(i).first;
+        col->addWidget(new QLabel("<b>"+name+"</b><hr/>"));
+
+        QVector<Option> options = optionGroups.at(i).second;
+        foreach (Option opt, options) {
+            OptionWidget* optWidget = new OptionWidget(this, opt);
+            optionWidgets.push_back(optWidget);
+            col->addWidget(optWidget);
+        }
+
+        if (i!=group_end-1) {
+            QFrame* hline = new QFrame();
+            hline->setFrameShape(QFrame::HLine);
+            col->addWidget(hline);
+        }
     }
     col->addStretch(1);
 }

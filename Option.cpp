@@ -160,9 +160,9 @@ Option misc_opts[] = {
 
 };
 
-template <int N>
-QVector<Option> arrayToVector(Option (&arr)[N]) {
-    QVector<Option> vec;
+template <typename T, int N>
+QVector<T> qVec(T (&arr)[N]) {
+    QVector<T> vec;
     vec.reserve(N);
     for (int i=0; i<N; ++i) {
         vec.push_back(arr[i]);
@@ -170,12 +170,26 @@ QVector<Option> arrayToVector(Option (&arr)[N]) {
     return vec;
 }
 
-QVector<Option> plot_group(  arrayToVector(plot_opts) );
-QVector<Option> inver_group( arrayToVector(inver_opts) );
-QVector<Option> group_group( arrayToVector(group_opts) );
-QVector<Option> rose_group(  arrayToVector(rose_opts) );
-QVector<Option> misc_group(   arrayToVector(misc_opts) );
+QVector<OptionGroup> createOptionGroups() {
+    QVector<OptionGroup> vec;
+    vec.push_back(qMakePair(QString("Plotting"),         qVec(plot_opts)));
+    vec.push_back(qMakePair(QString("Inversion"),        qVec(inver_opts)));
+    vec.push_back(qMakePair(QString("Group management"), qVec(group_opts)));
+    vec.push_back(qMakePair(QString("Rose diagram"),     qVec(rose_opts)));
+    vec.push_back(qMakePair(QString("Miscellaneous"),    qVec(misc_opts)));
+    return vec;
+}
 
+const QVector<OptionGroup> optionGroups( createOptionGroups() );
+
+}
+
+const QVector<OptionGroup>& getOptionGroups() {
+    return optionGroups;
+}
+
+int numberOfGroups() {
+    return optionGroups.size();
 }
 
 Option::Option(const QString& guiKey, const QString& cliKey)

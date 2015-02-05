@@ -10,10 +10,6 @@ struct Default { };
 
 struct Option {
 
-    // FIXME Remove
-    static const Option* getOpts();
-    static int getOptSize();
-
     Option() { }
 
     Option(const QString& guiKey, const QString& cliKey);
@@ -34,5 +30,11 @@ struct Option {
 
     int defaultElem;
 };
+
+typedef QPair<QString,QVector<Option> >  OptionGroup;
+
+int numberOfGroups();
+
+const QVector<OptionGroup>& getOptionGroups();
 
 #endif // OPTION_HPP
