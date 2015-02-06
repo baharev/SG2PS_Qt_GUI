@@ -198,7 +198,7 @@ QVector<OptionGroup> createOptionGroups() {
 
 const QVector<OptionGroup> optionGroups( createOptionGroups() );
 
-}
+} // end of anonymous namespace
 
 const QVector<OptionGroup>& getOptionGroups() {
     return optionGroups;
