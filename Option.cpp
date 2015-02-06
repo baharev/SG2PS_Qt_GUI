@@ -82,10 +82,13 @@ Option inver_opts[] = {
     << "No"  << "N" << setDefault
 };
 
-// FIXME Incomplete
 Option group_opts[] = {
 
-    // FIXME Inputgroup
+    Option("Group separation in the input", "INPUTGROUP")
+    << "None"                      << "N" << setDefault
+    << "Original user-defined"     << "F"
+    << "Former k-means clustering" << "S"
+    << "Former RUP/ANG clustering" << "T",
 
     Option("Sort by groups as well", "GROUP")
     << "Yes" << "Y" << setDefault
@@ -108,7 +111,11 @@ Option group_opts[] = {
     << "Use angular misfit (ANG)" << "A"
     << "Relative upsilon (RUP)"   << "R",
 
-    // FIXME Group separation
+    Option("Group separation in the output", "GROUPSEPARATION")
+    << "None"             << "I" << setDefault
+    << "User-defined"       << "G"
+    << "K-means clustering" << "K"
+    << "RUP/ANG clustering" << "R",
 };
 
 Option rose_opts[] = {
@@ -128,14 +135,13 @@ Option rose_opts[] = {
     << "22.5" << "D"
 };
 
-// FIXME Incomplete
 Option misc_opts[] = {
 
     Option("Ideal movement direction display", "IDEALMOVEMENT")
     << "Yes" << "Y"
     << "No"  << "N" << setDefault,
 
-    Option("Labelling", "LABELING")
+    Option("Labeling", "LABELING")
     << "Yes" << "Y"
     << "No"  << "N" << setDefault,
 
@@ -152,11 +158,16 @@ Option misc_opts[] = {
     << "0.9" << "9"
     << "1.0" << "0",
 
-    // FIXME Coloring missing
+    Option("Coloring", "COLORING")
+    << "Uniform black"       << "I" << setDefault
+    << "Color code"       << "C"
+    << "User-defined groups" << "G"
+    << "K-means clustering"  << "K"
+    << "RUP/ANG clustering"  << "R",
 
     Option("Grayscale", "GRAYSCALE")
     << "Coloured output" << "N" << setDefault
-    << "Grayscale mode" << "Y"
+    << "Grayscale mode"  << "Y"
 
 };
 
@@ -170,13 +181,18 @@ QVector<T> qVec(T (&arr)[N]) {
     return vec;
 }
 
+template <typename T, typename U, int N>
+void add(QVector<T>& vec, const char* name, U (&options)[N]) {
+    vec.push_back( qMakePair(QString(name), qVec(options)) );
+}
+
 QVector<OptionGroup> createOptionGroups() {
     QVector<OptionGroup> vec;
-    vec.push_back(qMakePair(QString("Plotting"),         qVec(plot_opts)));
-    vec.push_back(qMakePair(QString("Inversion"),        qVec(inver_opts)));
-    vec.push_back(qMakePair(QString("Group management"), qVec(group_opts)));
-    vec.push_back(qMakePair(QString("Rose diagram"),     qVec(rose_opts)));
-    vec.push_back(qMakePair(QString("Miscellaneous"),    qVec(misc_opts)));
+    add(vec, "Plotting",         plot_opts);
+    add(vec, "Group management", group_opts);
+    add(vec, "Inversion",        inver_opts);
+    add(vec, "Rose diagram",     rose_opts);
+    add(vec, "Miscellaneous",    misc_opts);
     return vec;
 }
 

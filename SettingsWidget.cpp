@@ -47,6 +47,7 @@ void SettingsWidget::fillColumn(QVBoxLayout* col, int group_first, int group_end
 
         QVector<Option> options = optionGroups.at(i).second;
         foreach (Option opt, options) {
+            opt.checkConsistency();
             OptionWidget* optWidget = new OptionWidget(this, opt);
             optionWidgets.push_back(optWidget);
             col->addWidget(optWidget);
