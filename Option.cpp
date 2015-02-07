@@ -107,9 +107,9 @@ Option group_opts[] = {
     << "9" << "9",
 
     Option("Stress estimator in clustering", "RUP_CLUSTERING")
-    << "Don\'t use"               << "N" << setDefault
-    << "Use angular misfit (ANG)" << "A"
-    << "Relative upsilon (RUP)"   << "R",
+    << "Don\'t use"             << "N" << setDefault
+    << "Angular misfit (ANG)"   << "A"
+    << "Relative upsilon (RUP)" << "R",
 
     Option("Group separation in the output", "GROUPSEPARATION")
     << "None"               << "I" << setDefault
