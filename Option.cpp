@@ -13,10 +13,10 @@ Option plot_opts[] = {
 
     Option("Data convention", "DATARULE")
     << "German dip directon" << "G" << setDefault
-    << "Right hand rule" << "R",
+    << "Right hand rule"     << "R",
 
     Option("Plot type", "PLOT")
-    << "Angelier plot" << "A" << setDefault
+    << "Angelier plot"       << "A" << setDefault
     << "Hoeppner pole point" << "H",
 
     Option("Projection type", "PLOTTYPE")
@@ -37,9 +37,9 @@ Option plot_opts[] = {
     << "Striae bearing / bearing"   << "B",
 
     Option("Bedding & palaeonorth correction", "TILTING")
-    << "Re-tilt with the bedding" << "B"
-    << "Only palaeonorth direction" << "P"
-    << "Both" << "A" << setDefault
+    << "Re-tilt with bedding" << "B"
+    << "Only palaeonorth"     << "P"
+    << "Both"                 << "A" << setDefault
 };
 
 Option inver_opts[] = {
@@ -57,7 +57,7 @@ Option inver_opts[] = {
 
     Option("Fracture weight point statistics", "BINGHAM")
     << "Bingham statistics" << "B" << setDefault
-    << "Not needed" << "N",
+    << "Not needed"         << "N",
 
     // TODO Spinbox would be more appropriate
     Option("Maximum stress & slickenside direction angle", "STRESSANGLE")
@@ -84,7 +84,7 @@ Option inver_opts[] = {
 
 Option group_opts[] = {
 
-    Option("Group separation in the input", "INPUTGROUP")
+    Option("Group separation in input", "INPUTGROUP")
     << "None"                      << "N" << setDefault
     << "Original user-defined"     << "F"
     << "Former k-means clustering" << "S"
@@ -112,7 +112,7 @@ Option group_opts[] = {
     << "Relative upsilon (RUP)"   << "R",
 
     Option("Group separation in the output", "GROUPSEPARATION")
-    << "None"             << "I" << setDefault
+    << "None"               << "I" << setDefault
     << "User-defined"       << "G"
     << "K-means clustering" << "K"
     << "RUP/ANG clustering" << "R",
@@ -160,7 +160,7 @@ Option misc_opts[] = {
 
     Option("Coloring", "COLORING")
     << "Uniform black"       << "I" << setDefault
-    << "Color code"       << "C"
+    << "Color code"          << "C"
     << "User-defined groups" << "G"
     << "K-means clustering"  << "K"
     << "RUP/ANG clustering"  << "R",
