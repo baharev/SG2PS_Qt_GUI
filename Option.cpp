@@ -9,7 +9,7 @@ namespace {
 
 const Default setDefault = Default();
 
-Option plot_opts[] = {
+Option conv_opts[] = {
 
     Option("Data convention", "DATARULE")
     << "German dip directon" << "G" << setDefault
@@ -45,9 +45,9 @@ Option plot_opts[] = {
 Option inver_opts[] = {
 
     Option("Inversion methodology", "INVERSION")
-    << "NDA after Sprang (1972)" << "D" << setDefault
+    << "NDA after Spang (1972)"  << "D" << setDefault
     << "PTN after Turner (1953)" << "P"
-    << "Fry (1999)" << "F"
+    << "Fry (1999)"      << "F"
     << "Shan et al (2003)" << "S"
     << "Michael (1984)"  << "M"
     << "Angelier (1990)" << "A"
@@ -55,9 +55,9 @@ Option inver_opts[] = {
     << "Brute force"     << "B"
     << "None"            << "N",
 
-    Option("Fracture weight point statistics", "BINGHAM")
-    << "Bingham statistics" << "B" << setDefault
-    << "Not needed"         << "N",
+    Option("Bingham statistics", "BINGHAM")
+    << "Yes" << "B" << setDefault
+    << "No"  << "N",
 
     // TODO Spinbox would be more appropriate
     Option("Maximum stress & slickenside direction angle", "STRESSANGLE")
@@ -77,20 +77,14 @@ Option inver_opts[] = {
     << "75" << "75"
     << "80" << "80",
 
-    Option("Virtual symmetrical data set", "VIRTUAL")
+    Option("Forced Andersonian stress conditions", "VIRTUAL")
     << "Yes" << "Y"
     << "No"  << "N" << setDefault
 };
 
 Option group_opts[] = {
 
-    Option("Group separation in input", "INPUTGROUP")
-    << "None"                      << "N" << setDefault
-    << "Original user-defined"     << "F"
-    << "Former k-means clustering" << "S"
-    << "Former RUP/ANG clustering" << "T",
-
-    Option("Sort by groups as well", "GROUP")
+    Option("Use user-defined groups", "GROUP")
     << "Yes" << "Y" << setDefault
     << "No"  << "N",
 
@@ -106,23 +100,29 @@ Option group_opts[] = {
     << "8" << "8"
     << "9" << "9",
 
-    Option("Stress estimator in clustering", "RUP_CLUSTERING")
+    Option("Clustering by stress estimator", "RUP_CLUSTERING")
     << "Don\'t use"             << "N" << setDefault
     << "Angular misfit (ANG)"   << "A"
     << "Relative upsilon (RUP)" << "R",
 
-    Option("Group separation in the output", "GROUPSEPARATION")
-    << "None"               << "I" << setDefault
-    << "User-defined"       << "G"
-    << "K-means clustering" << "K"
-    << "RUP/ANG clustering" << "R",
+    Option("Separation of the output by", "GROUPSEPARATION")
+    << "Don\'t separate"     << "I" << setDefault
+    << "User-defined groups" << "G"
+    << "K-means clustering"  << "K"
+    << "RUP/ANG clustering"  << "R",
+
+    Option("Group re-processing", "INPUTGROUP")
+    << "Ignore groups"             << "N" << setDefault
+    << "Original user-defined"     << "F"
+    << "Former k-means clustering" << "S"
+    << "Former RUP/ANG clustering" << "T",
 };
 
 Option rose_opts[] = {
 
-    Option("Type of the rose plot", "ROSETYPE")
-    << "Symmetric"  << "S" << setDefault
-    << "Asymmetric" << "A",
+    Option("Rose plot type", "ROSETYPE")
+    << "Bidirectional"  << "S" << setDefault
+    << "Unidirectional" << "A",
 
     Option("Plot rose diagram according to", "ROSEDIRECTION")
     << "Strike directions" << "S" << setDefault
@@ -135,9 +135,9 @@ Option rose_opts[] = {
     << "22.5" << "D"
 };
 
-Option misc_opts[] = {
+Option plot_opts[] = {
 
-    Option("Ideal movement direction display", "IDEALMOVEMENT")
+    Option("Display resolved shear direction", "IDEALMOVEMENT")
     << "Yes" << "Y"
     << "No"  << "N" << setDefault,
 
@@ -158,7 +158,7 @@ Option misc_opts[] = {
     << "0.9" << "9"
     << "1.0" << "0",
 
-    Option("Coloring", "COLORING")
+    Option("Coloring by", "COLORING")
     << "Uniform black"       << "I" << setDefault
     << "Color code"          << "C"
     << "User-defined groups" << "G"
@@ -188,11 +188,11 @@ void add(QVector<T>& vec, const char* name, U (&options)[N]) {
 
 QVector<OptionGroup> createOptionGroups() {
     QVector<OptionGroup> vec;
-    add(vec, "Plotting",         plot_opts);
+    add(vec, "Conventions",      conv_opts);
     add(vec, "Group management", group_opts);
     add(vec, "Inversion",        inver_opts);
     add(vec, "Rose diagram",     rose_opts);
-    add(vec, "Miscellaneous",    misc_opts);
+    add(vec, "Plotting",         plot_opts);
     return vec;
 }
 
