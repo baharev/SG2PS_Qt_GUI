@@ -164,7 +164,7 @@ void Runner::showPdfIfDemo() const {
         return;
     }
 
-    QString demoPDF = finalProjectFolder+"/5_ps_separated/STRIAE/ANG001_STRIAE_X.pdf";
+    QString demoPDF = finalProjectFolder+"/5_ps_separated/STRIAE/ANG001_STRIAE.pdf";
 
     qDebug() << "Trying to open demo pdf at" << demoPDF;
 
