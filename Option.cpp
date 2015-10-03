@@ -171,6 +171,32 @@ Option plot_opts[] = {
 
 };
 
+Option well_opts[] = {
+
+    Option("Window size measured in", "WELLINTERVAL")
+    << "meters"      << "M" << setDefault
+    << "data points" << "D",
+
+    Option("Window size", "WELLINTERVAL_LENGTH")
+    <<    "1" <<    "1"
+    <<    "2" <<    "2"
+    <<    "5" <<    "5"
+    <<   "10" <<   "10"
+    <<   "20" <<   "20"
+    <<   "50" <<   "50"
+    <<  "100" <<  "100" << setDefault
+    <<  "200" <<  "200"
+    <<  "500" <<  "500"
+    << "1000" << "1000"
+    << "2000" << "2000"
+    << "5000" << "5000",
+
+    Option("Window midpoint", "WELLINTERVAL_MIDDLE")
+    << "average depth" << "A" << setDefault
+    << "median depth"  << "M"
+
+};
+
 template <typename T, int N>
 QVector<T> qVec(T (&arr)[N]) {
     QVector<T> vec;
@@ -188,11 +214,12 @@ void add(QVector<T>& vec, const char* name, U (&options)[N]) {
 
 QVector<OptionGroup> createOptionGroups() {
     QVector<OptionGroup> vec;
-    add(vec, "Conventions",      conv_opts);
-    add(vec, "Group management", group_opts);
-    add(vec, "Inversion",        inver_opts);
-    add(vec, "Rose diagram",     rose_opts);
-    add(vec, "Plotting",         plot_opts);
+    add(vec, "Conventions",          conv_opts);
+    add(vec, "Group management",     group_opts);
+    add(vec, "Inversion",            inver_opts);
+    add(vec, "Rose diagram",         rose_opts);
+    add(vec, "Plotting",             plot_opts);
+    add(vec, "Well data processing", well_opts);
     return vec;
 }
 
