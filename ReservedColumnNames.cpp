@@ -1,3 +1,7 @@
+// Copyright (C) 2012 - 2015 Ali Baharev
+// All rights reserved.
+// This code is published under the GNU Lesser General Public License.
+
 #include <string>
 #include <vector>
 #include "ReservedColumnNames.hpp"
@@ -9,6 +13,7 @@ namespace {
 // TODO If changes -> update the enum of columns appropriately
 const string headers[] = {
 		"DATA_ID",
+		"DEPTH",
 		"GROUP_CODE",
 		"COLOR_CODE",
 		"LOCATION",

@@ -22,6 +22,12 @@ QString resolveExitCode(int exitCode) {
     case ExitStatus::XY_ERROR:
         msg = "problems with the coordinate file, please check the log / read the manual";
         break;
+    case ExitStatus::TRJ_ERROR:
+        msg = "problems with the trajectory file, please check the log / read the manual";
+        break;
+    case ExitStatus::ARG_ERROR:
+        msg = "apparently an argument passing error, please report it";
+        break;
     case ExitStatus::BUG:
         msg = "this is a bug, please report it";
         break;
