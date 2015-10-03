@@ -17,7 +17,6 @@
 #include "ErrorMsg.hpp"
 #include "GlobalSettings.hpp"
 #include "InfoWidget.hpp"
-#include "InputWidget.hpp"
 #include "Launcher.hpp"
 #include "ReservedColumnNames.hpp"
 #include "Runner.hpp"
