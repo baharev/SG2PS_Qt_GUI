@@ -9,55 +9,47 @@
 #include "LayoutConstants.hpp"
 
 
-OptionWidget::OptionWidget(QWidget* parent, const Option& option)
+OptionWidget::OptionWidget(QWidget* parent, const Option& option, QWidget* mainWindow)
     : QWidget(parent), opt(option)
 {
-
     label = new QLabel(opt.key, this);
 
     comboBox = new QComboBox(this);
-
     comboBox->addItems(opt.values);
-
     comboBox->setCurrentIndex(opt.defaultElem);
+
+    if (opt.cliKey == "WELLDATA") {
+        connect(comboBox,   SIGNAL(currentTextChanged(QString)),
+                mainWindow, SLOT(runModeChanged(QString)));
+    }
 
 //    QFont labelFont = label->font();
 //    labelFont.setStretch(QFont::SemiCondensed);
 //    label->setFont(labelFont);
-
 //    comboBox->setFont(labelFont);
-
 
     QHBoxLayout* layout = new QHBoxLayout(this);
 
     layout->setMargin(0);
-
     layout->setSpacing(SPACING);
-
     layout->addWidget(label);
-
     layout->addWidget(comboBox);
-
     layout->addStretch(1);
 
     setLayout(layout);
 }
 
 void OptionWidget::selectDefault() {
-
     comboBox->setCurrentIndex(opt.defaultElem);
 }
 
 QString OptionWidget::selection2CLI() const {
-
     int i = comboBox->currentIndex();
-
     return opt.toCLIString(i);
 }
 
 void OptionWidget::set(const QString& cliLine) {
-
     int i = opt.toIndex(cliLine);
-
     comboBox->setCurrentIndex(i);
 }
+

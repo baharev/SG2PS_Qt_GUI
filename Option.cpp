@@ -11,6 +11,12 @@ const Default setDefault = Default();
 
 Option mode_opts[] = {
 
+    // OptionWidget looks at the key value WELLDATA and
+    // connects MainWindow to its currentTextChanged signal
+
+    // MainWindow looks at the keys Field and Well
+    // and acts accordingly
+
     Option("Field or well data", "WELLDATA")
     << "Field" << "N" << setDefault
     << "Well"  << "Y"

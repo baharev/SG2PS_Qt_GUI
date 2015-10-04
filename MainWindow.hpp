@@ -27,6 +27,10 @@ public:
 
     ~MainWindow();
 
+public slots:
+
+    void runModeChanged(const QString& );
+
 private slots:
 
     void about();

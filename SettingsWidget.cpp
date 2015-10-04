@@ -13,7 +13,7 @@
 #include "Option.hpp"
 #include "LayoutConstants.hpp"
 
-SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
+SettingsWidget::SettingsWidget(QWidget *mainWindow) : QWidget(mainWindow) {
 
     QFrame* left  = new QFrame(this);
     QFrame* right = new QFrame(this);
@@ -23,8 +23,8 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
     int n_groups = numberOfGroups();
     int left_size = (n_groups+1) / 2;
 
-    fillColumn(leftColumn,          0, left_size);
-    fillColumn(rightColumn, left_size, n_groups);
+    fillColumn(leftColumn,          0, left_size, mainWindow);
+    fillColumn(rightColumn, left_size,  n_groups, mainWindow);
 
     left->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
     right->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
@@ -36,8 +36,11 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
     setLayout(panel);
 }
 
-void SettingsWidget::fillColumn(QVBoxLayout* col, int group_first, int group_end) {
-
+void SettingsWidget::fillColumn(QVBoxLayout* col,
+                                int group_first,
+                                int group_end,
+                                QWidget* mainWindow)
+{
     const QVector<OptionGroup>& optionGroups = getOptionGroups();
 
     for (int i=group_first; i<group_end; ++i) {
@@ -48,7 +51,7 @@ void SettingsWidget::fillColumn(QVBoxLayout* col, int group_first, int group_end
         QVector<Option> options = optionGroups.at(i).second;
         foreach (Option opt, options) {
             opt.checkConsistency();
-            OptionWidget* optWidget = new OptionWidget(this, opt);
+            OptionWidget* optWidget = new OptionWidget(this, opt, mainWindow);
             optionWidgets.push_back(optWidget);
             col->addWidget(optWidget);
         }

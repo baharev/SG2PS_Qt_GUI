@@ -19,7 +19,7 @@ class SettingsWidget: public QWidget {
 
 public:
 
-    explicit SettingsWidget(QWidget* parent);
+    explicit SettingsWidget(QWidget* mainWindow);
     void newProjectSelected(const QString& newProjectPath, const QString& newProjectName);
 
 public slots:
@@ -28,7 +28,7 @@ public slots:
 
 private:
 
-    void fillColumn(QVBoxLayout* col, int row_beg, int row_end);
+    void fillColumn(QVBoxLayout* col, int row_beg, int row_end, QWidget* mainWindow);
     void reset_defaults();
     void tryLoadSettings();
     void loadSettings();
