@@ -19,7 +19,7 @@ OptionWidget::OptionWidget(QWidget* parent, const Option& option, QWidget* mainW
     comboBox->setCurrentIndex(opt.defaultElem);
 
     if (opt.cliKey == "WELLDATA") {
-        connect(comboBox,   SIGNAL(currentTextChanged(QString)),
+        connect(comboBox,   SIGNAL(activated(QString)),
                 mainWindow, SLOT(runModeChanged(QString)));
     }
 
