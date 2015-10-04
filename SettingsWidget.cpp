@@ -21,7 +21,7 @@ SettingsWidget::SettingsWidget(QWidget *parent) : QWidget(parent) {
     rightColumn = new QVBoxLayout(right);
 
     int n_groups = numberOfGroups();
-    int left_size = n_groups / 2;
+    int left_size = (n_groups+1) / 2;
 
     fillColumn(leftColumn,          0, left_size);
     fillColumn(rightColumn, left_size, n_groups);

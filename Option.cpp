@@ -9,6 +9,13 @@ namespace {
 
 const Default setDefault = Default();
 
+Option mode_opts[] = {
+
+    Option("Field or well data", "WELLDATA")
+    << "Field" << "N" << setDefault
+    << "Well"  << "Y"
+};
+
 Option conv_opts[] = {
 
     Option("Data convention", "DATARULE")
@@ -214,12 +221,16 @@ void add(QVector<T>& vec, const char* name, U (&options)[N]) {
 
 QVector<OptionGroup> createOptionGroups() {
     QVector<OptionGroup> vec;
-    add(vec, "Conventions",          conv_opts);
+
+    add(vec, "Processing mode",      mode_opts);
     add(vec, "Group management",     group_opts);
-    add(vec, "Inversion",            inver_opts);
     add(vec, "Rose diagram",         rose_opts);
     add(vec, "Plotting",             plot_opts);
+
+    add(vec, "Conventions",          conv_opts);
+    add(vec, "Inversion",            inver_opts);
     add(vec, "Well data processing", well_opts);
+
     return vec;
 }
 

@@ -109,6 +109,10 @@ void MainWindow::set_menu() {
     QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Select Data", this);
     connect(loadRGF, SIGNAL(triggered()), SLOT(loadRGFRequested()));
 
+    // TODO To be continued
+    QAction* createTRJ = new QAction(QIcon(":/images/document_new48.png"), "New Trajectory", this);
+    QAction* editTRJ = new QAction(QIcon(":/images/spreadsheetB48.png"), "Edit Trajectory", this);
+
     QMenu* file = menuBar()->addMenu("File");
 
     file->addAction(createRGF);
@@ -116,16 +120,27 @@ void MainWindow::set_menu() {
     file->addAction(loadRGF);
     file->addAction(createXY);
     file->addAction(editXY);
+    file->addAction(createTRJ);
+    file->addAction(editTRJ);
 
-    QToolBar* fileToolBar = addToolBar("File");
+    QToolBar* fileToolBar = new QToolBar(this);
+
+    fileToolBar->setAllowedAreas(Qt::LeftToolBarArea);
+    fileToolBar->setOrientation(Qt::Vertical);
     fileToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    fileToolBar->setMovable(false);
+
     fileToolBar->addAction(createRGF);
     fileToolBar->addAction(editRGF);
     fileToolBar->addAction(loadRGF);
     fileToolBar->addAction(createXY);
     fileToolBar->addAction(editXY);
+    fileToolBar->addAction(createTRJ);
+    fileToolBar->addAction(editTRJ);
     fileToolBar->addAction(manual);
     fileToolBar->addAction(demo);
+
+    addToolBar(Qt::LeftToolBarArea, fileToolBar);
 
     QMenu* settingsMenu = menuBar()->addMenu("Advanced");
     settingsMenu->addAction(editSettings);
