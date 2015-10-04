@@ -109,9 +109,11 @@ void MainWindow::set_menu() {
     QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Select Data", this);
     connect(loadRGF, SIGNAL(triggered()), SLOT(loadRGFRequested()));
 
-    // TODO To be continued
     QAction* createTRJ = new QAction(QIcon(":/images/new_trj.png"), "New Trajectory", this);
+    connect(createTRJ, SIGNAL(triggered()), SLOT(newTRJRequested()));
+
     QAction* editTRJ = new QAction(QIcon(":/images/edit_trj.png"), "Edit Trajectory", this);
+    connect(editTRJ, SIGNAL(triggered()), SLOT(editTRJRequested()));
 
     QMenu* file = menuBar()->addMenu("File");
 
@@ -313,7 +315,7 @@ QString MainWindow::selectFile(const QString& extension) {
 void MainWindow::editRGFRequested() {
     QString file = selectFile("rgf");
     if (!file.isEmpty())
-        openSpreadsheet(file);
+        openSpreadsheet(file); // TODO Shoud openSpreadsheet check for empty file name?
 }
 
 void MainWindow::loadRGFRequested() {
@@ -322,6 +324,12 @@ void MainWindow::loadRGFRequested() {
 
 void MainWindow::editXYRequested() {
     QString file = selectFile("xy");
+    if (!file.isEmpty())
+        openSpreadsheet(file);
+}
+
+void MainWindow::editTRJRequested() {
+    QString file = selectFile("trj");
     if (!file.isEmpty())
         openSpreadsheet(file);
 }
@@ -379,6 +387,18 @@ void MainWindow::newXYRequested() {
     const QVector<QString> XY_HEADER = QVector<QString>() << "LOCATION" << "LOC_X" << "LOC_Y" << "FORMATION";
 
     QString file = newFileRequested("xy", XY_HEADER);
+
+    if (!file.isEmpty()) {
+        openSpreadsheet(file);
+    }
+}
+
+void MainWindow::newTRJRequested() {
+
+    // TODO Duplication regarding new xy file requested
+    const QVector<QString> TRJ_HEADER = QVector<QString>() << "DEPTH" << "LOC_X" << "LOC_Y";
+
+    QString file = newFileRequested("trj", TRJ_HEADER);
 
     if (!file.isEmpty()) {
         openSpreadsheet(file);

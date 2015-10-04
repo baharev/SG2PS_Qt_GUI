@@ -47,11 +47,15 @@ private slots:
 
     void editXYRequested();
 
+    void editTRJRequested();
+
     void loadRGFRequested();
 
     void newRGFRequested();
 
     void newXYRequested();
+
+    void newTRJRequested();
 
 private:
 
