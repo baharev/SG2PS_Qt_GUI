@@ -8,8 +8,6 @@
 #include <QString>
 
 class QLabel;
-class QHBoxLayout;
-class QVBoxLayout;
 
 class InfoWidget : public QFrame {
 
@@ -22,6 +20,8 @@ public:
     void freezeLabelSize();
 
     void newProjectSelected(const QString& newProjectPath, const QString& newProjectName);
+
+    void setMode(const QString& mode);
 
 public slots:
 
@@ -53,9 +53,9 @@ private:
 
     QLabel* xyLabel;
 
-    QVBoxLayout* vboxLayout;
+    QLabel* modeLabel;
 
-    QHBoxLayout* hboxLayout;
+    QLabel* trjLabel;
 
     QString projectPath;
 

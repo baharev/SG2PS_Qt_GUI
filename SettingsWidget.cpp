@@ -13,7 +13,8 @@
 #include "Option.hpp"
 #include "LayoutConstants.hpp"
 
-SettingsWidget::SettingsWidget(QWidget *mainWindow) : QWidget(mainWindow) {
+
+SettingsWidget::SettingsWidget(QWidget* mainWindow) : QWidget(mainWindow) {
 
     QFrame* left  = new QFrame(this);
     QFrame* right = new QFrame(this);

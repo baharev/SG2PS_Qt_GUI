@@ -13,6 +13,8 @@ namespace {
     const char GREEN[]  = "QLabel { background-color : #33FF00; }";
     const char YELLOW[] = "QLabel { background-color : #FFFF00; }";
     const char RED[]    = "QLabel { background-color : #FF0000; }";
+
+    const char FIELD[] = "Field";
 }
 
 InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
@@ -24,13 +26,30 @@ InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
     setLabel = new QLabel(this);
     xyLabel  = new QLabel(this);
 
-    hboxLayout = new QHBoxLayout(this);
+    QHBoxLayout* hboxLayout = new QHBoxLayout(this);
     hboxLayout->addWidget(rgfLabel, 1);
     hboxLayout->addWidget(setLabel, 1);
     hboxLayout->addWidget( xyLabel, 1);
+    hboxLayout->setContentsMargins(0, 0, 0, 0);
 
-    vboxLayout = new QVBoxLayout(this);
+    modeLabel = new QLabel(this);
+    modeLabel->setStyleSheet("border: 2px solid #33FF00"); // the same GREEN as in the other labels
+    modeLabel->setAlignment(Qt::AlignCenter);
+    trjLabel  = new QLabel(this);
+
+    setMode(FIELD); // references the trjLabel too
+
+    QHBoxLayout* modeLayout = new QHBoxLayout(this);
+    modeLayout->addWidget(modeLabel, 1);
+    modeLayout->addWidget(trjLabel,  1);
+    modeLayout->setContentsMargins(0, 0, 0, 0);
+
+    QVBoxLayout* vboxLayout = new QVBoxLayout(this);
     vboxLayout->addWidget(projectLabel);
+
+    QWidget* dummy2 = new QWidget(this);
+    dummy2->setLayout(modeLayout);
+    vboxLayout->addWidget(dummy2);
 
     QWidget* dummy = new QWidget(this);
     dummy->setLayout(hboxLayout);
@@ -96,11 +115,28 @@ void InfoWidget::updateXyLabel() {
         setWarnText(xyLabel, "Not using any coordinate file");
 }
 
+void InfoWidget::setMode(const QString& mode) {
+    modeLabel->setText("Processing <b>" + mode.toLower() + "</b> data");
+
+    if (mode==FIELD) {
+        trjLabel->clear();
+        trjLabel->setStyleSheet("background-color: rgba(0,0,0,0%)");
+        return;
+    }
+
+    if (fileExists(".trj"))
+        setOkText(trjLabel, "Trajectory file found");
+    else
+        setWarnText(trjLabel, "Not using any trajectory file");
+}
+
 void InfoWidget::freezeLabelSize() {
     freezeWidth(projectLabel);
     freezeWidth(rgfLabel);
     freezeWidth(setLabel);
     freezeWidth(xyLabel);
+    freezeWidth(modeLabel);
+    freezeWidth(trjLabel);
 }
 
 void InfoWidget::freezeWidth(QLabel* lbl) {

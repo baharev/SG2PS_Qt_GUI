@@ -451,6 +451,7 @@ void MainWindow::newProjectSelected() {
 void MainWindow::runModeChanged(const QString& text) {
 
     qDebug() << "Run mode: " << text;
+    infoWidget->setMode(text);
 }
 
 
