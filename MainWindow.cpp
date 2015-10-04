@@ -131,7 +131,7 @@ void MainWindow::set_menu() {
 
     fileToolBar->setAllowedAreas(Qt::LeftToolBarArea);
     fileToolBar->setOrientation(Qt::Vertical);
-    fileToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    fileToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     fileToolBar->setMovable(false);
 
     fileToolBar->addAction(createRGF);
