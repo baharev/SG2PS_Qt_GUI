@@ -110,8 +110,8 @@ void MainWindow::set_menu() {
     connect(loadRGF, SIGNAL(triggered()), SLOT(loadRGFRequested()));
 
     // TODO To be continued
-    QAction* createTRJ = new QAction(QIcon(":/images/document_new48.png"), "New Trajectory", this);
-    QAction* editTRJ = new QAction(QIcon(":/images/spreadsheetB48.png"), "Edit Trajectory", this);
+    QAction* createTRJ = new QAction(QIcon(":/images/new_trj.png"), "New Trajectory", this);
+    QAction* editTRJ = new QAction(QIcon(":/images/edit_trj.png"), "Edit Trajectory", this);
 
     QMenu* file = menuBar()->addMenu("File");
 
@@ -122,6 +122,8 @@ void MainWindow::set_menu() {
     file->addAction(editXY);
     file->addAction(createTRJ);
     file->addAction(editTRJ);
+    file->addAction(manual);
+    file->addAction(demo);
 
     QToolBar* fileToolBar = new QToolBar(this);
 

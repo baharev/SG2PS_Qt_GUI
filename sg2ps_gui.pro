@@ -66,6 +66,9 @@ OTHER_FILES += \
     images/spreadsheet48.png \
     images/spreadsheetB48.png \
     images/document_new48.png \
-    images/blockdevice-cubes-icon.png
+    images/blockdevice-cubes-icon.png \
+    images/new_trj.png \
+    images/edit_trj.png
+
 
 
