@@ -9,7 +9,7 @@
 #include "LayoutConstants.hpp"
 
 
-OptionWidget::OptionWidget(QWidget* parent, const Option& option, QWidget* mainWindow)
+OptionWidget::OptionWidget(QWidget* parent, const Option& option)
     : QWidget(parent), opt(option)
 {
     label = new QLabel(opt.key, this);
@@ -17,11 +17,6 @@ OptionWidget::OptionWidget(QWidget* parent, const Option& option, QWidget* mainW
     comboBox = new QComboBox(this);
     comboBox->addItems(opt.values);
     comboBox->setCurrentIndex(opt.defaultElem);
-
-    if (opt.cliKey == "WELLDATA") {
-        connect(comboBox,   SIGNAL(activated(QString)),
-                mainWindow, SLOT(runModeChanged(QString)));
-    }
 
 //    QFont labelFont = label->font();
 //    labelFont.setStretch(QFont::SemiCondensed);

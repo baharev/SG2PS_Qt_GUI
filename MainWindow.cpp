@@ -448,13 +448,6 @@ void MainWindow::newProjectSelected() {
     setWindowTitle(projectName + TITLE);
 }
 
-void MainWindow::runModeChanged(const QString& text) {
-
-    qDebug() << "Run mode: " << text;
-    infoWidget->setMode(text);
-}
-
-
 MainWindow::~MainWindow() {
     
 }

@@ -17,7 +17,7 @@ class OptionWidget : public QWidget {
 
 public:
 
-    OptionWidget(QWidget* parent, const Option& option, QWidget* mainWindow);
+    OptionWidget(QWidget* parent, const Option& option);
 
     QString selection2CLI() const;
 

@@ -9,19 +9,6 @@ namespace {
 
 const Default setDefault = Default();
 
-Option mode_opts[] = {
-
-    // OptionWidget looks at the key value WELLDATA and
-    // connects MainWindow to its currentTextChanged signal
-
-    // MainWindow passes the key Field or Well
-    // to InfoWidget
-
-    Option("Field or well data", "WELLDATA")
-    << "Field" << "N" << setDefault
-    << "Well"  << "Y"
-};
-
 Option conv_opts[] = {
 
     Option("Data convention", "DATARULE")
@@ -186,11 +173,11 @@ Option plot_opts[] = {
 
 Option well_opts[] = {
 
-    Option("Window size measured in", "WELLINTERVAL")
+    Option("Bin size measured in", "WELLINTERVAL")
     << "meters"      << "M" << setDefault
     << "data points" << "D",
 
-    Option("Window size", "WELLINTERVAL_LENGTH")
+    Option("Bin size", "WELLINTERVAL_LENGTH")
     <<    "1" <<    "1"
     <<    "2" <<    "2"
     <<    "5" <<    "5"
@@ -204,9 +191,9 @@ Option well_opts[] = {
     << "2000" << "2000"
     << "5000" << "5000",
 
-    Option("Window midpoint", "WELLINTERVAL_MIDDLE")
-    << "average depth" << "A" << setDefault
-    << "median depth"  << "M"
+    Option("Bin midpoint", "WELLINTERVAL_MIDDLE")
+    << "average depth" << "A"
+    << "median depth"  << "M" << setDefault
 
 };
 
@@ -228,14 +215,13 @@ void add(QVector<T>& vec, const char* name, U (&options)[N]) {
 QVector<OptionGroup> createOptionGroups() {
     QVector<OptionGroup> vec;
 
-    add(vec, "Processing mode",      mode_opts);
+    add(vec, "Well data processing", well_opts);
     add(vec, "Group management",     group_opts);
-    add(vec, "Rose diagram",         rose_opts);
     add(vec, "Plotting",             plot_opts);
 
     add(vec, "Conventions",          conv_opts);
     add(vec, "Inversion",            inver_opts);
-    add(vec, "Well data processing", well_opts);
+    add(vec, "Rose diagram",         rose_opts);
 
     return vec;
 }

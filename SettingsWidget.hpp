@@ -28,7 +28,7 @@ public slots:
 
 private:
 
-    void fillColumn(QVBoxLayout* col, int row_beg, int row_end, QWidget* mainWindow);
+    void fillColumn(QVBoxLayout* col, int row_beg, int row_end);
     void reset_defaults();
     void tryLoadSettings();
     void loadSettings();
