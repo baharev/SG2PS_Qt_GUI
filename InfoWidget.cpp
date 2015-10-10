@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QLabel>
+#include <QRadioButton>
 #include "InfoWidget.hpp"
 #include "LayoutConstants.hpp"
 
@@ -32,16 +33,16 @@ InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
     hboxLayout->addWidget( xyLabel, 1);
     hboxLayout->setContentsMargins(0, 0, 0, 0);
 
-    modeLabel = new QLabel(this);
-    modeLabel->setStyleSheet("border: 2px solid #33FF00"); // the same GREEN as in the other labels
-    modeLabel->setAlignment(Qt::AlignCenter);
+    QRadioButton *radioField = new QRadioButton("Field data processing");
+    QRadioButton *radioWell  = new QRadioButton("Well data processing");
+    radioField->setChecked(true);
+
     trjLabel  = new QLabel(this);
 
-    setMode(FIELD); // references the trjLabel too
-
     QHBoxLayout* modeLayout = new QHBoxLayout(this);
-    modeLayout->addWidget(modeLabel, 1);
-    modeLayout->addWidget(trjLabel,  1);
+    modeLayout->addWidget(radioField, 1);
+    modeLayout->addWidget(radioWell, 1);
+    modeLayout->addWidget(trjLabel,  2);
     modeLayout->setContentsMargins(0, 0, 0, 0);
 
     QVBoxLayout* vboxLayout = new QVBoxLayout(this);
@@ -115,27 +116,11 @@ void InfoWidget::updateXyLabel() {
         setWarnText(xyLabel, "Not using any coordinate file");
 }
 
-void InfoWidget::setMode(const QString& mode) {
-    modeLabel->setText("Processing <b>" + mode.toLower() + "</b> data");
-
-    if (mode==FIELD) {
-        trjLabel->clear();
-        trjLabel->setStyleSheet("background-color: rgba(0,0,0,0%)");
-        return;
-    }
-
-    if (fileExists(".trj"))
-        setOkText(trjLabel, "Trajectory file found");
-    else
-        setWarnText(trjLabel, "Not using any trajectory file");
-}
-
 void InfoWidget::freezeLabelSize() {
     freezeWidth(projectLabel);
     freezeWidth(rgfLabel);
     freezeWidth(setLabel);
     freezeWidth(xyLabel);
-    freezeWidth(modeLabel);
     freezeWidth(trjLabel);
 }
 
