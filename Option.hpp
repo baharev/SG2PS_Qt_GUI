@@ -20,7 +20,6 @@ struct Option {
     void checkConsistency() const;
 
     QString toCLIString(int i) const;
-    int toIndex(const QString& cliLine) const;
 
     QString key;
     QStringList values;

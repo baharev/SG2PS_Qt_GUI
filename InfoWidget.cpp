@@ -101,9 +101,7 @@ void InfoWidget::setErrorText(QLabel* lbl, const QString& msg) {
 
 void InfoWidget::updateModePanel() {
     bool isWell = wellRadio->isChecked();
-    qDebug() << "Updating the run mode panel, well mode: " << isWell;
     if (isWell) {
-        qDebug() << "Checking whether the trajectory file exits";
         if (fileExists(".trj"))
             setOkText(trjLabel, "Trajectory file found");
         else

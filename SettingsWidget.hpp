@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QString>
 #include <QVector>
+#include <QHash>
 
 class QHBoxLayout;
 class QVBoxLayout;
@@ -39,6 +40,9 @@ private:
     bool tryLoadSettings();
     bool loadSettings();
 
+    void addInvisibleRunModeWidget();
+    bool isWell() const;
+
     QString setFileName;
     QHBoxLayout* panel;
     QVBoxLayout* leftColumn;
@@ -46,6 +50,8 @@ private:
     QVector<OptionWidget*> optionWidgets;
     QString projectPath;
     QString projectName;
+
+    QHash<QString,OptionWidget*> cliKeyToOptionWidget;
 };
 
 #endif // SETTINGSWIDGET_HPP

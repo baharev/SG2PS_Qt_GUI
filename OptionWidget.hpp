@@ -21,9 +21,11 @@ public:
 
     QString selection2CLI() const;
 
-    void set(const QString& cliLine);
+    const QString& cliKey() const;
 
     void selectDefault();
+
+    int indexOf(const QString& s);
 
     void setCurrentIndex(int i);
 

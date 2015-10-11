@@ -24,9 +24,7 @@ SettingsWidget::SettingsWidget(QWidget* mainWindow) : QWidget(mainWindow) {
     int n_groups = numberOfGroups();
     int left_size = (n_groups+1) / 2;
 
-    OptionWidget* optWidget = new OptionWidget(this, getOptionGroups().at(0).second.at(0));
-    optWidget->setVisible(false);
-    optionWidgets.push_back(optWidget);
+    addInvisibleRunModeWidget();
 
     fillColumn(leftColumn,          1, left_size); // Skip the run mode group
     fillColumn(rightColumn, left_size,  n_groups);
@@ -39,6 +37,9 @@ SettingsWidget::SettingsWidget(QWidget* mainWindow) : QWidget(mainWindow) {
     panel->addWidget(right);
     panel->addStretch(1);
     setLayout(panel);
+
+    foreach (OptionWidget* widget, optionWidgets)
+        cliKeyToOptionWidget[widget->cliKey()] = widget;
 }
 
 void SettingsWidget::fillColumn(QVBoxLayout* col, int group_first, int group_end) {
@@ -74,11 +75,28 @@ void SettingsWidget::reset_defaults() {
     }
 }
 
-void SettingsWidget::setRunMode(bool isWell) {
+//-----------------------------------------------------------------------------
+// Hacks concerning the run mode
 
-    // FIXME Set the option group run mode appropriately
+void SettingsWidget::addInvisibleRunModeWidget() {
+    OptionWidget* optWidget = new OptionWidget(this, getOptionGroups().at(0).second.at(0));
+    optWidget->setVisible(false);
+    Q_ASSERT(optionWidgets.empty());
+    optionWidgets.push_back(optWidget);
+}
+
+void SettingsWidget::setRunMode(bool isWell) {
+    // Assumes that index 0 is no, and 1 is yes, compare with
+    // Option.cpp mode_opts[]
     optionWidgets.at(0)->setCurrentIndex(isWell ? 1 : 0);
 }
+
+bool SettingsWidget::isWell() const {
+    // Assumes the command line key Y if we are in well mode
+    return optionWidgets.at(0)->selection2CLI().endsWith("Y");
+}
+
+//-----------------------------------------------------------------------------
 
 void SettingsWidget::newProjectSelected(const QString& newProjectPath,
                                         const QString& newProjectName)
@@ -87,12 +105,13 @@ void SettingsWidget::newProjectSelected(const QString& newProjectPath,
     projectName = newProjectName;
     bool loadedCleanly = tryLoadSettings();
 
-    // FIXME Return: loaded cleanly, and is in well mode, or not
-    emit newSettingsFileLoaded(optionWidgets.at(0)->selection2CLI().endsWith("Y"), loadedCleanly);
+    emit newSettingsFileLoaded(isWell(), loadedCleanly);
 }
 
 // returns: loadedCleanly
 bool SettingsWidget::tryLoadSettings() {
+
+    reset_defaults();
 
     setFileName = projectPath + "/" + projectName + ".set";
     QFileInfo setFile = QFileInfo(setFileName);
@@ -102,7 +121,6 @@ bool SettingsWidget::tryLoadSettings() {
     }
     else {
         qDebug() << setFileName << " not found";
-        reset_defaults();
         return false;
     }
 }
@@ -135,14 +153,26 @@ bool SettingsWidget::loadSettings() {
         return false;
     }
 
+    bool isOK = true;
     QTextStream in(&file);
-
-    int n = optionWidgets.size();
-
-    for (int i=0; (!in.atEnd()) && i<n; ++i) {
-        QString line = in.readLine();
-        optionWidgets.at(i)->set(line);
+    while (!in.atEnd()) {
+        // Compare with Option::toCLIString() where the file is written
+        const QStringList opt = in.readLine().split(":\t", QString::SkipEmptyParts);
+        if (opt.size()!=2) {
+            isOK = false;
+            continue;
+        }
+        const QString& cliKey = opt.at(0);
+        if (!cliKeyToOptionWidget.contains(cliKey)) {
+            isOK = false;
+            continue;
+        }
+        OptionWidget* widget = cliKeyToOptionWidget.value(cliKey);
+        int pos = widget->indexOf(opt.at(1));
+        if (pos >= 0)
+            widget->setCurrentIndex(pos);
+        else
+            isOK = false;
     }
-
-    return true; // FIXME Check for errors above!
+    return isOK;
 }

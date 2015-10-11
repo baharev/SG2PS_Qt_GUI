@@ -47,8 +47,11 @@ QString OptionWidget::selection2CLI() const {
     return opt.toCLIString(i);
 }
 
-void OptionWidget::set(const QString& cliLine) {
-    int i = opt.toIndex(cliLine);
-    comboBox->setCurrentIndex(i);
+const QString& OptionWidget::cliKey() const {
+    return opt.cliKey;
+}
+
+int OptionWidget::indexOf(const QString& s) {
+    return opt.cliValues.indexOf(s);
 }
 

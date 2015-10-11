@@ -9,8 +9,9 @@ namespace {
 
 const Default setDefault = Default();
 
-// Keep this as the first item (index 0)
-// It will be treated as special, and not shown
+// Keep this as the first item (index 0), and in this order.
+// It will be treated as special, and not shown on the GUI.
+// Compare with SettingsWidget hacks, concering the run mode.
 
 Option mode_opts[] = {
 
@@ -283,20 +284,7 @@ void Option::checkConsistency() const {
 }
 
 QString Option::toCLIString(int i) const {
-
+    // compare with SettingsWidget loadSettings()
+    // where the file is parsed
     return cliKey + ":\t" + cliValues.at(i);
-}
-
-int Option::toIndex(const QString& cliLine) const {
-
-    int index = defaultElem;
-
-    QStringList opt = cliLine.split(":\t", QString::SkipEmptyParts);
-
-    if (opt.size()==2 && opt.at(0)==cliKey) {
-        int pos = cliValues.indexOf(opt.at(1));
-        index = (pos>=0) ? pos : defaultElem;
-        //qDebug() << key << index << "(" << defaultElem << ")";
-    }
-    return index;
 }
