@@ -12,7 +12,6 @@
 #include "OptionWidget.hpp"
 #include "Option.hpp"
 #include "LayoutConstants.hpp"
-#include "InfoSettingsWire.hpp"
 
 
 SettingsWidget::SettingsWidget(QWidget* mainWindow) : QWidget(mainWindow) {
@@ -75,10 +74,6 @@ void SettingsWidget::reset_defaults() {
     }
 }
 
-void SettingsWidget::setWire(InfoSettingsWire* wire) {
-    this->wire = wire;
-}
-
 void SettingsWidget::setRunMode(bool isWell) {
 
     // FIXME Set the option group run mode appropriately
@@ -93,7 +88,7 @@ void SettingsWidget::newProjectSelected(const QString& newProjectPath,
     bool loadedCleanly = tryLoadSettings();
 
     // FIXME Return: loaded cleanly, and is in well mode, or not
-    wire->newSettingsFileLoaded(optionWidgets.at(0)->selection2CLI().endsWith("Y"), loadedCleanly);
+    emit newSettingsFileLoaded(optionWidgets.at(0)->selection2CLI().endsWith("Y"), loadedCleanly);
 }
 
 // returns: loadedCleanly

@@ -9,7 +9,6 @@
 #include <QRadioButton>
 #include "InfoWidget.hpp"
 #include "LayoutConstants.hpp"
-#include "InfoSettingsWire.hpp"
 
 namespace {
     const char GREEN[]  = "QLabel { background-color : #33FF00; }";
@@ -64,10 +63,6 @@ InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
     setFrameStyle(QFrame::Box | QFrame::Raised);
 }
 
-void InfoWidget::setWire(InfoSettingsWire* wire) {
-    this->wire = wire;
-}
-
 void InfoWidget::checkSetFile() {
     updateSetLabel(fileExists(".set"));
 }
@@ -104,13 +99,8 @@ void InfoWidget::setErrorText(QLabel* lbl, const QString& msg) {
     lbl->setStyleSheet(RED);
 }
 
-bool InfoWidget::isInWellMode() const {
-
-    return wellRadio->isChecked();
-}
-
 void InfoWidget::updateModePanel() {
-    bool isWell = isInWellMode();
+    bool isWell = wellRadio->isChecked();
     qDebug() << "Updating the run mode panel, well mode: " << isWell;
     if (isWell) {
         qDebug() << "Checking whether the trajectory file exits";
@@ -123,7 +113,8 @@ void InfoWidget::updateModePanel() {
         trjLabel->clear();
         trjLabel->setStyleSheet("background-color: rgba(0,0,0,0%)");
     }
-    wire->runModeChanged(isWell);
+
+    emit runModeChanged(isWell);
 }
 
 void InfoWidget::newSettingsFileLoaded(bool isWell, bool loadedCleanly) {

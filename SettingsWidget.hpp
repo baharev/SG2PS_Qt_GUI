@@ -10,7 +10,6 @@
 
 class QHBoxLayout;
 class QVBoxLayout;
-class InfoSettingsWire;
 class OptionWidget;
 
 class SettingsWidget: public QWidget {
@@ -21,15 +20,17 @@ public:
 
     explicit SettingsWidget(QWidget* mainWindow);
 
-    void setWire(InfoSettingsWire* wire);
-
     void newProjectSelected(const QString& newProjectPath, const QString& newProjectName);
-
-    void setRunMode(bool isWell);
 
 public slots:
 
     void writeSettings();
+
+    void setRunMode(bool isWell);
+
+signals:
+
+    void newSettingsFileLoaded(bool isWell, bool loadedCleanly);
 
 private:
 
@@ -45,8 +46,6 @@ private:
     QVector<OptionWidget*> optionWidgets;
     QString projectPath;
     QString projectName;
-
-    InfoSettingsWire* wire;
 };
 
 #endif // SETTINGSWIDGET_HPP

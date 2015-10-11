@@ -37,7 +37,15 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::connect_signal_slots() {
+    connect(infoWidget, SIGNAL(runModeChanged(bool)),
+            settingsWidget, SLOT(setRunMode(bool)));
+
+    connect(settingsWidget, SIGNAL(newSettingsFileLoaded(bool,bool)),
+            infoWidget,     SLOT(newSettingsFileLoaded(bool,bool)));
+
     connect(runner, SIGNAL(generateSetFile()), settingsWidget, SLOT(writeSettings()));
+    // TODO I am not sure why this one is needed and it unconditionally sets the *.set
+    // file satuts to OK, which may not be true...
     connect(runner, SIGNAL(generateSetFile()), infoWidget, SLOT(checkSetFile()));
 }
 
@@ -50,10 +58,6 @@ void MainWindow::add_elements() {
 
     settingsWidget = new SettingsWidget(this);
     mainLayout->addWidget(settingsWidget);
-
-    infoSettingsWire = InfoSettingsWire();
-    infoSettingsWire.setInfoWidget(infoWidget);
-    infoSettingsWire.setSettingsWidget(settingsWidget);
 
     statusBar = new QStatusBar;
     statusBar->setStyleSheet("QStatusBar { border: 1px solid grey; border-radius: 3px; } ");

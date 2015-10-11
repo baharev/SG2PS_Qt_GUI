@@ -27,7 +27,6 @@ SOURCES += main.cpp\
     ResolveExitCode.cpp \
     Option.cpp \
     Launcher.cpp \
-    InfoSettingsWire.cpp \
     InfoWidget.cpp \
     ReservedColumnNames.cpp \
     Launcher_Win32.cpp \
@@ -49,7 +48,6 @@ HEADERS  += \
     ErrorMsg.hpp \
     ResolveExitCode.hpp \
     Launcher.hpp \
-    InfoSettingsWire.hpp \
     InfoWidget.hpp \
     ReservedColumnNames.hpp \
     ConvertEPS2PDF.hpp \
