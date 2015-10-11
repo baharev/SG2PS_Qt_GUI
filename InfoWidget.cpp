@@ -33,15 +33,18 @@ InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
     hboxLayout->addWidget( xyLabel, 1);
     hboxLayout->setContentsMargins(0, 0, 0, 0);
 
-    QRadioButton *radioField = new QRadioButton("Field data processing");
-    QRadioButton *radioWell  = new QRadioButton("Well data processing");
-    radioField->setChecked(true);
+    fieldRadio = new QRadioButton("Field data processing", this);
+    wellRadio  = new QRadioButton("Well data processing", this);
 
     trjLabel  = new QLabel(this);
 
+    fieldRadio->setChecked(true);
+
+    connect(fieldRadio, SIGNAL(toggled(bool)), this, SLOT(updateModePanel()));
+
     QHBoxLayout* modeLayout = new QHBoxLayout(this);
-    modeLayout->addWidget(radioField, 1);
-    modeLayout->addWidget(radioWell, 1);
+    modeLayout->addWidget(fieldRadio, 1);
+    modeLayout->addWidget(wellRadio, 1);
     modeLayout->addWidget(trjLabel,  2);
     modeLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -70,6 +73,8 @@ void InfoWidget::newProjectSelected(const QString& newProjectPath, const QString
     projectName = newProjectName;
     projectLabel->setText("Project: <b>"+projectName+"</b>,  path: "+QDir::toNativeSeparators(projectPath));
 
+    updateModePanel();
+
     updateRgfLabel();
     updateSetLabel();
     updateXyLabel();
@@ -93,6 +98,20 @@ void InfoWidget::setWarnText(QLabel* lbl, const QString& msg) {
 void InfoWidget::setErrorText(QLabel* lbl, const QString& msg) {
     lbl->setText(msg);
     lbl->setStyleSheet(RED);
+}
+
+void InfoWidget::updateModePanel() {
+
+    if (fieldRadio->isChecked()) {
+        trjLabel->clear();
+        trjLabel->setStyleSheet("background-color: rgba(0,0,0,0%)");
+        return;
+    }
+
+    if (fileExists(".trj"))
+        setOkText(trjLabel, "Trajectory file found");
+    else
+        setWarnText(trjLabel, "Not using any trajectory file");
 }
 
 void InfoWidget::updateRgfLabel() {

@@ -8,6 +8,7 @@
 #include <QString>
 
 class QLabel;
+class QRadioButton;
 
 
 class InfoWidget : public QFrame {
@@ -25,6 +26,10 @@ public:
 public slots:
 
     void checkSetFile();
+
+private slots:
+
+    void updateModePanel();
 
 private:
 
@@ -44,19 +49,26 @@ private:
 
     void freezeWidth(QLabel* lbl);
 
+
+    QString projectPath;
+
+    QString projectName;
+
     QLabel* projectLabel;
+
+
+    QRadioButton* fieldRadio;
+
+    QRadioButton* wellRadio;
+
+    QLabel* trjLabel;
+
 
     QLabel* rgfLabel;
 
     QLabel* setLabel;
 
     QLabel* xyLabel;
-
-    QLabel* trjLabel;
-
-    QString projectPath;
-
-    QString projectName;
 
 };
 
