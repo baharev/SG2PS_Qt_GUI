@@ -157,22 +157,32 @@ bool SettingsWidget::loadSettings() {
     QTextStream in(&file);
     while (!in.atEnd()) {
         // Compare with Option::toCLIString() where the file is written
-        const QStringList opt = in.readLine().split(":\t", QString::SkipEmptyParts);
+        QString line = in.readLine();
+        const QStringList opt = line.split(":\t", QString::SkipEmptyParts);
         if (opt.size()!=2) {
             isOK = false;
+            qDebug() << "Failed to split into key-value pair:" << line;
             continue;
         }
         const QString& cliKey = opt.at(0);
         if (!cliKeyToOptionWidget.contains(cliKey)) {
             isOK = false;
+            qDebug() << "Key" << cliKey << "not found for line:" << line;
             continue;
         }
         OptionWidget* widget = cliKeyToOptionWidget.value(cliKey);
-        int pos = widget->indexOf(opt.at(1));
+        const QString& value = opt.at(1);
+        int pos = widget->indexOf(value);
         if (pos >= 0)
             widget->setCurrentIndex(pos);
-        else
+        else {
             isOK = false;
+            qDebug() << "Value" << value << "not found for line:" << line;
+        }
     }
+
+    if (isOK)
+        qDebug() << "The file" << setFileName << "loaded cleanly";
+
     return isOK;
 }

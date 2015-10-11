@@ -34,24 +34,34 @@ void ConvertAllEps::run(const QString& project_directory) {
 
     projectFolder = project_directory;
 
-    findAllFiles();
+    // TODO Another magic constant
+
+    findAllFiles(projectFolder+"/5_PS_SEPARATED/");
+
+    loop();
+
+    findAllFiles(projectFolder+"/6_WELL_PS_SEPARATED/");
 
     loop();
 }
 
-void ConvertAllEps::findAllFiles() {
+void ConvertAllEps::findAllFiles(const QString& dirName) {
+
+    qDebug() << "Searching" << dirName << "for subdirectories";
 
     directories->clear();
 
     eps_files->clear();
 
-    QDir dir = QDir(projectFolder+"/5_ps_separated/");  // TODO Another magic constant
+    QDir dir = QDir(dirName);
 
     *directories = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
 
     for (QList<QFileInfo>::iterator subdir=directories->begin(); subdir!=directories->end(); ++subdir) {
 
         QString subDirPath = subdir->filePath();
+
+        qDebug() << "Searching" << subDirPath << "for eps files";
 
         eps_files->append( QDir(subDirPath).entryInfoList(QStringList("*.eps"), QDir::Files, QDir::Name)  );
     }
