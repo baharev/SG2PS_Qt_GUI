@@ -6,13 +6,12 @@
 
 #include <QMainWindow>
 #include <QString>
+#include "InfoSettingsWire.hpp"
 
 class QVBoxLayout;
 class QFileDialog;
 
-class InfoWidget;
-class InputWidget;
-class SettingsWidget;
+class InfoSettingsWire;
 class Runner;
 
 class MainWindow : public QMainWindow
@@ -88,6 +87,8 @@ private:
     InfoWidget* infoWidget;
 
     SettingsWidget* settingsWidget;
+
+    InfoSettingsWire infoSettingsWire;
 
     Runner* runner;
 

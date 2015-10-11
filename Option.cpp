@@ -9,6 +9,16 @@ namespace {
 
 const Default setDefault = Default();
 
+// Keep this as the first item (index 0)
+// It will be treated as special, and not shown
+
+Option mode_opts[] = {
+
+    Option("Field or well data", "WELLDATA")
+    << "Field" << "N" << setDefault
+    << "Well"  << "Y"
+};
+
 Option conv_opts[] = {
 
     Option("Data convention", "DATARULE")
@@ -214,6 +224,8 @@ void add(QVector<T>& vec, const char* name, U (&options)[N]) {
 
 QVector<OptionGroup> createOptionGroups() {
     QVector<OptionGroup> vec;
+
+    add(vec, "Processing mode",      mode_opts);
 
     add(vec, "Well data processing", well_opts);
     add(vec, "Group management",     group_opts);

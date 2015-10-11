@@ -51,6 +51,10 @@ void MainWindow::add_elements() {
     settingsWidget = new SettingsWidget(this);
     mainLayout->addWidget(settingsWidget);
 
+    infoSettingsWire = InfoSettingsWire();
+    infoSettingsWire.setInfoWidget(infoWidget);
+    infoSettingsWire.setSettingsWidget(settingsWidget);
+
     statusBar = new QStatusBar;
     statusBar->setStyleSheet("QStatusBar { border: 1px solid grey; border-radius: 3px; } ");
     statusBar->showMessage("Ready", 2000);
@@ -443,6 +447,7 @@ QString MainWindow::tryToSetFileAsProject(const QString& file, const QString& ex
 void MainWindow::newProjectSelected() {
     startDir = projectPath;
     infoWidget->newProjectSelected(projectPath, projectName);
+    // this also sets the *.set label on the infoWidget, and the run mode:
     settingsWidget->newProjectSelected(projectPath, projectName);
     runner->newProjectSelected(projectPath, projectName);
     setWindowTitle(projectName + TITLE);

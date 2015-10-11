@@ -9,6 +9,7 @@
 #include <QRadioButton>
 #include "InfoWidget.hpp"
 #include "LayoutConstants.hpp"
+#include "InfoSettingsWire.hpp"
 
 namespace {
     const char GREEN[]  = "QLabel { background-color : #33FF00; }";
@@ -34,12 +35,12 @@ InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
     hboxLayout->setContentsMargins(0, 0, 0, 0);
 
     fieldRadio = new QRadioButton("Field data processing", this);
+    fieldRadio->setChecked(true);
     wellRadio  = new QRadioButton("Well data processing", this);
-
     trjLabel  = new QLabel(this);
 
-    fieldRadio->setChecked(true);
-
+    // keep this line after trjLabel initialization:
+    // updateModePanel() references trjLabel
     connect(fieldRadio, SIGNAL(toggled(bool)), this, SLOT(updateModePanel()));
 
     QHBoxLayout* modeLayout = new QHBoxLayout(this);
@@ -63,8 +64,12 @@ InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
     setFrameStyle(QFrame::Box | QFrame::Raised);
 }
 
+void InfoWidget::setWire(InfoSettingsWire* wire) {
+    this->wire = wire;
+}
+
 void InfoWidget::checkSetFile() {
-    updateSetLabel();
+    updateSetLabel(fileExists(".set"));
 }
 
 void InfoWidget::newProjectSelected(const QString& newProjectPath, const QString& newProjectName) {
@@ -73,10 +78,9 @@ void InfoWidget::newProjectSelected(const QString& newProjectPath, const QString
     projectName = newProjectName;
     projectLabel->setText("Project: <b>"+projectName+"</b>,  path: "+QDir::toNativeSeparators(projectPath));
 
-    updateModePanel();
-
     updateRgfLabel();
-    updateSetLabel();
+    bool isSetFileOK = false;
+    updateSetLabel(isSetFileOK); // will be updated later anyway
     updateXyLabel();
 }
 
@@ -100,18 +104,35 @@ void InfoWidget::setErrorText(QLabel* lbl, const QString& msg) {
     lbl->setStyleSheet(RED);
 }
 
-void InfoWidget::updateModePanel() {
+bool InfoWidget::isInWellMode() const {
 
-    if (fieldRadio->isChecked()) {
+    return wellRadio->isChecked();
+}
+
+void InfoWidget::updateModePanel() {
+    bool isWell = isInWellMode();
+    qDebug() << "Updating the run mode panel, well mode: " << isWell;
+    if (isWell) {
+        qDebug() << "Checking whether the trajectory file exits";
+        if (fileExists(".trj"))
+            setOkText(trjLabel, "Trajectory file found");
+        else
+            setWarnText(trjLabel, "Not using any trajectory file");
+    }
+    else {
         trjLabel->clear();
         trjLabel->setStyleSheet("background-color: rgba(0,0,0,0%)");
-        return;
     }
+    wire->runModeChanged(isWell);
+}
 
-    if (fileExists(".trj"))
-        setOkText(trjLabel, "Trajectory file found");
+void InfoWidget::newSettingsFileLoaded(bool isWell, bool loadedCleanly) {
+    if (isWell)
+        wellRadio->setChecked(true);
     else
-        setWarnText(trjLabel, "Not using any trajectory file");
+        fieldRadio->setChecked(true);
+    updateModePanel();
+    updateSetLabel(loadedCleanly);
 }
 
 void InfoWidget::updateRgfLabel() {
@@ -121,8 +142,8 @@ void InfoWidget::updateRgfLabel() {
         setErrorText(rgfLabel, "Don\'t forget to create the data file!");
 }
 
-void InfoWidget::updateSetLabel() {
-    if (fileExists(".set"))
+void InfoWidget::updateSetLabel(bool isOK) {
+    if (isOK)
         setOkText(setLabel, "Settings from a previous run found");
     else
         setWarnText(setLabel, "The settings below need your attention");

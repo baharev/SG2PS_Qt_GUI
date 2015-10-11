@@ -10,8 +10,8 @@
 
 class QHBoxLayout;
 class QVBoxLayout;
+class InfoSettingsWire;
 class OptionWidget;
-
 
 class SettingsWidget: public QWidget {
 
@@ -20,7 +20,12 @@ class SettingsWidget: public QWidget {
 public:
 
     explicit SettingsWidget(QWidget* mainWindow);
+
+    void setWire(InfoSettingsWire* wire);
+
     void newProjectSelected(const QString& newProjectPath, const QString& newProjectName);
+
+    void setRunMode(bool isWell);
 
 public slots:
 
@@ -30,8 +35,8 @@ private:
 
     void fillColumn(QVBoxLayout* col, int row_beg, int row_end);
     void reset_defaults();
-    void tryLoadSettings();
-    void loadSettings();
+    bool tryLoadSettings();
+    bool loadSettings();
 
     QString setFileName;
     QHBoxLayout* panel;
@@ -40,6 +45,8 @@ private:
     QVector<OptionWidget*> optionWidgets;
     QString projectPath;
     QString projectName;
+
+    InfoSettingsWire* wire;
 };
 
 #endif // SETTINGSWIDGET_HPP

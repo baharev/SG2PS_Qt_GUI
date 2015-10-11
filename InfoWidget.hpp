@@ -9,6 +9,7 @@
 
 class QLabel;
 class QRadioButton;
+class InfoSettingsWire;
 
 
 class InfoWidget : public QFrame {
@@ -21,7 +22,13 @@ public:
 
     void freezeLabelSize();
 
+    void setWire(InfoSettingsWire* wire);
+
     void newProjectSelected(const QString& newProjectPath, const QString& newProjectName);
+
+    bool isInWellMode() const;
+
+    void newSettingsFileLoaded(bool isWell, bool loadedCleanly);
 
 public slots:
 
@@ -35,7 +42,7 @@ private:
 
     void updateRgfLabel();
 
-    void updateSetLabel();
+    void updateSetLabel(bool isOK);
 
     void updateXyLabel();
 
@@ -49,27 +56,19 @@ private:
 
     void freezeWidth(QLabel* lbl);
 
-
     QString projectPath;
-
     QString projectName;
-
     QLabel* projectLabel;
 
-
     QRadioButton* fieldRadio;
-
     QRadioButton* wellRadio;
-
     QLabel* trjLabel;
 
-
     QLabel* rgfLabel;
-
     QLabel* setLabel;
-
     QLabel* xyLabel;
 
+    InfoSettingsWire* wire;
 };
 
 #endif // INFOWIDGET_HPP

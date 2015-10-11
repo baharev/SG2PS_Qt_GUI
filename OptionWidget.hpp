@@ -25,6 +25,8 @@ public:
 
     void selectDefault();
 
+    void setCurrentIndex(int i);
+
 private:
 
     QComboBox* comboBox;

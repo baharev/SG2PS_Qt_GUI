@@ -38,6 +38,10 @@ void OptionWidget::selectDefault() {
     comboBox->setCurrentIndex(opt.defaultElem);
 }
 
+void OptionWidget::setCurrentIndex(int i) {
+    comboBox->setCurrentIndex(i);
+}
+
 QString OptionWidget::selection2CLI() const {
     int i = comboBox->currentIndex();
     return opt.toCLIString(i);

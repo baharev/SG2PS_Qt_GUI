@@ -12,6 +12,7 @@
 #include "OptionWidget.hpp"
 #include "Option.hpp"
 #include "LayoutConstants.hpp"
+#include "InfoSettingsWire.hpp"
 
 
 SettingsWidget::SettingsWidget(QWidget* mainWindow) : QWidget(mainWindow) {
@@ -24,7 +25,11 @@ SettingsWidget::SettingsWidget(QWidget* mainWindow) : QWidget(mainWindow) {
     int n_groups = numberOfGroups();
     int left_size = (n_groups+1) / 2;
 
-    fillColumn(leftColumn,          0, left_size);
+    OptionWidget* optWidget = new OptionWidget(this, getOptionGroups().at(0).second.at(0));
+    optWidget->setVisible(false);
+    optionWidgets.push_back(optWidget);
+
+    fillColumn(leftColumn,          1, left_size); // Skip the run mode group
     fillColumn(rightColumn, left_size,  n_groups);
 
     left->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
@@ -70,25 +75,40 @@ void SettingsWidget::reset_defaults() {
     }
 }
 
+void SettingsWidget::setWire(InfoSettingsWire* wire) {
+    this->wire = wire;
+}
+
+void SettingsWidget::setRunMode(bool isWell) {
+
+    // FIXME Set the option group run mode appropriately
+    optionWidgets.at(0)->setCurrentIndex(isWell ? 1 : 0);
+}
+
 void SettingsWidget::newProjectSelected(const QString& newProjectPath,
                                         const QString& newProjectName)
 {
     projectPath = newProjectPath;
     projectName = newProjectName;
-    tryLoadSettings();
+    bool loadedCleanly = tryLoadSettings();
+
+    // FIXME Return: loaded cleanly, and is in well mode, or not
+    wire->newSettingsFileLoaded(optionWidgets.at(0)->selection2CLI().endsWith("Y"), loadedCleanly);
 }
 
-void SettingsWidget::tryLoadSettings() {
+// returns: loadedCleanly
+bool SettingsWidget::tryLoadSettings() {
 
     setFileName = projectPath + "/" + projectName + ".set";
     QFileInfo setFile = QFileInfo(setFileName);
     if (setFile.exists() && setFile.isFile()) {
         qDebug() << "Corresponding .set file found";
-        loadSettings();
+        return loadSettings();
     }
     else {
         qDebug() << setFileName << " not found";
         reset_defaults();
+        return false;
     }
 }
 
@@ -110,13 +130,14 @@ void SettingsWidget::writeSettings() {
     qDebug() << "Settings dumped";
 }
 
-void SettingsWidget::loadSettings() {
+// return: loadedCleanly
+bool SettingsWidget::loadSettings() {
 
     QFile file(setFileName);
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Failed to open " << setFileName;
-        return;
+        return false;
     }
 
     QTextStream in(&file);
@@ -127,4 +148,6 @@ void SettingsWidget::loadSettings() {
         QString line = in.readLine();
         optionWidgets.at(i)->set(line);
     }
+
+    return true; // FIXME Check for errors above!
 }
