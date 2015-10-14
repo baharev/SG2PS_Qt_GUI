@@ -36,34 +36,40 @@ void ConvertAllEps::run(const QString& project_directory) {
 
     // TODO Another magic constant
 
-    findAllFiles(projectFolder+"/5_PS_SEPARATED/");
+    QVector<QString> dirs = QVector<QString>();
 
-    loop();
+    dirs.append(projectFolder+"/5_PS_SEPARATED/");
 
-    findAllFiles(projectFolder+"/6_WELL_PS_SEPARATED/");
+    dirs.append(projectFolder+"/6_WELL_PS_SEPARATED/");
+
+    findAllFiles(dirs);
 
     loop();
 }
 
-void ConvertAllEps::findAllFiles(const QString& dirName) {
-
-    qDebug() << "Searching" << dirName << "for subdirectories";
+void ConvertAllEps::findAllFiles(const QVector<QString>& dirs) {
 
     directories->clear();
 
     eps_files->clear();
 
-    QDir dir = QDir(dirName);
+    foreach(QString dirName, dirs) {
 
-    *directories = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+        qDebug() << "Searching" << dirName << "for subdirectories";
 
-    for (QList<QFileInfo>::iterator subdir=directories->begin(); subdir!=directories->end(); ++subdir) {
+        QDir dir = QDir(dirName);
 
-        QString subDirPath = subdir->filePath();
+        *directories = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
 
-        qDebug() << "Searching" << subDirPath << "for eps files";
+        for (QList<QFileInfo>::iterator subdir=directories->begin(); subdir!=directories->end(); ++subdir) {
 
-        eps_files->append( QDir(subDirPath).entryInfoList(QStringList("*.eps"), QDir::Files, QDir::Name)  );
+            QString subDirPath = subdir->filePath();
+
+            qDebug() << "Searching" << subDirPath << "for eps files";
+
+            eps_files->append( QDir(subDirPath).entryInfoList(QStringList("*.eps"), QDir::Files, QDir::Name)  );
+        }
+
     }
 
     qDebug() << "Found" << eps_files->size() << "eps files to convert";

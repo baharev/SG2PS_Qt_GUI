@@ -36,7 +36,7 @@ private slots:
 
 private:
 
-    void findAllFiles(const QString& dirName);
+    void findAllFiles(const QVector<QString>& dirs);
 
     void loop();
 
