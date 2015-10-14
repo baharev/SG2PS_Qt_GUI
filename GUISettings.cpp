@@ -36,7 +36,7 @@ GUISettings::GUISettings() : strOptions(*new Map()) {
 
     strOptions[convert_to_pdf()] = "yes"; // TODO Stringly typed...
 
-    strOptions[delete_eps_on_success()] = "yes";
+    strOptions[delete_eps_on_success()] = "no";
 
     strOptions[show_logfile()] = "yes";
 
