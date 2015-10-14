@@ -105,7 +105,7 @@ void InfoWidget::updateModePanel() {
         if (fileExists(".trj"))
             setOkText(trjLabel, "Trajectory file found");
         else
-            setWarnText(trjLabel, "Not using any trajectory file");
+            setWarnText(trjLabel, "No trajectory file found, assuming vertical trajectory");
     }
     else {
         trjLabel->clear();
