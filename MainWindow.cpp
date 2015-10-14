@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2015, Ali Baharev
 // All rights reserved.
 // This code is published under the GNU Lesser General Public License.
+#include <QCloseEvent>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
@@ -165,6 +166,25 @@ void MainWindow::set_menu() {
     help->addAction(paper);
     help->addAction(showAboutQt);
     help->addAction(showAbout);
+}
+
+void MainWindow::closeEvent(QCloseEvent* event) {
+    bool quit = true;
+    // Compare with ConvertAllEps.cpp loop()
+    bool busy = statusBar->currentMessage().startsWith("Converting ");
+    //busy = true; // uncomment for testing
+    if (busy) {
+        int ret = QMessageBox::warning(this, "SG2PS",
+                                             "The EPS to PDF conversions are still running.\n"
+                                             "Are you sure you want to abort them and exit?",
+                                             QMessageBox::Yes | QMessageBox::Cancel);
+        quit = ret==QMessageBox::Yes;
+    }
+
+    if (quit)
+        QMainWindow::closeEvent(event);
+    else
+        event->ignore();
 }
 
 void MainWindow::about() {

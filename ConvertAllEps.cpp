@@ -94,6 +94,7 @@ void ConvertAllEps::loop() {
 
     QString eps_file_name = currentFile->fileName();
 
+    // Compare with MainWindow closeEvent(), checking for this message
     statusBar->showMessage("Converting "+eps_file_name, 0);
 
     converter->convert(directory, eps_file_name);

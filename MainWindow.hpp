@@ -65,6 +65,8 @@ private:
 
     void set_menu();
 
+    void closeEvent(QCloseEvent* event);
+
     QString selectFile(const QString& extension);
 
     QString saveFileAsDialog(const QString& extension);
