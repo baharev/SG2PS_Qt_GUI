@@ -6,7 +6,6 @@
 #include <QLabel>
 #include "Option.hpp"
 #include "OptionWidget.hpp"
-#include "LayoutConstants.hpp"
 
 
 OptionWidget::OptionWidget(QWidget* parent, const Option& option)
@@ -26,7 +25,7 @@ OptionWidget::OptionWidget(QWidget* parent, const Option& option)
     QHBoxLayout* layout = new QHBoxLayout(this);
 
     layout->setMargin(0);
-    layout->setSpacing(SPACING);
+    layout->setSpacing(10);
     layout->addWidget(label);
     layout->addWidget(comboBox);
     layout->addStretch(1);
@@ -55,3 +54,7 @@ int OptionWidget::indexOf(const QString& s) {
     return opt.cliValues.indexOf(s);
 }
 
+void OptionWidget::setForbidden(bool flag) {
+
+    comboBox->setDisabled(flag);
+}

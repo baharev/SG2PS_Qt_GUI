@@ -41,6 +41,8 @@ private:
     bool loadSettings();
 
     void addInvisibleRunModeWidget();
+    void collectWellGroupWidgets();
+    void disableWellGroup(bool flag);
     bool isWell() const;
 
     QString setFileName;
@@ -52,6 +54,7 @@ private:
     QString projectName;
 
     QHash<QString,OptionWidget*> cliKeyToOptionWidget;
+    QVector<OptionWidget*> wellGroup;
 };
 
 #endif // SETTINGSWIDGET_HPP

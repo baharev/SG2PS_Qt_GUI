@@ -35,7 +35,6 @@ SOURCES += main.cpp\
     ConvertAllEps.cpp
 
 HEADERS  += \
-    LayoutConstants.hpp \
     SettingsWidget.hpp \
     MainWindow.hpp \
     OptionWidget.hpp \

@@ -11,7 +11,6 @@
 #include "SettingsWidget.hpp"
 #include "OptionWidget.hpp"
 #include "Option.hpp"
-#include "LayoutConstants.hpp"
 
 
 SettingsWidget::SettingsWidget(QWidget* mainWindow) : QWidget(mainWindow) {
@@ -40,6 +39,11 @@ SettingsWidget::SettingsWidget(QWidget* mainWindow) : QWidget(mainWindow) {
 
     foreach (OptionWidget* widget, optionWidgets)
         cliKeyToOptionWidget[widget->cliKey()] = widget;
+
+    // FIXME The well group hack: disabled these options
+    // in field mode.
+    collectWellGroupWidgets();
+    disableWellGroup(true);
 }
 
 void SettingsWidget::fillColumn(QVBoxLayout* col, int group_first, int group_end) {
@@ -85,15 +89,37 @@ void SettingsWidget::addInvisibleRunModeWidget() {
     optionWidgets.push_back(optWidget);
 }
 
+void SettingsWidget::collectWellGroupWidgets() {
+    // count the first and the last index of the well
+    // group options in optionWidgets
+    const QVector<OptionGroup>& optionGroups = getOptionGroups();
+    int begin = 0;
+    int well_group_index = wellGroupIndex();
+    for (int i=0; i<well_group_index; ++i)
+        begin += optionGroups.at(i).second.size();
+
+    int end = begin + optionGroups.at(well_group_index).second.size();
+
+    for (int i=begin; i<end; ++i)
+        wellGroup.push_back(optionWidgets.at(i));
+}
+
 void SettingsWidget::setRunMode(bool isWell) {
     // Assumes that index 0 is no, and 1 is yes, compare with
     // Option.cpp mode_opts[]
     optionWidgets.at(0)->setCurrentIndex(isWell ? 1 : 0);
+    disableWellGroup(!isWell);
 }
 
 bool SettingsWidget::isWell() const {
     // Assumes the command line key Y if we are in well mode
     return optionWidgets.at(0)->selection2CLI().endsWith("Y");
+}
+
+void SettingsWidget::disableWellGroup(bool flag) {
+    foreach (OptionWidget* widget , wellGroup) {
+        widget->setForbidden(flag);
+    }
 }
 
 //-----------------------------------------------------------------------------

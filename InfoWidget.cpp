@@ -8,7 +8,7 @@
 #include <QLabel>
 #include <QRadioButton>
 #include "InfoWidget.hpp"
-#include "LayoutConstants.hpp"
+
 
 namespace {
     const char GREEN[]  = "QLabel { background-color : #33FF00; }";

@@ -36,4 +36,6 @@ int numberOfGroups();
 
 const QVector<OptionGroup>& getOptionGroups();
 
+int wellGroupIndex();
+
 #endif // OPTION_HPP

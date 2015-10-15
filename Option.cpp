@@ -223,18 +223,24 @@ void add(QVector<T>& vec, const char* name, U (&options)[N]) {
     vec.push_back( qMakePair(QString(name), qVec(options)) );
 }
 
+// FIXME A hack so that the SettingsWidget can
+// disable the well options if we are in field mode.
+int WELL_GROUP_INDEX;
+
 QVector<OptionGroup> createOptionGroups() {
     QVector<OptionGroup> vec;
 
     add(vec, "Processing mode",      mode_opts);
 
-    add(vec, "Well data processing", well_opts);
-    add(vec, "Group management",     group_opts);
-    add(vec, "Plotting",             plot_opts);
-
     add(vec, "Conventions",          conv_opts);
     add(vec, "Inversion",            inver_opts);
     add(vec, "Rose diagram",         rose_opts);
+
+    add(vec, "Well data processing", well_opts);
+    WELL_GROUP_INDEX = vec.size()-1;
+
+    add(vec, "Group management",     group_opts);
+    add(vec, "Plotting",             plot_opts);
 
     return vec;
 }
@@ -249,6 +255,10 @@ const QVector<OptionGroup>& getOptionGroups() {
 
 int numberOfGroups() {
     return optionGroups.size();
+}
+
+int wellGroupIndex() {
+    return WELL_GROUP_INDEX;
 }
 
 Option::Option(const QString& guiKey, const QString& cliKey)

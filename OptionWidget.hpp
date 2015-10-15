@@ -29,6 +29,8 @@ public:
 
     void setCurrentIndex(int i);
 
+    void setForbidden(bool flag);
+
 private:
 
     QComboBox* comboBox;
