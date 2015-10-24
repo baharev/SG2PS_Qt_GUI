@@ -63,8 +63,8 @@ InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
     setFrameStyle(QFrame::Box | QFrame::Raised);
 
     // a hack to make the infowidget as wide as the settings panel
-    setContentsMargins(10, 1, 10, 1);
-    vboxLayout->setContentsMargins(10, 1, 10, 1);
+    setContentsMargins(10, 5, 10, 5);
+    vboxLayout->setContentsMargins(10, 5, 10, 5);
 }
 
 void InfoWidget::checkSetFile() {

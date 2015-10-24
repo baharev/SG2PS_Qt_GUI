@@ -303,6 +303,12 @@ void MainWindow::runDemo() {
         return;
     if (!setupDemoRgf())
          return;
+
+    // The demo is run in well mode by default and we assume no existing set file
+    bool isWell = true;
+    bool cleanSetFile = false;
+    infoWidget->newSettingsFileLoaded(isWell, cleanSetFile);
+
     QMessageBox mbox;
     mbox.setText("Hit the <b>Run</b> button at the bottom of the main window. Let\'s hope everthing works.");
     mbox.exec();

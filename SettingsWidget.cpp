@@ -113,7 +113,7 @@ void SettingsWidget::setRunMode(bool isWell) {
 
 bool SettingsWidget::isWell() const {
     // Assumes the command line key Y if we are in well mode
-    return optionWidgets.at(0)->selection2CLI().endsWith("Y");
+    return optionWidgets.at(0)->getCurrentIndex() == 1;
 }
 
 void SettingsWidget::disableWellGroup(bool flag) {

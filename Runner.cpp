@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QStatusBar>
+#include <QVector>
 #include "Runner.hpp"
 #include "ConvertAllEps.hpp"
 #include "ErrorMsg.hpp"
@@ -162,13 +163,14 @@ void Runner::showPdfIfDemo() const {
         return;
     }
 
-    QString demoPDF = finalProjectFolder+"/5_ps_separated/STRIAE/ANG001_STRIAE.pdf";
+    QVector<QString> demoPDFs = QVector<QString>();
+    demoPDFs.append(finalProjectFolder+"/5_PS_SEPARATED/FRACTURE/WELL-1_FRACTURE.pdf");
+    demoPDFs.append(finalProjectFolder+"/6_WELL_PS_SEPARATED/FRACTURE/WELL-1_FRACTURE_TILTED.pdf");
 
-    qDebug() << "Trying to open demo pdf at" << demoPDF;
-
-    if (QFile::exists(demoPDF)) {
-
-        openPDF(demoPDF);
+    foreach (QString demoPDF, demoPDFs) {
+        qDebug() << "Trying to open demo pdf at" << demoPDF;
+        if (QFile::exists(demoPDF))
+            openPDF(demoPDF);
     }
 }
 

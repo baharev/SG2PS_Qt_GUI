@@ -29,6 +29,8 @@ public:
 
     void setCurrentIndex(int i);
 
+    int getCurrentIndex() const;
+
     void setForbidden(bool flag);
 
 private:
