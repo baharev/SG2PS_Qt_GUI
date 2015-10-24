@@ -103,6 +103,8 @@ void ConvertAllEps::loop() {
 
 void ConvertAllEps::onSingleFileConversionFinished(bool success) {
 
+    success = success && doubleCheckPdfExistence();
+
     if (success) {
 
         if (opts().getDeleteEpsOnSuccess()) {
@@ -120,4 +122,15 @@ void ConvertAllEps::onSingleFileConversionFinished(bool success) {
 
         emit finished(false);
     }
+}
+
+bool ConvertAllEps::doubleCheckPdfExistence() const {
+
+    const QString epsName = currentFile->filePath();
+
+    const QString pdfName = epsName.left(epsName.size()-4) + ".pdf";
+
+    qDebug() << "PDF name:" << pdfName;
+
+    return QFile::exists(pdfName);
 }

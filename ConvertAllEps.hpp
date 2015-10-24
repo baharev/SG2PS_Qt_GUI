@@ -38,6 +38,8 @@ private:
 
     void findAllFiles(const QVector<QString>& dirs);
 
+    bool doubleCheckPdfExistence() const;
+
     void loop();
 
     QString projectFolder;
