@@ -17,7 +17,7 @@
 
 namespace {
 
-const char RUN[] = "Run";
+const char RUN[] = "&Run";
 
 const char RUNNING[] = "Please wait...";
 
