@@ -32,7 +32,7 @@ OptionWidget::OptionWidget(QWidget* parent, const Option& option)
 
     setLayout(layout);
 
-    setFocusPolicy(Qt::StrongFocus);
+    label->setFocusPolicy(Qt::NoFocus);
     comboBox->setFocusPolicy(Qt::StrongFocus);
 }
 

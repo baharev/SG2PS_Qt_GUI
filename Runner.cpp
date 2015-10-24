@@ -38,6 +38,8 @@ Runner::Runner(QWidget *parent, QStatusBar* mainWindowStatusBar)
 
     runButton->setMinimumWidth(fontMetrics.width(RUNNING)*1.5);
 
+    runButton->setFocusPolicy(Qt::StrongFocus);
+
     connect(runButton, SIGNAL(clicked()), SLOT(runButtonClicked()));
 
     layout->addStretch(1);
