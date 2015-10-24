@@ -209,9 +209,12 @@ void MainWindow::about() {
 
                 "http://dx.doi.org/10.1016/j.cageo.2013.12.010\n\n");
 
+    msg.append("You can reach us at sg2ps@sg2ps.eu.\n\n");
+
     msg.append("Command line application built on ");
     msg.append(back_end_was_built_on()+"\n");
     msg.append( "GUI built on " __DATE__ " at " __TIME__ "\n\n");
+
     msg.append( "The heavy lifting is done by the back end, the external "
                 "command line application sg2ps, written and maintained by ");
 
