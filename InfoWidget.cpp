@@ -22,6 +22,7 @@ InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
 
     projectLabel = new QLabel("Please create a new or edit / select an existing file by clicking on one of icons on the left!", this);
     projectLabel->setAlignment(Qt::AlignHCenter);
+    projectLabel->setFocusPolicy(Qt::NoFocus);
 
     rgfLabel = new QLabel(this);
     setLabel = new QLabel(this);
