@@ -82,7 +82,7 @@ void MainWindow::fixSize() {
 }
 
 void MainWindow::set_menu() {
-    QAction *showAbout = new QAction("About &SG2PS", this);
+    QAction *showAbout = new QAction("&About SG2PS", this);
     connect(showAbout, SIGNAL(triggered()), SLOT(about()));
 
     QAction *showAboutQt = new QAction("About &Qt", this);
@@ -100,16 +100,16 @@ void MainWindow::set_menu() {
     QAction *homepage = new QAction(QIcon(":/images/package_internet48.png"), "Jump to the &homepage", this);
     connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
 
-    QAction *paper = new QAction("Jump to the &paper", this);
+    QAction *paper = new QAction("&Jump to the paper", this);
     connect(paper, SIGNAL(triggered()), SLOT(showPaper()));
 
-    QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "New &Data", this);
+    QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "&New Data", this);
     connect(createRGF, SIGNAL(triggered()), SLOT(newRGFRequested()));
 
     QAction* createXY = new QAction(QIcon(":/images/document_new48.png"), "New &Coordinate", this);
     connect(createXY, SIGNAL(triggered()), SLOT(newXYRequested()));
 
-    QAction* editRGF = new QAction(QIcon(":/images/spreadsheet48.png"), "Edit D&ata", this);
+    QAction* editRGF = new QAction(QIcon(":/images/spreadsheet48.png"), "&Edit Data", this);
     connect(editRGF, SIGNAL(triggered()), SLOT(editRGFRequested()));
 
     QAction* editXY = new QAction(QIcon(":/images/spreadsheetB48.png"), "Edit C&oordinate", this);
@@ -360,7 +360,7 @@ QString MainWindow::selectFile(const QString& extension) {
 void MainWindow::editRGFRequested() {
     QString file = selectFile("rgf");
     if (!file.isEmpty())
-        openSpreadsheet(file); // TODO Shoud openSpreadsheet check for empty file name?
+        openSpreadsheet(file); // TODO Should openSpreadsheet check for empty file name?
 }
 
 void MainWindow::loadRGFRequested() {

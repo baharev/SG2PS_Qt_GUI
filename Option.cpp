@@ -223,7 +223,7 @@ void add(QVector<T>& vec, const char* name, U (&options)[N]) {
     vec.push_back( qMakePair(QString(name), qVec(options)) );
 }
 
-// FIXME A hack so that the SettingsWidget can
+// TODO A hack so that the SettingsWidget can
 // disable the well options if we are in field mode.
 int WELL_GROUP_INDEX;
 

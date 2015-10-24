@@ -40,7 +40,7 @@ SettingsWidget::SettingsWidget(QWidget* mainWindow) : QWidget(mainWindow) {
     foreach (OptionWidget* widget, optionWidgets)
         cliKeyToOptionWidget[widget->cliKey()] = widget;
 
-    // FIXME The well group hack: disabled these options
+    // TODO The well group hack: disabled these options
     // in field mode.
     collectWellGroupWidgets();
     disableWellGroup(true);
