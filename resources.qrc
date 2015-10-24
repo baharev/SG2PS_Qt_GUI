@@ -10,5 +10,6 @@
         <file>images/blockdevice-cubes-icon.png</file>
         <file>images/edit_trj.png</file>
         <file>images/new_trj.png</file>
+        <file>images/exit.png</file>
     </qresource>
 </RCC>

@@ -67,7 +67,8 @@ OTHER_FILES += \
     images/document_new48.png \
     images/blockdevice-cubes-icon.png \
     images/new_trj.png \
-    images/edit_trj.png
+    images/edit_trj.png \
+    images/exit.png
 
 
 

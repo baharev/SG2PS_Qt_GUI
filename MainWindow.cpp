@@ -124,6 +124,9 @@ void MainWindow::set_menu() {
     QAction* editTRJ = new QAction(QIcon(":/images/edit_trj.png"), "Edit Trajectory", this);
     connect(editTRJ, SIGNAL(triggered()), SLOT(editTRJRequested()));
 
+    QAction* closeApplication = new QAction(QIcon(":/images/exit.png"), "Exit", this);
+    connect(closeApplication, SIGNAL(triggered()), SLOT(close()));
+
     QMenu* file = menuBar()->addMenu("File");
 
     file->addAction(createRGF);
@@ -135,6 +138,7 @@ void MainWindow::set_menu() {
     file->addAction(editTRJ);
     file->addAction(manual);
     file->addAction(demo);
+    file->addAction(closeApplication);
 
     QToolBar* fileToolBar = new QToolBar(this);
 
@@ -169,6 +173,14 @@ void MainWindow::set_menu() {
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
+    bool quit = confirmQuit();
+    if (quit)
+        QMainWindow::closeEvent(event);
+    else
+        event->ignore();
+}
+
+bool MainWindow::confirmQuit() {
     bool quit = true;
     // Compare with ConvertAllEps.cpp loop()
     bool busy = statusBar->currentMessage().startsWith("Converting ");
@@ -180,11 +192,7 @@ void MainWindow::closeEvent(QCloseEvent* event) {
                                              QMessageBox::Yes | QMessageBox::Cancel);
         quit = ret==QMessageBox::Yes;
     }
-
-    if (quit)
-        QMainWindow::closeEvent(event);
-    else
-        event->ignore();
+    return quit;
 }
 
 void MainWindow::about() {

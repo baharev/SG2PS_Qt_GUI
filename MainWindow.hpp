@@ -57,6 +57,8 @@ private slots:
 
     void newTRJRequested();
 
+    bool confirmQuit();
+
 private:
 
     void connect_signal_slots();
