@@ -65,6 +65,17 @@ InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
     // a hack to make the infowidget as wide as the settings panel
     setContentsMargins(10, 5, 10, 5);
     vboxLayout->setContentsMargins(10, 5, 10, 5);
+
+    setFocusPolicy(Qt::StrongFocus);
+    fieldRadio->setFocusPolicy(Qt::StrongFocus);
+    wellRadio->setFocusPolicy(Qt::StrongFocus);
+}
+
+void InfoWidget::setFocus(Qt::FocusReason reason) {
+    if (wellRadio->isChecked())
+        wellRadio->setFocus(reason);
+    else
+        fieldRadio->setFocus(reason);
 }
 
 void InfoWidget::checkSetFile() {

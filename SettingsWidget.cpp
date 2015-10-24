@@ -44,6 +44,8 @@ SettingsWidget::SettingsWidget(QWidget* mainWindow) : QWidget(mainWindow) {
     // in field mode.
     collectWellGroupWidgets();
     disableWellGroup(true);
+
+    setFocusPolicy(Qt::StrongFocus);
 }
 
 void SettingsWidget::fillColumn(QVBoxLayout* col, int group_first, int group_end) {

@@ -31,6 +31,9 @@ OptionWidget::OptionWidget(QWidget* parent, const Option& option)
     layout->addStretch(1);
 
     setLayout(layout);
+
+    setFocusPolicy(Qt::StrongFocus);
+    comboBox->setFocusPolicy(Qt::StrongFocus);
 }
 
 void OptionWidget::selectDefault() {

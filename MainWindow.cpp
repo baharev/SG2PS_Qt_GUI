@@ -489,6 +489,7 @@ void MainWindow::newProjectSelected() {
     settingsWidget->newProjectSelected(projectPath, projectName);
     runner->newProjectSelected(projectPath, projectName);
     setWindowTitle(projectName + TITLE);
+    infoWidget->setFocus(Qt::OtherFocusReason);
 }
 
 MainWindow::~MainWindow() {

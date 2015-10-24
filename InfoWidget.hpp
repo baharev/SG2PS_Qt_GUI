@@ -23,6 +23,8 @@ public:
 
     void newProjectSelected(const QString& newProjectPath, const QString& newProjectName);
 
+    void setFocus(Qt::FocusReason reason);
+
 public slots:
 
     void checkSetFile();
