@@ -82,52 +82,52 @@ void MainWindow::fixSize() {
 }
 
 void MainWindow::set_menu() {
-    QAction *showAbout = new QAction("About SG2PS", this);
+    QAction *showAbout = new QAction("About &SG2PS", this);
     connect(showAbout, SIGNAL(triggered()), SLOT(about()));
 
-    QAction *showAboutQt = new QAction("About Qt", this);
+    QAction *showAboutQt = new QAction("About &Qt", this);
     connect(showAboutQt, SIGNAL(triggered()), SLOT(aboutQt()));
 
-    QAction *editSettings = new QAction("GUI Settings", this);
+    QAction *editSettings = new QAction("&GUI Settings", this);
     connect(editSettings, SIGNAL(triggered()), SLOT(editGUISettings()));
 
-    QAction *manual = new QAction(QIcon(":/images/acroread48.png"), "Manual", this);
+    QAction *manual = new QAction(QIcon(":/images/acroread48.png"), "&Manual", this);
     connect(manual, SIGNAL(triggered()), SLOT(showManual()));
 
-    QAction* demo = new QAction(QIcon(":/images/blockdevice-cubes-icon.png"), "Demo", this) ;
+    QAction* demo = new QAction(QIcon(":/images/blockdevice-cubes-icon.png"), "&Demo", this) ;
     connect(demo, SIGNAL(triggered()), SLOT(runDemo()));
 
-    QAction *homepage = new QAction(QIcon(":/images/package_internet48.png"), "Jump to the homepage", this);
+    QAction *homepage = new QAction(QIcon(":/images/package_internet48.png"), "Jump to the &homepage", this);
     connect(homepage, SIGNAL(triggered()), SLOT(showHomepage()));
 
-    QAction *paper = new QAction("Jump to the paper", this);
+    QAction *paper = new QAction("Jump to the &paper", this);
     connect(paper, SIGNAL(triggered()), SLOT(showPaper()));
 
-    QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "New Data", this);
+    QAction* createRGF = new QAction(QIcon(":/images/insert_table48.png"), "New &Data", this);
     connect(createRGF, SIGNAL(triggered()), SLOT(newRGFRequested()));
 
-    QAction* createXY = new QAction(QIcon(":/images/document_new48.png"), "New Coordinate", this);
+    QAction* createXY = new QAction(QIcon(":/images/document_new48.png"), "New &Coordinate", this);
     connect(createXY, SIGNAL(triggered()), SLOT(newXYRequested()));
 
-    QAction* editRGF = new QAction(QIcon(":/images/spreadsheet48.png"), "Edit Data", this);
+    QAction* editRGF = new QAction(QIcon(":/images/spreadsheet48.png"), "Edit D&ata", this);
     connect(editRGF, SIGNAL(triggered()), SLOT(editRGFRequested()));
 
-    QAction* editXY = new QAction(QIcon(":/images/spreadsheetB48.png"), "Edit Coordinate", this);
+    QAction* editXY = new QAction(QIcon(":/images/spreadsheetB48.png"), "Edit C&oordinate", this);
     connect(editXY, SIGNAL(triggered()), SLOT(editXYRequested()));
 
-    QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "Select Data", this);
+    QAction* loadRGF  = new QAction(QIcon(":/images/document_import48.png"), "&Select Data", this);
     connect(loadRGF, SIGNAL(triggered()), SLOT(loadRGFRequested()));
 
-    QAction* createTRJ = new QAction(QIcon(":/images/new_trj.png"), "New Trajectory", this);
+    QAction* createTRJ = new QAction(QIcon(":/images/new_trj.png"), "New &Trajectory", this);
     connect(createTRJ, SIGNAL(triggered()), SLOT(newTRJRequested()));
 
-    QAction* editTRJ = new QAction(QIcon(":/images/edit_trj.png"), "Edit Trajectory", this);
+    QAction* editTRJ = new QAction(QIcon(":/images/edit_trj.png"), "Edit T&rajectory", this);
     connect(editTRJ, SIGNAL(triggered()), SLOT(editTRJRequested()));
 
-    QAction* closeApplication = new QAction(QIcon(":/images/exit.png"), "Exit", this);
+    QAction* closeApplication = new QAction(QIcon(":/images/exit.png"), "E&xit", this);
     connect(closeApplication, SIGNAL(triggered()), SLOT(close()));
 
-    QMenu* file = menuBar()->addMenu("File");
+    QMenu* file = menuBar()->addMenu("&File");
 
     file->addAction(createRGF);
     file->addAction(editRGF);
@@ -159,10 +159,10 @@ void MainWindow::set_menu() {
 
     addToolBar(Qt::LeftToolBarArea, fileToolBar);
 
-    QMenu* settingsMenu = menuBar()->addMenu("Advanced");
+    QMenu* settingsMenu = menuBar()->addMenu("&Advanced");
     settingsMenu->addAction(editSettings);
 
-    QMenu* help = menuBar()->addMenu("Help");
+    QMenu* help = menuBar()->addMenu("&Help");
 
     help->addAction(manual);
     help->addAction(demo);
