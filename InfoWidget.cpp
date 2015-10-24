@@ -67,7 +67,6 @@ InfoWidget::InfoWidget(QWidget *parent) : QFrame(parent) {
     setContentsMargins(10, 5, 10, 5);
     vboxLayout->setContentsMargins(10, 5, 10, 5);
 
-    setFocusPolicy(Qt::StrongFocus);
     fieldRadio->setFocusPolicy(Qt::StrongFocus);
     wellRadio->setFocusPolicy(Qt::StrongFocus);
 }
