@@ -112,7 +112,7 @@ void SettingsWidget::setRunMode(bool isWell) {
 }
 
 bool SettingsWidget::isWell() const {
-    // Assumes the command line key Y if we are in well mode
+    // Compare with setRunMode() just above
     return optionWidgets.at(0)->getCurrentIndex() == 1;
 }
 

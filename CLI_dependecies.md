@@ -15,7 +15,8 @@ The following files are shared by the back end and the GUI:
 If a new exception is thrown by the back end, the corresponding 
 `Code` must be introduced in the `enum` of the `ExitStatus`. In the back
 end, don't forget to catch the new exception in `main()`. In the GUI, 
-the corresponding error message needs to be added.
+the corresponding error message needs to be added. (We had a bug in the
+previous release with the `arg_error`!)
 
 When a new RGF file is created, the GUI writes all the allowed column 
 names into the header. These names are hard-coded in the 
