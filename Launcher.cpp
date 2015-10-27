@@ -128,12 +128,20 @@ bool openPDF(const QString& fileName) {
 
 void handle_missing_spreadsheet_editor() {
 
-    // TODO Make sure the Manual actually has such a section
     // TODO Try to resolve it on loading the applicaton,
     // somewhat ugly that it occurs later on demand
 
-    showErrorMsg("could not find the default application associated with spreadsheet documents. "
-                 "Please read the manual under <b>Editing data files</b>");
+    QMessageBox mbox(QMessageBox::Critical, "Error",
+                     "Error: failed to find the application that could open spreadsheet documents!\n"
+                     "Try to download such an application now?",
+                     QMessageBox::Yes | QMessageBox::No);
+
+    int ret = mbox.exec();
+
+    if (ret==QMessageBox::Yes) {
+
+        openWithDefaultApp("http://www.openoffice.org/download/");
+    }
 }
 
 bool canOpenSpreadsheet() {
