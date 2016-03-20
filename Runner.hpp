@@ -9,8 +9,9 @@
 class QPushButton;
 class QHBoxLayout;
 class QStatusBar;
-class ProcessManager;
 class ConvertAllEps;
+class ConcatPdfs;
+class ProcessManager;
 
 class Runner : public QWidget {
 
@@ -34,7 +35,9 @@ private slots:
 
     void onRunFinished(bool success, const QString& errorMsg);
 
-    void onConversionFinished(bool done);
+    void onConversionFinished(bool ok);
+
+    void onConcatFinished(bool ok);
 
 private:
 
@@ -55,6 +58,8 @@ private:
     ProcessManager* processManager;
 
     ConvertAllEps* converter;
+
+    ConcatPdfs* pdf_concat;
 
     QStatusBar* statusBar;
 

@@ -182,8 +182,9 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 
 bool MainWindow::confirmQuit() {
     bool quit = true;
-    // Compare with ConvertAllEps.cpp loop()
-    bool busy = statusBar->currentMessage().startsWith("Converting ");
+    // Compare with ConvertAllEps.cpp loop() and Runner onConversionFinished()
+    const QString& msg = statusBar->currentMessage();
+    bool busy = msg.startsWith("Converting ") || msg.startsWith("Concatenating ");
     //busy = true; // uncomment for testing
     if (busy) {
         int ret = QMessageBox::warning(this, "SG2PS",

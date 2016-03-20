@@ -9,6 +9,7 @@
 #include <QStatusBar>
 #include <QVector>
 #include "Runner.hpp"
+#include "ConcatPdfs.hpp"
 #include "ConvertAllEps.hpp"
 #include "ErrorMsg.hpp"
 #include "Launcher.hpp"
@@ -53,12 +54,16 @@ Runner::Runner(QWidget *parent, QStatusBar* mainWindowStatusBar)
 
     converter = new ConvertAllEps(this, mainWindowStatusBar);
 
+    pdf_concat = new ConcatPdfs(this);
+
 
     connect(processManager, SIGNAL(runFinished(bool,QString)), SLOT(onRunFinished(bool,QString)));
 
     connect(processManager, SIGNAL(runStarted()), SLOT(onRunStarted()));
 
     connect(converter, SIGNAL(finished(bool)), SLOT(onConversionFinished(bool)));
+
+    connect(pdf_concat, SIGNAL(finished(bool)), SLOT(onConcatFinished(bool)));
 }
 
 void Runner::newProjectSelected(const QString& newProjectPath,
@@ -122,17 +127,30 @@ void Runner::onRunFinished(bool success, const QString& errorMsg) {
     }
     else {
 
-        onConversionFinished(success && pointerToFolderOK);
+        onConcatFinished(success && pointerToFolderOK);
     }
 }
 
-void Runner::onConversionFinished(bool done) {
+void Runner::onConversionFinished(bool ok) {
+
+    if (ok) {
+
+        statusBar->showMessage("Concatenating all PDF files"); // Hack: compare with MainWindow closeEvent()
+
+        pdf_concat->run(finalProjectFolder, projectName);
+    }
+    else {
+        onConcatFinished(ok);
+    }
+}
+
+void Runner::onConcatFinished(bool ok) {
 
     runButton->setText(RUN);
 
     runButton->setEnabled(true);
 
-    QString msg = done ? QString("Done") : QString("Error occured");
+    QString msg = ok ? QString("Done") : QString("Error occured");
 
     statusBar->showMessage(msg, 2000);
 

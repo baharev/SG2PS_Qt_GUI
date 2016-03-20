@@ -27,6 +27,8 @@ public:
 
     QString getEps2PdfConverter() const;
 
+    QString getPdfConcat() const;
+
     QString getStartBrowsingFromDirectory() const;
 
     QString getTextEditor() const;
@@ -60,6 +62,8 @@ private:
     QString executable_name() const;
 
     QString eps2pdf_converter() const;
+
+    QString pdf_concat() const;
 
     QString start_browsing_from_directory() const;
 

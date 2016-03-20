@@ -28,6 +28,8 @@ GUISettings::GUISettings() : strOptions(*new Map()) {
 
     strOptions[eps2pdf_converter()] = "ps2pdf";
 
+    strOptions[pdf_concat()] = "pdf_concat";
+
     strOptions[start_browsing_from_directory()] = QDir::homePath();
 
     strOptions[text_editor()] = QString();
@@ -79,6 +81,16 @@ QString GUISettings::eps2pdf_converter() const {
 QString GUISettings::getEps2PdfConverter() const {
 
     return getStrOption(eps2pdf_converter());
+}
+
+QString GUISettings::pdf_concat() const {
+
+    return "pdf_concat";
+}
+
+QString GUISettings::getPdfConcat() const {
+
+    return getStrOption(pdf_concat());
 }
 
 QString GUISettings::start_browsing_from_directory() const {

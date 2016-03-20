@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     Launcher_Win32.cpp \
     Launcher_Linux.cpp \
     ConvertEPS2PDF.cpp \
-    ConvertAllEps.cpp
+    ConvertAllEps.cpp \
+    ConcatPdfs.cpp
 
 HEADERS  += \
     SettingsWidget.hpp \
@@ -50,7 +51,8 @@ HEADERS  += \
     InfoWidget.hpp \
     ReservedColumnNames.hpp \
     ConvertEPS2PDF.hpp \
-    ConvertAllEps.hpp
+    ConvertAllEps.hpp \
+    ConcatPdfs.hpp
 
 RESOURCES += \
     resources.qrc
