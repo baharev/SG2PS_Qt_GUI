@@ -1,0 +1,17 @@
+
+Python distribution:
+
+cd \distrib\
+
+set PATH=%PATH%;C:\Python27;C:\Python27\Scripts;
+
+python --version
+
+pip install PyPDF2
+
+
+
+download py2exe from sourceforge.net 
+
+python setup.py py2exe
+
