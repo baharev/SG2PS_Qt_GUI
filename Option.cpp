@@ -95,6 +95,10 @@ Option inver_opts[] = {
 
 Option group_opts[] = {
 
+    Option("Use formation name to group", "FORMATION")
+    << "Yes" << "Y" << setDefault
+    << "No"  << "N",
+
     Option("Use user-defined groups", "GROUP")
     << "Yes" << "Y" << setDefault
     << "No"  << "N",
